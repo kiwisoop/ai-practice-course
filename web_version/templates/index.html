@@ -1,0 +1,24 @@
+<!doctype html>
+<!-- Created with Codex on 2026-09-10. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MNIST Digit Recognition</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="card">
+    <p class="eyebrow">MNIST DEMO</p>
+    <h1>Handwritten Digit Recognition</h1>
+    <p class="instructions">Draw one digit from 0 to 9 in the box.</p>
+    <canvas id="drawing" width="280" height="280" aria-label="Drawing area for one digit" tabindex="0"></canvas>
+    <div class="controls">
+      <button id="clear" type="button">Clear</button>
+      <button id="recognize" class="primary" type="button">Recognize</button>
+    </div>
+    <p id="result" class="result" role="status" aria-live="polite">Result: -</p>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

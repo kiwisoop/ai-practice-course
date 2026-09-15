@@ -1,0 +1,4 @@
+# Created with Codex on 2026-09-10.
+tensorflow>=2.16,<2.22
+numpy>=1.26,<3
+Pillow>=10,<12
