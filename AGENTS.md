@@ -2,9 +2,8 @@
 
 A desktop and web application that recognizes a mouse-drawn digit (0-9) using a
 convolutional neural network trained on the MNIST dataset. The base
-implementation was generated with Codex; this file and the per-folder
-`CLAUDE.md` files were added with Claude Code to match the class submission
-format.
+implementation was generated with Codex. The root and per-folder
+`AGENTS.md` files describe the current project rules for Codex.
 
 ## Project Overview
 
@@ -35,17 +34,17 @@ both call the same model and preprocessing code in `mnist_model.py`.
 
 ```
 Study-01/
-├── CLAUDE.md                 # this file (root rules for Claude Code)
+├── AGENTS.md                 # this file (root rules for Codex)
 ├── README.md / SUBMISSION.md # course submission docs
 ├── mnist_model.py            # shared model: train/load, preprocess, predict
 ├── mnist_model.keras         # trained model, reused by both apps
 ├── requirements.txt
 ├── desktop_version/
-│   ├── CLAUDE.md             # desktop-specific rules
+│   ├── AGENTS.md             # desktop-specific rules
 │   ├── digit_recognition.py  # Tkinter app
 │   └── run_desktop.bat
 ├── web_version/
-│   ├── CLAUDE.md             # web-specific rules
+│   ├── AGENTS.md             # web-specific rules
 │   ├── server.py             # ThreadingHTTPServer + /predict endpoint
 │   ├── run_web.bat
 │   ├── templates/index.html
@@ -82,8 +81,7 @@ instead of duplicating model or preprocessing logic.
   unless the model file is missing or intentionally being replaced.
 - `.gitignore` excludes `.venv/`, `__pycache__/`, `.pytest_cache/`,
   `.DS_Store`, and `memo.txt` (the instructor-facing task notes used to
-  drive Claude Code, not part of the submitted program). Never commit
+  drive Codex, not part of the submitted program). Never commit
   virtual environments, credentials, or API keys.
-- Codex originally implemented the desktop and web applications; Claude Code
-  added this `CLAUDE.md` hierarchy and cleaned up the documentation to match
-  the class submission format. See `README.md` for the full history.
+- Codex originally implemented the desktop and web applications. Maintain
+  this `AGENTS.md` hierarchy as the current project configuration for Codex.
