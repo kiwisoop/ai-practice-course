@@ -258,26 +258,20 @@ function setFocusDuration(minutes) {
   return true;
 }
 
-function getNestState(progress) {
-  if (progress === 100) {
+function getNestState(completedCount, totalCount) {
+  if (totalCount === 0) {
+    return {className: "stage-empty", label: "빈 둥지", message: "할 일을 추가하면 둥지에 알이 생겨요."};
+  }
+  if (completedCount === totalCount) {
     return {className: "stage-complete", label: "완성된 둥지와 키위새", message: "오늘 할 일을 모두 끝냈어요!"};
   }
-  if (progress >= 75) {
-    return {className: "stage-bird", label: "키위새가 찾아온 둥지", message: "키위새가 둥지에 찾아왔어요."};
-  }
-  if (progress >= 50) {
-    return {className: "stage-egg", label: "알이 있는 둥지", message: "둥지에 작은 알이 생겼어요."};
-  }
-  if (progress >= 25) {
-    return {className: "stage-leaf", label: "나뭇잎이 생긴 둥지", message: "둥지에 초록 잎이 돋았어요."};
-  }
-  return {className: "stage-empty", label: "빈 둥지", message: "할 일을 하나씩 완료해 둥지를 채워 보세요."};
+  return {className: "stage-egg", label: "알이 있는 둥지", message: "할 일을 모두 마치면 키위새가 태어나요."};
 }
 
 function renderDashboard() {
   const completedTasks = tasks.filter((task) => task.completed).length;
   const progress = tasks.length === 0 ? 0 : Math.round((completedTasks / tasks.length) * 100);
-  const nestState = getNestState(progress);
+  const nestState = getNestState(completedTasks, tasks.length);
 
   todayCount.textContent = tasks.filter((task) => task.dueDate && getDaysUntil(task.dueDate) === 0).length;
   remainingCount.textContent = tasks.length - completedTasks;

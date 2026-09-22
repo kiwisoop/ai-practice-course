@@ -328,19 +328,6 @@ progress::-webkit-progress-value {
   pointer-events: none;
 }
 
-.nest-leaf {
-  position: absolute;
-  z-index: 1;
-  width: 42px;
-  height: 24px;
-  border-radius: 80% 10% 80% 10%;
-  background: #6f963e;
-  opacity: 0;
-}
-
-.leaf-one { right: 31px; bottom: 59px; transform: rotate(-18deg); }
-.leaf-two { left: 30px; bottom: 57px; transform: rotate(28deg); }
-
 .nest-egg {
   position: absolute;
   z-index: 2;
@@ -367,12 +354,7 @@ progress::-webkit-progress-value {
   transition: opacity 180ms ease, transform 180ms ease;
 }
 
-.stage-leaf .nest-leaf,
-.stage-egg .nest-leaf,
-.stage-bird .nest-leaf,
-.stage-complete .nest-leaf,
 .stage-egg .nest-egg,
-.stage-bird .nest-bird,
 .stage-complete .nest-bird {
   opacity: 1;
 }
