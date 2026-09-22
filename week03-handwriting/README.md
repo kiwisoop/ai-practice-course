@@ -46,7 +46,6 @@ python -m unittest discover -s tests
 
 ```text
 week03-handwriting/
-├── .gitignore
 ├── AGENTS.md
 ├── README.md
 ├── SUBMISSION.md
