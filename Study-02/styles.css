@@ -320,14 +320,12 @@ progress::-webkit-progress-value {
 .nest-bowl {
   position: absolute;
   z-index: 4;
-  right: 31px;
-  bottom: 27px;
-  width: 158px;
-  height: 55px;
-  border: 10px solid #80653d;
-  border-top: 0;
-  border-radius: 0 0 90px 90px;
-  background: repeating-linear-gradient(12deg, #b28b50 0 6px, #987442 6px 10px);
+  right: 10px;
+  bottom: 0;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 .nest-leaf {
