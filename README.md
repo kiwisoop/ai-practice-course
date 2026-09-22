@@ -4,6 +4,6 @@
 
 ## 과제 목록
 
-- [3주차 — MNIST 손글씨 숫자 인식 프로그램](./week03-handwriting)
+- [3주차 — MNIST 손글씨 숫자 인식 프로그램](./week03-handwriting/README.md)
 
 새 과제는 `week04-과제명`처럼 별도 폴더에 추가합니다.
