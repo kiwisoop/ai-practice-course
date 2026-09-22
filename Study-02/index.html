@@ -33,7 +33,35 @@
             placeholder="예: 과제 제출하기"
             autocomplete="off"
           >
-          <button type="submit" class="primary-button">추가</button>
+        </div>
+
+        <div class="field-grid">
+          <div>
+            <label for="category-input">카테고리</label>
+            <select id="category-input" name="category">
+              <option value="업무">업무</option>
+              <option value="과제" selected>과제</option>
+              <option value="공부">공부</option>
+              <option value="취미">취미</option>
+              <option value="개발">개발</option>
+              <option value="개인">개인</option>
+            </select>
+          </div>
+          <div>
+            <label for="due-date-input">마감일 <span class="optional-label">선택</span></label>
+            <input id="due-date-input" name="dueDate" type="date">
+          </div>
+          <div>
+            <label for="priority-input">중요도</label>
+            <select id="priority-input" name="priority">
+              <option value="낮음">낮음</option>
+              <option value="보통" selected>보통</option>
+              <option value="높음">높음</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="primary-button">할 일 추가</button>
         </div>
       </form>
       <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
@@ -45,11 +73,23 @@
           <p class="eyebrow">TODAY</p>
           <h2 id="task-list-title">할 일 목록</h2>
         </div>
+        <div class="filter-field">
+          <label for="category-filter">카테고리 보기</label>
+          <select id="category-filter">
+            <option value="전체">전체</option>
+            <option value="업무">업무</option>
+            <option value="과제">과제</option>
+            <option value="공부">공부</option>
+            <option value="취미">취미</option>
+            <option value="개발">개발</option>
+            <option value="개인">개인</option>
+          </select>
+        </div>
       </div>
 
       <p id="empty-state" class="empty-state">
-        아직 등록한 할 일이 없어요.<br>
-        오늘 해야 할 일을 하나 적어 보세요.
+        <strong id="empty-title">아직 등록한 할 일이 없어요.</strong>
+        <span id="empty-description">오늘 해야 할 일을 하나 적어 보세요.</span>
       </p>
       <ul id="task-list" class="task-list" aria-label="등록한 할 일"></ul>
     </section>

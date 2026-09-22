@@ -20,7 +20,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -29,7 +30,8 @@ button {
 }
 
 button:focus-visible,
-input:focus-visible {
+input:focus-visible,
+select:focus-visible {
   outline: 3px solid #264f2b;
   outline-offset: 3px;
 }
@@ -158,6 +160,33 @@ label {
   background: #fffef9;
 }
 
+select,
+input[type="date"] {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #bfc9ae;
+  border-radius: 14px;
+  padding: 10px 12px;
+  color: #25311f;
+  background: #fffef9;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.field-grid label {
+  margin-top: 14px;
+}
+
+.optional-label {
+  color: #788171;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
 #task-input::placeholder {
   color: #87917f;
 }
@@ -180,6 +209,16 @@ label {
   background: #31572c;
 }
 
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.form-actions .primary-button {
+  min-width: 140px;
+}
+
 .status-message {
   min-height: 1.5em;
   margin: 10px 0 0;
@@ -197,6 +236,15 @@ label {
   justify-content: space-between;
 }
 
+.filter-field {
+  width: min(180px, 45%);
+}
+
+.filter-field label {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+}
+
 .empty-state {
   margin: 22px 0 4px;
   border: 1px dashed #b8c49f;
@@ -206,6 +254,11 @@ label {
   background: #f7f6ed;
   line-height: 1.7;
   text-align: center;
+}
+
+.empty-state strong,
+.empty-state span {
+  display: block;
 }
 
 .task-list {
@@ -242,6 +295,63 @@ label {
 .task-title {
   min-width: 0;
   line-height: 1.5;
+}
+
+.task-content {
+  min-width: 0;
+}
+
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.category-badge,
+.priority-badge,
+.due-badge {
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.category-badge {
+  color: #fff;
+  background: #5f6a76;
+}
+
+.category-업무 .category-badge { background: #344b71; }
+.category-과제 .category-badge { background: #a95620; }
+.category-공부 .category-badge { background: #356a9c; }
+.category-취미 .category-badge { background: #a54868; }
+.category-개발 .category-badge { background: #397044; }
+.category-개인 .category-badge { background: #6d4b8c; }
+
+.priority-badge {
+  color: #4f5948;
+  background: #edf0e7;
+}
+
+.priority-높음 {
+  color: #8b2f27;
+  background: #ffe5df;
+}
+
+.priority-낮음 {
+  color: #52654c;
+  background: #edf4e7;
+}
+
+.due-badge {
+  color: #4f5e45;
+  background: #f1f0e5;
+}
+
+.due-badge.overdue {
+  color: #942f27;
+  background: #ffe0da;
 }
 
 .delete-button {
@@ -293,7 +403,17 @@ label {
     flex-direction: column;
   }
 
-  .primary-button {
+  .field-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .section-heading {
+    align-items: end;
+    gap: 14px;
+  }
+
+  .form-actions .primary-button {
     width: 100%;
   }
 
