@@ -37,6 +37,7 @@ const overdueCount = document.querySelector("#overdue-count");
 const overallProgress = document.querySelector("#overall-progress");
 const progressLabel = document.querySelector("#progress-label");
 const nestScene = document.querySelector("#nest-scene");
+const nestArt = document.querySelector("#nest-art");
 const nestMessage = document.querySelector("#nest-message");
 const categoryProgressList = document.querySelector("#category-progress-list");
 const themeToggle = document.querySelector("#theme-toggle");
@@ -260,12 +261,12 @@ function setFocusDuration(minutes) {
 
 function getNestState(completedCount, totalCount) {
   if (totalCount === 0) {
-    return {className: "stage-empty", label: "빈 둥지", message: "할 일을 추가하면 둥지에 알이 생겨요."};
+    return {className: "stage-empty", image: "assets/kiwibird-nest.png", label: "빈 둥지", message: "할 일을 추가하면 둥지에 알이 생겨요."};
   }
   if (completedCount === totalCount) {
-    return {className: "stage-complete", label: "완성된 둥지와 키위새", message: "오늘 할 일을 모두 끝냈어요!"};
+    return {className: "stage-complete", image: "assets/kiwibird-nest-bird.png", label: "완성된 둥지와 키위새", message: "오늘 할 일을 모두 끝냈어요!"};
   }
-  return {className: "stage-egg", label: "알이 있는 둥지", message: "할 일을 모두 마치면 키위새가 태어나요."};
+  return {className: "stage-egg", image: "assets/kiwibird-nest-egg.png", label: "알이 있는 둥지", message: "할 일을 모두 마치면 키위새가 태어나요."};
 }
 
 function renderDashboard() {
@@ -282,6 +283,7 @@ function renderDashboard() {
   progressLabel.textContent = `${progress}%`;
   nestScene.className = `nest-scene ${nestState.className}`;
   nestScene.setAttribute("aria-label", nestState.label);
+  if (nestArt.getAttribute("src") !== nestState.image) nestArt.src = nestState.image;
   nestMessage.textContent = nestState.message;
 
   categoryProgressList.replaceChildren(...categories.map((category) => {
