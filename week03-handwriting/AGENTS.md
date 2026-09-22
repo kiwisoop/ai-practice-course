@@ -33,7 +33,7 @@ both call the same model and preprocessing code in `mnist_model.py`.
 ## Architecture
 
 ```
-Study-01/
+week03-handwriting/
 ├── AGENTS.md                 # this file (root rules for Codex)
 ├── README.md / SUBMISSION.md # course submission docs
 ├── mnist_model.py            # shared model: train/load, preprocess, predict
