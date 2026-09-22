@@ -23,7 +23,7 @@ both call the same model and preprocessing code in `mnist_model.py`.
 
 ## Tech Stack
 
-- Python 3.11 recommended (Python 3.9+ is also supported)
+- Python 3.11 recommended
 - TensorFlow/Keras for the CNN model
 - Pillow and NumPy for image preprocessing
 - Tkinter for the desktop GUI
@@ -35,7 +35,7 @@ both call the same model and preprocessing code in `mnist_model.py`.
 ```
 Study-01/
 ├── AGENTS.md                 # this file (root rules for Codex)
-├── README.md / SUBMISSION.md # course submission docs
+├── README.md                 # course submission and setup guide
 ├── mnist_model.py            # shared model: train/load, preprocess, predict
 ├── mnist_model.keras         # trained model, reused by both apps
 ├── requirements.txt
