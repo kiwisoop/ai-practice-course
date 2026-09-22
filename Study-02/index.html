@@ -20,6 +20,40 @@
       </div>
     </header>
 
+    <section class="dashboard" aria-labelledby="dashboard-title">
+      <div class="dashboard-copy">
+        <p class="eyebrow">KIWIBIRD NEST</p>
+        <h2 id="dashboard-title">오늘의 둥지</h2>
+        <p id="nest-message" class="nest-message">할 일을 하나씩 완료해 둥지를 채워 보세요.</p>
+
+        <dl class="summary-grid">
+          <div><dt>오늘 마감</dt><dd id="today-count">0</dd></div>
+          <div><dt>남은 일</dt><dd id="remaining-count">0</dd></div>
+          <div><dt>완료</dt><dd id="completed-count">0</dd></div>
+          <div><dt>기한 지남</dt><dd id="overdue-count">0</dd></div>
+        </dl>
+
+        <div class="progress-heading">
+          <label for="overall-progress">전체 완료율</label>
+          <strong id="progress-label">0%</strong>
+        </div>
+        <progress id="overall-progress" max="100" value="0">0%</progress>
+      </div>
+
+      <div id="nest-scene" class="nest-scene stage-empty" role="img" aria-label="빈 둥지">
+        <span class="nest-leaf leaf-one"></span>
+        <span class="nest-leaf leaf-two"></span>
+        <span class="nest-egg"></span>
+        <span class="nest-bird"><span class="nest-bird-eye"></span></span>
+        <span class="nest-bowl"></span>
+      </div>
+
+      <div class="category-progress-section">
+        <h3>카테고리별 완료율</h3>
+        <div id="category-progress-list" class="category-progress-list"></div>
+      </div>
+    </section>
+
     <section class="task-card" aria-labelledby="task-form-title">
       <h2 id="task-form-title">새 할 일</h2>
       <form id="task-form" novalidate>
@@ -61,7 +95,8 @@
           </div>
         </div>
         <div class="form-actions">
-          <button type="submit" class="primary-button">할 일 추가</button>
+          <button id="cancel-edit-button" type="button" class="secondary-button" hidden>수정 취소</button>
+          <button id="submit-button" type="submit" class="primary-button">할 일 추가</button>
         </div>
       </form>
       <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
