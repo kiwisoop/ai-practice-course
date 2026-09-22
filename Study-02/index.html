@@ -18,6 +18,7 @@
         <h1>Kiwibird</h1>
         <p class="tagline">오늘 할 일을 가볍게 정리해요.</p>
       </div>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="다크 모드로 전환">다크 모드</button>
     </header>
 
     <section class="dashboard" aria-labelledby="dashboard-title">
@@ -52,6 +53,43 @@
         <h3>카테고리별 완료율</h3>
         <div id="category-progress-list" class="category-progress-list"></div>
       </div>
+    </section>
+
+    <section class="focus-card" aria-labelledby="focus-title">
+      <div class="focus-heading">
+        <div>
+          <p class="eyebrow">KIWIBIRD FOCUS</p>
+          <h2 id="focus-title">지금 집중할 일</h2>
+        </div>
+        <span class="focus-count">오늘 집중 <strong id="focus-count">0</strong>회</span>
+      </div>
+
+      <div class="focus-recommendation">
+        <strong id="focus-task">추천할 할 일이 아직 없어요.</strong>
+        <span id="focus-reason">미완료 할 일을 추가하면 우선순위에 맞춰 추천해 드려요.</span>
+      </div>
+
+      <output id="timer-display" class="timer-display" aria-live="polite">25:00</output>
+
+      <div class="focus-settings">
+        <div class="quick-times" aria-label="빠른 집중 시간 선택">
+          <button type="button" data-minutes="15">15분</button>
+          <button type="button" data-minutes="25" class="selected">25분</button>
+          <button type="button" data-minutes="45">45분</button>
+        </div>
+        <div class="duration-field">
+          <label for="focus-duration">직접 설정</label>
+          <div><input id="focus-duration" type="number" min="5" max="120" step="1" value="25"> <span>분</span></div>
+        </div>
+      </div>
+
+      <div class="timer-actions">
+        <button id="timer-start" type="button" class="primary-button">집중 시작</button>
+        <button id="timer-pause" type="button" class="secondary-button" hidden>일시정지</button>
+        <button id="timer-resume" type="button" class="primary-button" hidden>계속하기</button>
+        <button id="timer-stop" type="button" class="danger-button" hidden>종료</button>
+      </div>
+      <p id="focus-status" class="status-message" role="status" aria-live="polite"></p>
     </section>
 
     <section class="task-card" aria-labelledby="task-form-title">
@@ -108,6 +146,23 @@
           <p class="eyebrow">TODAY</p>
           <h2 id="task-list-title">할 일 목록</h2>
         </div>
+        <button id="clear-completed" class="danger-button" type="button">완료 항목 삭제</button>
+      </div>
+
+      <div class="filter-toolbar" aria-label="할 일 검색과 필터">
+        <div class="search-field">
+          <label for="search-input">할 일 검색</label>
+          <input id="search-input" type="search" placeholder="검색어 입력 (/)">
+        </div>
+        <div class="filter-field">
+          <label for="status-filter">상태</label>
+          <select id="status-filter">
+            <option value="전체">전체</option>
+            <option value="진행 중">진행 중</option>
+            <option value="완료">완료</option>
+            <option value="기한 지남">기한 지남</option>
+          </select>
+        </div>
         <div class="filter-field">
           <label for="category-filter">카테고리 보기</label>
           <select id="category-filter">
@@ -120,6 +175,15 @@
             <option value="개인">개인</option>
           </select>
         </div>
+        <div class="filter-field">
+          <label for="sort-filter">정렬</label>
+          <select id="sort-filter">
+            <option value="recent">최근 등록순</option>
+            <option value="deadline">마감일순</option>
+            <option value="priority">중요도순</option>
+          </select>
+        </div>
+        <button id="reset-filters" class="secondary-button" type="button">조건 초기화</button>
       </div>
 
       <p id="empty-state" class="empty-state">
@@ -130,6 +194,6 @@
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>

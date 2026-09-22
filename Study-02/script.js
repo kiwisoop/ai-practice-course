@@ -1,8 +1,15 @@
 const tasks = [];
 let nextTaskId = 1;
 let editingTaskId = null;
+let focusTaskId = null;
+let timerState = "idle";
+let timerEndTime = 0;
+let timerInterval = null;
+let focusCount = 0;
 
 const categories = ["업무", "과제", "공부", "취미", "개발", "개인"];
+const priorityRanks = {높음: 3, 보통: 2, 낮음: 1};
+const defaultFocusDuration = 25;
 
 const form = document.querySelector("#task-form");
 const formTitle = document.querySelector("#task-form-title");
@@ -12,7 +19,12 @@ const dueDateInput = document.querySelector("#due-date-input");
 const priorityInput = document.querySelector("#priority-input");
 const submitButton = document.querySelector("#submit-button");
 const cancelEditButton = document.querySelector("#cancel-edit-button");
+const searchInput = document.querySelector("#search-input");
+const statusFilter = document.querySelector("#status-filter");
 const categoryFilter = document.querySelector("#category-filter");
+const sortFilter = document.querySelector("#sort-filter");
+const resetFiltersButton = document.querySelector("#reset-filters");
+const clearCompletedButton = document.querySelector("#clear-completed");
 const list = document.querySelector("#task-list");
 const emptyState = document.querySelector("#empty-state");
 const emptyTitle = document.querySelector("#empty-title");
@@ -27,8 +39,49 @@ const progressLabel = document.querySelector("#progress-label");
 const nestScene = document.querySelector("#nest-scene");
 const nestMessage = document.querySelector("#nest-message");
 const categoryProgressList = document.querySelector("#category-progress-list");
+const themeToggle = document.querySelector("#theme-toggle");
+const focusTask = document.querySelector("#focus-task");
+const focusReason = document.querySelector("#focus-reason");
+const focusCountDisplay = document.querySelector("#focus-count");
+const focusDurationInput = document.querySelector("#focus-duration");
+const timerDisplay = document.querySelector("#timer-display");
+const timerStartButton = document.querySelector("#timer-start");
+const timerPauseButton = document.querySelector("#timer-pause");
+const timerResumeButton = document.querySelector("#timer-resume");
+const timerStopButton = document.querySelector("#timer-stop");
+const focusStatus = document.querySelector("#focus-status");
+const quickTimeButtons = [...document.querySelectorAll("[data-minutes]")];
 
 const dayInMilliseconds = 86_400_000;
+let focusDuration = getStoredNumber("kiwibird-focus-duration", defaultFocusDuration);
+let remainingSeconds = focusDuration * 60;
+
+function getStoredNumber(key, fallback) {
+  try {
+    const value = Number(localStorage.getItem(key));
+    return Number.isInteger(value) && value >= 5 && value <= 120 ? value : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function getStoredTheme() {
+  try {
+    const theme = localStorage.getItem("kiwibird-theme");
+    if (theme === "light" || theme === "dark") return theme;
+  } catch {
+    // The app still works when browser storage is unavailable.
+  }
+  return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function storeSetting(key, value) {
+  try {
+    localStorage.setItem(key, String(value));
+  } catch {
+    // Settings remain available for the current session.
+  }
+}
 
 function getDaysUntil(dateString) {
   const [year, month, day] = dateString.split("-").map(Number);
@@ -50,6 +103,159 @@ function getDueLabel(task) {
 function announce(message, isError = false) {
   statusMessage.textContent = message;
   statusMessage.classList.toggle("error", isError);
+}
+
+function announceFocus(message, isError = false) {
+  focusStatus.textContent = message;
+  focusStatus.classList.toggle("error", isError);
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const isDark = theme === "dark";
+  themeToggle.textContent = isDark ? "라이트 모드" : "다크 모드";
+  themeToggle.setAttribute("aria-label", `${isDark ? "라이트" : "다크"} 모드로 전환`);
+}
+
+function getVisibleTasks() {
+  const query = searchInput.value.trim().toLocaleLowerCase("ko-KR");
+  const visibleTasks = tasks.filter((task) => {
+    const matchesSearch = !query || task.title.toLocaleLowerCase("ko-KR").includes(query);
+    const matchesCategory = categoryFilter.value === "전체" || task.category === categoryFilter.value;
+    const matchesStatus = statusFilter.value === "전체"
+      || (statusFilter.value === "진행 중" && !task.completed)
+      || (statusFilter.value === "완료" && task.completed)
+      || (statusFilter.value === "기한 지남" && !task.completed && task.dueDate && getDaysUntil(task.dueDate) < 0);
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
+
+  return visibleTasks.sort((first, second) => {
+    if (sortFilter.value === "deadline") {
+      if (!first.dueDate && !second.dueDate) {
+        return first.createdAt.localeCompare(second.createdAt) || first.id - second.id;
+      }
+      if (!first.dueDate) return 1;
+      if (!second.dueDate) return -1;
+      return first.dueDate.localeCompare(second.dueDate)
+        || first.createdAt.localeCompare(second.createdAt)
+        || first.id - second.id;
+    }
+    if (sortFilter.value === "priority") {
+      return priorityRanks[second.priority] - priorityRanks[first.priority]
+        || first.createdAt.localeCompare(second.createdAt)
+        || first.id - second.id;
+    }
+    return second.createdAt.localeCompare(first.createdAt) || second.id - first.id;
+  });
+}
+
+function getFocusRecommendation() {
+  const incompleteTasks = tasks.filter((task) => !task.completed);
+  return incompleteTasks.sort((first, second) => {
+    const firstDays = first.dueDate ? getDaysUntil(first.dueDate) : Infinity;
+    const secondDays = second.dueDate ? getDaysUntil(second.dueDate) : Infinity;
+    const getGroup = (task, days) => {
+      if (days < 0) return 0;
+      if (days === 0) return 1;
+      if (task.priority === "높음") return 2;
+      if (Number.isFinite(days)) return 3;
+      return 4;
+    };
+    return getGroup(first, firstDays) - getGroup(second, secondDays)
+      || firstDays - secondDays
+      || priorityRanks[second.priority] - priorityRanks[first.priority]
+      || first.createdAt.localeCompare(second.createdAt);
+  })[0] ?? null;
+}
+
+function getFocusReason(task) {
+  if (!task) return "미완료 할 일을 추가하면 우선순위에 맞춰 추천해 드려요.";
+  const days = task.dueDate ? getDaysUntil(task.dueDate) : Infinity;
+  if (days < 0) return "기한이 지난 일이라 가장 먼저 추천했어요.";
+  if (days === 0) return "오늘 마감인 일이라 먼저 추천했어요.";
+  if (task.priority === "높음") return "중요도가 높은 일이라 추천했어요.";
+  if (Number.isFinite(days)) return "마감일이 가까운 일이라 추천했어요.";
+  return "먼저 등록한 일이라 추천했어요.";
+}
+
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainder = seconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`;
+}
+
+function renderFocus() {
+  const activeTask = tasks.find((task) => task.id === focusTaskId) ?? getFocusRecommendation();
+  focusTask.textContent = activeTask?.title ?? "추천할 할 일이 아직 없어요.";
+  focusReason.textContent = getFocusReason(activeTask);
+  focusCountDisplay.textContent = focusCount;
+  timerDisplay.value = formatTime(remainingSeconds);
+  timerDisplay.textContent = formatTime(remainingSeconds);
+  timerStartButton.hidden = timerState !== "idle";
+  timerPauseButton.hidden = timerState !== "running";
+  timerResumeButton.hidden = timerState !== "paused";
+  timerStopButton.hidden = timerState === "idle";
+  quickTimeButtons.forEach((button) => {
+    button.classList.toggle("selected", Number(button.dataset.minutes) === focusDuration);
+  });
+}
+
+function readFocusDuration() {
+  const minutes = Number(focusDurationInput.value);
+  if (!Number.isInteger(minutes) || minutes < 5 || minutes > 120) {
+    announceFocus("집중 시간은 5분부터 120분 사이의 정수로 입력해 주세요.", true);
+    return null;
+  }
+  return minutes;
+}
+
+function stopTimer(resetDisplay = true) {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerState = "idle";
+  timerEndTime = 0;
+  focusTaskId = null;
+  if (resetDisplay) remainingSeconds = focusDuration * 60;
+  document.title = "Kiwibird";
+  renderFocus();
+}
+
+function finishTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerState = "idle";
+  timerEndTime = 0;
+  remainingSeconds = 0;
+  focusTaskId = null;
+  focusCount += 1;
+  document.title = "집중 시간이 끝났어요! · Kiwibird";
+  announceFocus("집중 시간이 끝났어요! 잠시 쉬어 가세요.");
+  renderFocus();
+}
+
+function updateTimer() {
+  remainingSeconds = Math.max(0, Math.ceil((timerEndTime - Date.now()) / 1000));
+  if (remainingSeconds === 0) finishTimer();
+  else renderFocus();
+}
+
+function setFocusDuration(minutes) {
+  if (!Number.isInteger(minutes) || minutes < 5 || minutes > 120) {
+    announceFocus("집중 시간은 5분부터 120분 사이의 정수로 입력해 주세요.", true);
+    return false;
+  }
+  if (timerState !== "idle" && !window.confirm("실행 중인 타이머를 초기화하고 시간을 바꿀까요?")) {
+    focusDurationInput.value = focusDuration;
+    return false;
+  }
+  if (timerState !== "idle") stopTimer(false);
+  focusDuration = minutes;
+  remainingSeconds = minutes * 60;
+  focusDurationInput.value = minutes;
+  storeSetting("kiwibird-focus-duration", minutes);
+  announceFocus(`${minutes}분 집중으로 설정했어요.`);
+  renderFocus();
+  return true;
 }
 
 function getNestState(progress) {
@@ -212,22 +418,21 @@ function createTaskElement(task) {
 
 function renderApp() {
   renderDashboard();
+  renderFocus();
   renderTasks();
 }
 
 function renderTasks() {
-  const visibleTasks = categoryFilter.value === "전체"
-    ? tasks
-    : tasks.filter((task) => task.category === categoryFilter.value);
+  const visibleTasks = getVisibleTasks();
 
   list.replaceChildren(...visibleTasks.map(createTaskElement));
   emptyState.hidden = visibleTasks.length > 0;
   emptyTitle.textContent = tasks.length === 0
     ? "아직 등록한 할 일이 없어요."
-    : "이 카테고리에는 할 일이 없어요.";
+    : "조건에 맞는 할 일이 없어요.";
   emptyDescription.textContent = tasks.length === 0
     ? "오늘 해야 할 일을 하나 적어 보세요."
-    : "다른 카테고리를 선택해 보세요.";
+    : "검색어나 필터 조건을 바꿔 보세요.";
 }
 
 form.addEventListener("submit", (event) => {
@@ -274,10 +479,93 @@ form.addEventListener("submit", (event) => {
   input.focus();
 });
 
+searchInput.addEventListener("input", renderTasks);
+statusFilter.addEventListener("change", renderTasks);
 categoryFilter.addEventListener("change", renderTasks);
+sortFilter.addEventListener("change", renderTasks);
+resetFiltersButton.addEventListener("click", () => {
+  searchInput.value = "";
+  statusFilter.value = "전체";
+  categoryFilter.value = "전체";
+  sortFilter.value = "recent";
+  renderTasks();
+  announce("검색과 필터 조건을 초기화했어요.");
+});
+clearCompletedButton.addEventListener("click", () => {
+  const completedTasks = tasks.filter((task) => task.completed);
+  if (completedTasks.length === 0) {
+    announce("삭제할 완료 항목이 없어요.");
+    return;
+  }
+  if (!window.confirm(`완료한 할 일 ${completedTasks.length}개를 모두 삭제할까요?`)) return;
+  if (completedTasks.some((task) => task.id === editingTaskId)) cancelEditing(false);
+  for (let index = tasks.length - 1; index >= 0; index -= 1) {
+    if (tasks[index].completed) tasks.splice(index, 1);
+  }
+  renderApp();
+  announce("완료한 할 일을 모두 삭제했어요.");
+});
 cancelEditButton.addEventListener("click", () => cancelEditing());
+themeToggle.addEventListener("click", () => {
+  const theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(theme);
+  storeSetting("kiwibird-theme", theme);
+});
+quickTimeButtons.forEach((button) => {
+  button.addEventListener("click", () => setFocusDuration(Number(button.dataset.minutes)));
+});
+focusDurationInput.addEventListener("change", () => {
+  const minutes = readFocusDuration();
+  if (minutes !== null) setFocusDuration(minutes);
+});
+timerStartButton.addEventListener("click", () => {
+  const minutes = readFocusDuration();
+  if (minutes === null || !setFocusDuration(minutes)) return;
+  const recommendation = getFocusRecommendation();
+  if (!recommendation) {
+    announceFocus("집중할 미완료 할 일이 없어요.", true);
+    return;
+  }
+  focusTaskId = recommendation.id;
+  timerState = "running";
+  remainingSeconds = focusDuration * 60;
+  timerEndTime = Date.now() + remainingSeconds * 1000;
+  document.title = "집중 중 · Kiwibird";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(updateTimer, 250);
+  announceFocus(`${recommendation.title}에 집중을 시작했어요.`);
+  renderFocus();
+});
+timerPauseButton.addEventListener("click", () => {
+  updateTimer();
+  if (timerState !== "running") return;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerState = "paused";
+  announceFocus("타이머를 일시정지했어요.");
+  renderFocus();
+});
+timerResumeButton.addEventListener("click", () => {
+  timerState = "running";
+  timerEndTime = Date.now() + remainingSeconds * 1000;
+  timerInterval = setInterval(updateTimer, 250);
+  document.title = "집중 중 · Kiwibird";
+  announceFocus("집중을 계속할게요.");
+  renderFocus();
+});
+timerStopButton.addEventListener("click", () => {
+  if (!window.confirm("집중 타이머를 종료할까요?")) return;
+  stopTimer();
+  announceFocus("집중 타이머를 종료했어요.");
+});
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") cancelEditing();
+  if (event.key === "/" && !["INPUT", "SELECT", "TEXTAREA"].includes(event.target.tagName)) {
+    event.preventDefault();
+    searchInput.focus();
+  }
 });
 
+focusDurationInput.value = focusDuration;
+applyTheme(getStoredTheme());
 renderApp();
