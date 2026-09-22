@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="오늘 할 일을 가볍게 정리하는 Kiwibird 할 일 관리 앱">
   <title>Kiwibird</title>
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
   <main class="app-shell">
@@ -84,6 +84,24 @@
         <button id="timer-stop" type="button" class="danger-button" hidden>종료</button>
       </div>
       <p id="focus-status" class="status-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="utility-card" aria-labelledby="data-title">
+      <div class="quote-panel">
+        <p class="eyebrow">TODAY'S NOTE</p>
+        <h2>오늘의 한마디</h2>
+        <blockquote id="daily-quote"></blockquote>
+      </div>
+      <div class="backup-panel">
+        <h2 id="data-title">내 할 일 보관</h2>
+        <p>할 일은 이 브라우저에 자동 저장돼요. 다른 곳으로 옮길 때는 JSON 파일을 이용하세요.</p>
+        <div class="backup-actions">
+          <button id="export-button" class="secondary-button" type="button">JSON 내보내기</button>
+          <label class="secondary-button file-button" for="import-file">JSON 가져오기</label>
+          <input id="import-file" class="visually-hidden" type="file" accept="application/json,.json">
+        </div>
+        <p id="backup-status" class="status-message" role="status" aria-live="polite"></p>
+      </div>
     </section>
 
     <section class="task-card" aria-labelledby="task-form-title">
@@ -188,6 +206,6 @@
     </section>
   </main>
 
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>

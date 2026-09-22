@@ -6,10 +6,20 @@ let timerState = "idle";
 let timerEndTime = 0;
 let timerInterval = null;
 let focusCount = 0;
+let storageLoadError = "";
 
 const categories = ["업무", "과제", "공부", "취미", "개발", "개인"];
 const priorityRanks = {높음: 3, 보통: 2, 낮음: 1};
 const defaultFocusDuration = 25;
+const taskStorageKey = "kiwibird-tasks";
+const backupVersion = 1;
+const dailyQuotes = [
+  "작은 할 일 하나를 끝내는 것이 가장 좋은 시작이에요.",
+  "완벽한 계획보다 오늘의 한 걸음이 더 멀리 데려가요.",
+  "잠깐의 집중이 하루의 흐름을 바꿀 수 있어요.",
+  "서두르지 않아도 괜찮아요. 멈추지만 않으면 돼요.",
+  "해낸 일을 바라보며 다음 한 가지를 시작해 보세요.",
+];
 
 const form = document.querySelector("#task-form");
 const formTitle = document.querySelector("#task-form-title");
@@ -52,6 +62,10 @@ const timerResumeButton = document.querySelector("#timer-resume");
 const timerStopButton = document.querySelector("#timer-stop");
 const focusStatus = document.querySelector("#focus-status");
 const quickTimeButtons = [...document.querySelectorAll("[data-minutes]")];
+const dailyQuote = document.querySelector("#daily-quote");
+const exportButton = document.querySelector("#export-button");
+const importFileInput = document.querySelector("#import-file");
+const backupStatus = document.querySelector("#backup-status");
 
 const dayInMilliseconds = 86_400_000;
 let focusDuration = getStoredNumber("kiwibird-focus-duration", defaultFocusDuration);
@@ -81,6 +95,118 @@ function storeSetting(key, value) {
     localStorage.setItem(key, String(value));
   } catch {
     // Settings remain available for the current session.
+  }
+}
+
+function getLocalDateString() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function getStoredFocusCount() {
+  try {
+    const value = Number(localStorage.getItem(`kiwibird-focus-count-${getLocalDateString()}`));
+    return Number.isInteger(value) && value >= 0 ? value : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function isValidDateString(value) {
+  if (value === "") return true;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year
+    && date.getUTCMonth() === month - 1
+    && date.getUTCDate() === day;
+}
+
+function isIsoTimestamp(value) {
+  if (typeof value !== "string" || Number.isNaN(Date.parse(value))) return false;
+  return new Date(value).toISOString() === value;
+}
+
+function validateBackup(data) {
+  if (!data || typeof data !== "object" || data.version !== backupVersion || !Array.isArray(data.tasks)) {
+    throw new Error("Kiwibird 백업 파일 형식이 아니에요.");
+  }
+
+  const ids = new Set();
+  data.tasks.forEach((task, index) => {
+    const number = index + 1;
+    if (!task || typeof task !== "object") throw new Error(`${number}번째 할 일 형식이 올바르지 않아요.`);
+    if (!Number.isInteger(task.id) || task.id < 1 || ids.has(task.id)) throw new Error(`${number}번째 할 일의 번호가 올바르지 않아요.`);
+    if (typeof task.title !== "string" || task.title !== task.title.trim() || task.title.length < 1 || task.title.length > 100) {
+      throw new Error(`${number}번째 할 일의 내용이 올바르지 않아요.`);
+    }
+    if (!categories.includes(task.category)) throw new Error(`${number}번째 할 일의 카테고리가 올바르지 않아요.`);
+    if (!isValidDateString(task.dueDate)) throw new Error(`${number}번째 할 일의 마감일이 올바르지 않아요.`);
+    if (!(task.priority in priorityRanks)) throw new Error(`${number}번째 할 일의 중요도가 올바르지 않아요.`);
+    if (typeof task.completed !== "boolean") throw new Error(`${number}번째 할 일의 완료 상태가 올바르지 않아요.`);
+    if (!isIsoTimestamp(task.createdAt) || !isIsoTimestamp(task.updatedAt)) {
+      throw new Error(`${number}번째 할 일의 저장 시각이 올바르지 않아요.`);
+    }
+    ids.add(task.id);
+  });
+
+  return data.tasks.map((task) => ({
+    id: task.id,
+    title: task.title,
+    category: task.category,
+    dueDate: task.dueDate,
+    priority: task.priority,
+    completed: task.completed,
+    createdAt: task.createdAt,
+    updatedAt: task.updatedAt,
+  }));
+}
+
+function saveTasks() {
+  try {
+    localStorage.setItem(taskStorageKey, JSON.stringify({version: backupVersion, tasks}));
+  } catch {
+    // The current session still works when browser storage is unavailable.
+  }
+}
+
+function restoreTasks() {
+  try {
+    const stored = localStorage.getItem(taskStorageKey);
+    if (!stored) return;
+    tasks.push(...validateBackup(JSON.parse(stored)));
+    nextTaskId = Math.max(0, ...tasks.map((task) => task.id)) + 1;
+  } catch (error) {
+    storageLoadError = error instanceof Error ? error.message : "저장된 할 일을 불러오지 못했어요.";
+  }
+}
+
+function announceBackup(message, isError = false) {
+  backupStatus.textContent = message;
+  backupStatus.classList.toggle("error", isError);
+}
+
+function runBackupSelfCheck() {
+  const now = new Date().toISOString();
+  const task = {
+    id: 1,
+    title: "백업 검사",
+    category: "과제",
+    dueDate: "",
+    priority: "보통",
+    completed: false,
+    createdAt: now,
+    updatedAt: now,
+  };
+  console.assert(validateBackup({version: backupVersion, tasks: [task]}).length === 1, "정상 백업을 읽어야 합니다.");
+  try {
+    validateBackup({version: backupVersion, tasks: [{...task, category: "없는 분류"}]});
+    console.error("잘못된 카테고리를 거부해야 합니다.");
+  } catch {
+    // Expected result.
   }
 }
 
@@ -229,6 +355,7 @@ function finishTimer() {
   remainingSeconds = 0;
   focusTaskId = null;
   focusCount += 1;
+  storeSetting(`kiwibird-focus-count-${getLocalDateString()}`, focusCount);
   document.title = "집중 시간이 끝났어요! · Kiwibird";
   announceFocus("집중 시간이 끝났어요! 잠시 쉬어 가세요.");
   renderFocus();
@@ -413,6 +540,7 @@ function createTaskElement(task) {
 }
 
 function renderApp() {
+  saveTasks();
   renderDashboard();
   renderFocus();
   renderTasks();
@@ -562,6 +690,52 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+exportButton.addEventListener("click", () => {
+  const backup = {
+    version: backupVersion,
+    exportedAt: new Date().toISOString(),
+    tasks,
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `kiwibird-backup-${getLocalDateString()}.json`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+  announceBackup(`할 일 ${tasks.length}개를 JSON 파일로 내보냈어요.`);
+});
+
+importFileInput.addEventListener("change", async () => {
+  const [file] = importFileInput.files;
+  importFileInput.value = "";
+  if (!file) return;
+
+  try {
+    const importedTasks = validateBackup(JSON.parse(await file.text()));
+    if (!window.confirm(`현재 목록을 가져온 할 일 ${importedTasks.length}개로 바꿀까요?`)) {
+      announceBackup("가져오기를 취소했어요.");
+      return;
+    }
+    tasks.splice(0, tasks.length, ...importedTasks);
+    nextTaskId = Math.max(0, ...tasks.map((task) => task.id)) + 1;
+    cancelEditing(false);
+    renderApp();
+    announceBackup(`할 일 ${tasks.length}개를 가져왔어요.`);
+  } catch (error) {
+    announceBackup(error instanceof Error ? error.message : "JSON 파일을 읽지 못했어요.", true);
+  }
+});
+
 focusDurationInput.value = focusDuration;
+focusCount = getStoredFocusCount();
+dailyQuote.textContent = dailyQuotes[Math.floor(Math.random() * dailyQuotes.length)];
 applyTheme(getStoredTheme());
-renderApp();
+restoreTasks();
+renderDashboard();
+renderFocus();
+renderTasks();
+if (storageLoadError) announceBackup(`저장된 할 일을 불러오지 못했어요: ${storageLoadError}`, true);
+if (new URLSearchParams(location.search).has("self-test")) runBackupSelfCheck();

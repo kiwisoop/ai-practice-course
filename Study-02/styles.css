@@ -31,7 +31,8 @@ button {
 
 button:focus-visible,
 input:focus-visible,
-select:focus-visible {
+select:focus-visible,
+.file-button:focus-within {
   outline: 3px solid #264f2b;
   outline-offset: 3px;
 }
@@ -130,6 +131,72 @@ h2 {
   color: #f9f6e9;
   background: linear-gradient(145deg, #2e542f, #456f38);
   box-shadow: 0 18px 45px rgb(35 69 37 / 18%);
+}
+
+.utility-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+  padding: 24px;
+  border: 1px solid rgb(73 100 50 / 15%);
+  border-radius: 24px;
+  background: rgb(255 253 246 / 92%);
+  box-shadow: 0 18px 45px rgb(76 66 38 / 10%);
+}
+
+.quote-panel,
+.backup-panel {
+  padding: 20px;
+  border-radius: 18px;
+  background: #f3f2e8;
+}
+
+.quote-panel h2,
+.backup-panel h2 {
+  margin-bottom: 10px;
+}
+
+.quote-panel blockquote,
+.backup-panel p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.quote-panel blockquote {
+  color: #31572c;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.backup-panel > p {
+  color: #64705e;
+}
+
+.backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.file-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .focus-card .eyebrow,
@@ -685,7 +752,8 @@ input[type="date"] {
 }
 
 :root[data-theme="dark"] .dashboard,
-:root[data-theme="dark"] .task-card {
+:root[data-theme="dark"] .task-card,
+:root[data-theme="dark"] .utility-card {
   border-color: #3b4a3c;
   background: rgb(34 45 35 / 96%);
   box-shadow: 0 18px 45px rgb(0 0 0 / 28%);
@@ -694,12 +762,19 @@ input[type="date"] {
 :root[data-theme="dark"] .summary-grid div,
 :root[data-theme="dark"] .category-progress,
 :root[data-theme="dark"] .filter-toolbar,
-:root[data-theme="dark"] .empty-state {
+:root[data-theme="dark"] .empty-state,
+:root[data-theme="dark"] .quote-panel,
+:root[data-theme="dark"] .backup-panel {
   background: #2c372d;
 }
 
 :root[data-theme="dark"] .empty-state {
   border-color: #53644f;
+}
+
+:root[data-theme="dark"] .quote-panel blockquote,
+:root[data-theme="dark"] .backup-panel > p {
+  color: #dce6d6;
 }
 
 :root[data-theme="dark"] label,
@@ -776,6 +851,12 @@ input[type="date"] {
   }
 
   .task-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .utility-card {
+    grid-template-columns: 1fr;
     padding: 18px;
     border-radius: 20px;
   }

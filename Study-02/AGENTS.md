@@ -16,7 +16,7 @@ Kiwibird is a personal task manager for the fourth-week AI practice assignment. 
 ## Technology
 
 - Use only HTML, CSS, and vanilla JavaScript.
-- Do not add frameworks, package managers, build tools, external APIs, or external images.
+- Do not add frameworks, package managers, build tools, external APIs, or remotely hosted images. Keep visual assets in the local `assets` folder.
 - The app must work by opening `index.html` directly in a current browser.
 - Prefer native browser features such as `input type="date"`, `localStorage`, file inputs, and Blob downloads.
 
@@ -24,6 +24,7 @@ Kiwibird is a personal task manager for the fourth-week AI practice assignment. 
 
 ```text
 Study-02/
+├── assets/
 ├── AGENTS.md
 ├── PRD.md
 ├── PROMPTS.md
