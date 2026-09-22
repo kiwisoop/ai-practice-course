@@ -45,7 +45,7 @@ python -m unittest discover -s tests
 ## 폴더 구조
 
 ```text
-week03-handwriting/
+Study-01/
 ├── AGENTS.md
 ├── README.md
 ├── SUBMISSION.md
