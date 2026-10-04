@@ -6,5 +6,6 @@
 
 - [3주차 — MNIST 손글씨 숫자 인식 프로그램](./Study-01/README.md)
 - [4주차 — Kiwibird 개인용 할 일 관리 앱](./Study-02/README.md)
+- [3차 과제 — 상식 한 바퀴: 출처를 확인하는 50문제 퀴즈](./Study-03/README.md)
 
 새 과제는 `Study-03`처럼 별도 폴더에 추가합니다.

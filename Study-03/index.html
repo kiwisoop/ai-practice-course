@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>상식 한 바퀴 — 출처를 확인하는 퀴즈</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="questions-data.js" defer></script>
+  <script src="quiz.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="brand"><span class="brand-mark" aria-hidden="true">Q</span><span>상식 한 바퀴<small>STUDY 03 · KNOW & CHECK</small></span></header>
+    <noscript><p class="notice">이 게임을 실행하려면 브라우저에서 JavaScript를 허용해 주세요.</p></noscript>
+
+    <section id="intro" class="panel" aria-labelledby="intro-title">
+      <p class="eyebrow">정답을 넘어, 근거까지</p>
+      <h1 id="intro-title">상식의 영역을<br>한 바퀴 넓혀 보세요.</h1>
+      <p class="lead">다섯 분야의 50문제. 답을 고른 뒤 해설을 읽고,<br class="wide-only"> 출처에서 그 근거를 확인해 보세요.</p>
+      <ul id="categories" class="chips" aria-label="퀴즈 분야"></ul>
+      <div class="facts"><p><strong>50</strong>문제</p><p><strong>4</strong>지선다</p><p><strong>50</strong>점 만점</p></div>
+      <p class="hint">분야별 10문제 · 정답당 1점 · 시간 제한 없음</p>
+      <button id="start" class="primary" type="button">퀴즈 시작 <span aria-hidden="true">→</span></button>
+    </section>
+
+    <section id="quiz" hidden aria-labelledby="question">
+      <div class="progress-meta"><p id="category" class="eyebrow"></p><p id="position"></p></div>
+      <progress id="progress" max="50" value="0" aria-label="답변한 문제 수"></progress>
+      <div class="panel question-panel">
+        <div class="question-meta"><span id="topic"></span><span id="current-score"></span></div>
+        <h2 id="question" tabindex="-1"></h2>
+        <div id="options" class="options" role="group" aria-labelledby="question"></div>
+        <div id="feedback" role="status" aria-live="polite" aria-atomic="true"></div>
+        <button id="next" class="primary" type="button" disabled>다음 문제 <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <section id="result" class="panel" hidden aria-labelledby="result-title">
+      <p class="eyebrow">다섯 분야, 한 바퀴 완료</p>
+      <h2 id="result-title" tabindex="-1">수고하셨습니다!</h2>
+      <p class="total"><strong id="total-score">0</strong><span> / 50점</span></p>
+      <p id="result-summary" class="lead"></p>
+      <dl id="category-scores" class="score-grid"></dl>
+      <form id="save-form">
+        <label for="player-name">순위에 남길 이름 (선택)</label>
+        <p id="name-hint" class="hint">기록을 저장하려면 이름을 1~20자로 입력해 주세요.</p>
+        <input id="player-name" name="name" type="text" required aria-describedby="name-hint" autocomplete="off">
+        <button id="save-record" class="primary" type="submit">이번 결과 저장</button>
+      </form>
+      <p id="save-status" role="status"></p>
+      <section class="ranking" aria-labelledby="ranking-title">
+        <h3 id="ranking-title">이 브라우저의 순위</h3>
+        <p class="hint">동점은 공동 순위 · 기록은 이 브라우저에만 저장됩니다.<br>브라우저 데이터를 지우면 기록도 사라질 수 있습니다.</p>
+        <p id="ranking-status" role="status"></p>
+        <ol id="ranking-list" aria-label="저장된 완료 기록"></ol>
+      </section>
+      <button id="restart" class="primary" type="button">다시 도전 <span aria-hidden="true">↻</span></button>
+    </section>
+    <footer>맞혔는지 확인하고, 왜 맞는지 읽어 보세요.<br>문제 출처 확인일: 2026.10.01 · 출처 방문에는 인터넷 연결이 필요합니다.</footer>
+  </main>
+</body>
+</html>
