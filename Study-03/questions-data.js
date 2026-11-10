@@ -1,9 +1,9 @@
 // Generated from questions.json by build_data.py; edit the JSON source.
 globalThis.QUIZ_DATA = {
   "version": 1,
-  "checked_on": "2026-10-01",
+  "checked_on": "2026-11-10",
   "answer_index_base": 0,
-  "verification_note": "출처 본문의 해당 사실과 보기의 단일 정답 여부를 검토했다. 모든 문제를 독립 출처 2개로 교차 검증한 것은 아니다. 외부 검토자 재검토는 아직 수행하지 않았다. 기본 게임 동작 검증 결과는 README.md에 별도로 기록했다.",
+  "verification_note": "2026-11-10 기본 50문제의 질문·정답·해설을 공식 본문·공식 서지·작품 정보와 다시 대조했다. HIS-01·03·10은 접근 실패한 출처를 공식 대체 자료로 변경했다. FIDE 제2.1조는 이번에 본문 접근으로 확인했다. AI의 출처 대조이며 독립된 사람의 검토나 오류 부재 보장은 아니다. SOURCE_REVIEW.md 참조.",
   "categories": [
     "한국사",
     "과학",
@@ -27,12 +27,11 @@ globalThis.QUIZ_DATA = {
       "explanation": "세종이 훈민정음을 창제했다. 창제 완료는 1443년이며 반포와 해례본 간행은 1446년으로 구분한다.",
       "sources": [
         {
-          "publisher": "UNESCO",
-          "title": "Hunminjeongum Manuscript",
-          "url": "https://www.unesco.org/en/memory-world/hunminjeongum-manuscript?hub=1081",
-          "checked_on": "2026-10-01",
-          "evidence_summary": "자료 본문은 세종이 1443년에 문자 개발을 완료했으며 1446년에 반포를 담은 문헌이 간행되었다고 설명한다.",
-          "access_method": "page_text"
+          "publisher": "국사편찬위원회 우리역사넷",
+          "title": "한글 창제와 훈민정음",
+          "url": "https://contents.history.go.kr/front/km/print.do?levelId=km_037_0070_0020_0010&whereStr=",
+          "checked_on": "2026-11-10",
+          "evidence_summary": "세종의 1443년 창제와 1446년 반포를 설명하는 본문을 대조했다."
         }
       ]
     },
@@ -54,7 +53,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "문화체육관광부 Korea.net",
           "title": "Seoul exhibition honors 1,100 years of Goryeo Dynasty artworks",
           "url": "https://www.korea.net/NewsFocus/Culture/view?articleId=166086",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Korea.net 본문은 고려의 연대를 918~1392년으로 제시하고 창건자를 태조 왕건으로 명시한다.",
           "access_method": "page_text"
         }
@@ -75,12 +74,11 @@ globalThis.QUIZ_DATA = {
       "explanation": "조선은 1392년에 건국되었다.",
       "sources": [
         {
-          "publisher": "국립민속박물관",
-          "title": "History of Korea — Korean Culture Box",
-          "url": "https://www.nfm.go.kr/k-box/ui/annyeong/history.do?lang=en",
-          "checked_on": "2026-10-01",
-          "evidence_summary": "박물관의 Joseon 연표에 1392년 고려 멸망과 조선 건국이 명시되어 있다.",
-          "access_method": "page_text"
+          "publisher": "UNESCO World Heritage Centre",
+          "title": "Jongmyo Shrine",
+          "url": "https://whc.unesco.org/en/list/738/",
+          "checked_on": "2026-11-10",
+          "evidence_summary": "본문에서 조선 왕조의 기간을 1392–1910년으로 표시한 부분을 확인했다."
         }
       ]
     },
@@ -102,7 +100,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Seokguram Grotto and Bulguksa Temple",
           "url": "https://whc.unesco.org/en/list/736/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Outstanding Universal Value의 Brief synthesis는 8세기 신라 왕조 아래 조성되었다고 설명한다.",
           "access_method": "page_text"
         }
@@ -126,7 +124,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Haeinsa Temple Janggyeong Panjeon",
           "url": "https://whc.unesco.org/en/list/737/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 설명과 Brief synthesis는 해인사의 장경판전이 Tripitaka Koreana 목판을 보관한다고 명시한다.",
           "access_method": "page_text"
         }
@@ -150,7 +148,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Jongmyo Shrine",
           "url": "https://whc.unesco.org/en/list/738/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Brief synthesis는 종묘가 조선의 옛 왕과 왕비의 신위를 모시는 사당이라고 설명한다.",
           "access_method": "page_text"
         }
@@ -174,7 +172,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Hwaseong Fortress",
           "url": "https://whc.unesco.org/en/list/817/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Brief synthesis는 화성이 조선의 정조에 의해 18세기 말 건설되었다고 명시한다.",
           "access_method": "page_text"
         }
@@ -198,7 +196,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Baekje Historic Areas",
           "url": "https://whc.unesco.org/en/list/1477/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 설명은 웅진을 현재의 공주로, 사비를 현재의 부여로 구분한다.",
           "access_method": "page_text"
         }
@@ -222,7 +220,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Changdeokgung Palace Complex",
           "url": "https://whc.unesco.org/en/list/816/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Brief synthesis는 창덕궁이 조선 왕조의 15세기에 건설되었다고 설명한다.",
           "access_method": "page_text"
         }
@@ -243,12 +241,11 @@ globalThis.QUIZ_DATA = {
       "explanation": "대한제국은 1897년에 선포되었다.",
       "sources": [
         {
-          "publisher": "국립민속박물관",
-          "title": "History of Korea — Korean Culture Box",
-          "url": "https://www.nfm.go.kr/k-box/ui/annyeong/history.do?lang=en",
-          "checked_on": "2026-10-01",
-          "evidence_summary": "Joseon 연표에 대한제국 선포 연도가 1897년으로 명시되어 있다.",
-          "access_method": "page_text"
+          "publisher": "국사편찬위원회 우리역사넷",
+          "title": "고종과 대한제국의 시기 개관",
+          "url": "https://contents.history.go.kr/front/ht/print.do?levelId=ht_003_0010&whereStr=",
+          "checked_on": "2026-11-10",
+          "evidence_summary": "첫 본문의 1897년 대한제국 국호 변경과 황제 즉위 설명을 대조했다. 날짜의 일 단위는 질문 범위가 아니다."
         }
       ]
     },
@@ -270,7 +267,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 국립표준기술연구소 NIST",
           "title": "Ampere: Introduction",
           "url": "https://www.nist.gov/si-redefinition/ampere-introduction",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "본문은 ampere (A)를 전류의 SI 기본 단위로 명시한다.",
           "access_method": "page_text"
         }
@@ -294,7 +291,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 국립표준기술연구소 NIST",
           "title": "SP 330 — Section 2",
           "url": "https://www.nist.gov/pml/special-publication-330/sp-330-section-2",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "The kelvin 절은 켈빈 K를 열역학적 온도의 SI 단위로 정의한다.",
           "access_method": "page_text"
         }
@@ -318,7 +315,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "영국 왕립화학회 RSC",
           "title": "Oxygen — Element information, properties and uses",
           "url": "https://periodic-table.rsc.org/element/8/Oxygen",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Fact box의 Atomic number는 8이며, 용어 설명은 원자번호를 양성자 수로 정의한다.",
           "access_method": "page_text"
         }
@@ -342,7 +339,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "영국 왕립화학회 RSC",
           "title": "Hydrogen — Element information, properties and uses",
           "url": "https://periodic-table.rsc.org/element/1/hydrogen",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Hydrogen의 Fact box에서 Atomic number 1을 확인했다.",
           "access_method": "page_text"
         }
@@ -366,7 +363,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 국립인간게놈연구소 NHGRI",
           "title": "Deoxyribonucleic Acid (DNA)",
           "url": "https://www.genome.gov/genetics-glossary/Deoxyribonucleic-Acid-DNA",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Definition은 DNA에서 아데닌과 타이민, 사이토신과 구아닌이 결합한다고 설명한다.",
           "access_method": "page_text"
         }
@@ -390,7 +387,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 국립공원관리청 NPS",
           "title": "Why Do Leaves Change Colors in the Fall",
           "url": "https://www.nps.gov/articles/why-do-leaves-change-in-the-fall.htm",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "NPS 본문은 chlorophyll이 햇빛을 흡수하고 식물의 녹색을 만든다고 설명한다.",
           "access_method": "page_text"
         }
@@ -414,7 +411,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 지질조사국 USGS",
           "title": "How hot are Yellowstone’s boiling waters? Some are hotter than others",
           "url": "https://www.usgs.gov/observatories/yvo/news/how-hot-are-yellowstones-boiling-waters-some-are-hotter-others",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "USGS 본문은 1기압의 해수면 조건에서 순수한 물이 100°C에 끓는다고 설명하며 압력과 용질의 영향을 구분한다.",
           "access_method": "page_text"
         }
@@ -438,7 +435,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 항공우주국 NASA",
           "title": "Facts About Earth",
           "url": "https://science.nasa.gov/earth/facts/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Formation 절은 지구가 태양에서 세 번째 행성임을 명시한다.",
           "access_method": "page_text"
         }
@@ -462,7 +459,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 항공우주국 NASA",
           "title": "Jupiter Facts",
           "url": "https://science.nasa.gov/jupiter/jupiter-facts/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Formation 절은 목성이 태양에서 다섯 번째 행성이라고 설명한다.",
           "access_method": "page_text"
         }
@@ -486,7 +483,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 국립인간게놈연구소 NHGRI",
           "title": "Deoxyribonucleic Acid (DNA)",
           "url": "https://www.genome.gov/genetics-glossary/Deoxyribonucleic-Acid-DNA",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Definition은 DNA의 두 연결된 가닥이 서로 감긴 형태를 double helix라고 설명한다.",
           "access_method": "page_text"
         }
@@ -510,7 +507,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Fujisan, sacred place and source of artistic inspiration",
           "url": "https://whc.unesco.org/en/list/1418/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 설명은 후지산을 일본의 상징으로 설명하고 국가 항목을 일본으로 표시한다.",
           "access_method": "page_text"
         }
@@ -534,7 +531,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Uluru-Kata Tjuta National Park",
           "url": "https://whc.unesco.org/en/list/447/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 설명은 울루루와 카타추타가 호주 중부의 평원에 위치한다고 명시한다.",
           "access_method": "page_text"
         }
@@ -558,7 +555,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Kilimanjaro National Park",
           "url": "https://whc.unesco.org/en/list/403/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 페이지의 국가 항목과 지역 항목은 탄자니아와 킬리만자로 지역을 표시한다.",
           "access_method": "page_text"
         }
@@ -582,7 +579,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Historic Sanctuary of Machu Picchu",
           "url": "https://whc.unesco.org/en/list/274/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 페이지의 국가 항목이 Peru이며 관리 설명에서도 페루의 유산으로 설명한다.",
           "access_method": "page_text"
         }
@@ -606,7 +603,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Galápagos Islands",
           "url": "https://whc.unesco.org/en/list/1/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 페이지의 국가 항목은 Ecuador이며 갈라파고스주를 위치로 제시한다.",
           "access_method": "page_text"
         }
@@ -630,7 +627,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Taj Mahal",
           "url": "https://whc.unesco.org/en/list/252/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 페이지의 국가 항목은 India이며 위치는 Uttar Pradesh, Agra District이다.",
           "access_method": "page_text"
         }
@@ -654,7 +651,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "UNESCO 세계유산센터",
           "title": "Grand Canyon National Park",
           "url": "https://whc.unesco.org/en/list/75/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "유산 설명과 Brief synthesis는 콜로라도강의 침식으로 그랜드캐니언이 형성되었다고 설명한다.",
           "access_method": "page_text"
         }
@@ -678,7 +675,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 해양대기청 NOAA",
           "title": "What is the largest ocean basin on Earth?",
           "url": "https://oceanservice.noaa.gov/facts/biggestocean.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "NOAA는 태평양의 면적을 약 1억 6,200만 제곱킬로미터로 제시하며 가장 큰 해양 분지라고 설명한다.",
           "access_method": "page_text"
         }
@@ -702,7 +699,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "National Geographic Society",
           "title": "Equator",
           "url": "https://education.nationalgeographic.org/resource/equator/",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "National Geographic의 Equator 설명은 적도의 위도를 0도로 제시한다.",
           "access_method": "page_text"
         }
@@ -726,7 +723,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Royal Museums Greenwich",
           "title": "What is the Prime Meridian, and why is it in Greenwich?",
           "url": "https://www.rmg.co.uk/stories/time/what-prime-meridian-why-it-greenwich",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "1884년 회의 설명은 그리니치 자오선의 선택과 Airy Transit Circle의 기준을 설명하며 현대 기준선과의 차이도 다룬다.",
           "access_method": "page_text"
         }
@@ -750,7 +747,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Project Gutenberg",
           "title": "Romeo and Juliet by William Shakespeare",
           "url": "https://www.gutenberg.org/ebooks/1513",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "전자책의 About this eBook에서 Title과 Author의 연결을 확인했다. 자동 생성 줄거리 요약은 근거로 쓰지 않았다.",
           "access_method": "page_text"
         }
@@ -774,7 +771,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Project Gutenberg",
           "title": "Pride and Prejudice by Jane Austen",
           "url": "https://www.gutenberg.org/ebooks/1342",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "전자책의 Title은 Pride and Prejudice, Author는 Austen, Jane이다.",
           "access_method": "page_text"
         }
@@ -798,7 +795,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Project Gutenberg",
           "title": "Alice’s Adventures in Wonderland by Lewis Carroll",
           "url": "https://www.gutenberg.org/ebooks/11",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "전자책의 Title은 Alice’s Adventures in Wonderland, Author는 Carroll, Lewis이다.",
           "access_method": "page_text"
         }
@@ -822,7 +819,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Project Gutenberg",
           "title": "Frankenstein; or, the modern prometheus by Mary Wollstonecraft Shelley",
           "url": "https://www.gutenberg.org/ebooks/84",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "전자책의 Author는 Shelley, Mary Wollstonecraft이며 Title은 Frankenstein이다.",
           "access_method": "page_text"
         }
@@ -846,7 +843,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "루브르 박물관",
           "title": "From the Mona Lisa to The Wedding Feast at Cana — The Salle des États",
           "url": "https://www.louvre.fr/en/explore/the-palace/from-the-mona-lisa-to-the-wedding-feast-at-cana",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "루브르 본문과 작품 캡션에서 화가와 작품명의 연결을 확인했다.",
           "access_method": "page_text"
         }
@@ -870,7 +867,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "뉴욕 현대미술관 MoMA",
           "title": "Vincent van Gogh. The Starry Night. 1889",
           "url": "https://www.moma.org/collection/works/79802",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "MoMA 작품 페이지 제목이 Vincent van Gogh. The Starry Night. Saint Rémy, June 1889이다.",
           "access_method": "page_text"
         }
@@ -894,7 +891,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "로댕 미술관",
           "title": "The Thinker",
           "url": "https://www.musee-rodin.fr/en/musee/collections/oeuvres/thinker",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "작품 페이지의 작가 항목은 Auguste Rodin이다.",
           "access_method": "page_text"
         }
@@ -918,7 +915,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "노르웨이 국립미술관",
           "title": "Edvard Munch, The Scream",
           "url": "https://www.nasjonalmuseet.no/en/collection/object/NG.M.00939",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "작품 페이지의 Artist 항목은 Edvard Munch이다.",
           "access_method": "page_text"
         }
@@ -942,7 +939,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "국제체스연맹 FIDE",
           "title": "FIDE Laws of Chess taking effect from 1 January 2023 — Article 2.1",
           "url": "https://handbook.fide.com/chapter/e012023",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "FIDE의 2023년 시행 규칙 제2.1조는 체스판을 8×8, 64칸으로 명시한다. 직접 열기는 실패했지만 공식 도메인 검색 응답에서 조문 본문을 확인했다.",
           "access_method": "official_search_text"
         }
@@ -966,7 +963,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "국제 ISBN 관리기구",
           "title": "What is an ISBN?",
           "url": "https://www.isbn-international.org/index.php/node/10",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "국제 ISBN 관리기구는 2006년 말까지 10자리였고 2007년 1월 1일부터 13자리라고 설명한다.",
           "access_method": "page_text"
         }
@@ -990,7 +987,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Python Software Foundation",
           "title": "Python 3 Tutorial — An Informal Introduction to Python",
           "url": "https://docs.python.org/3/tutorial/introduction.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "튜토리얼 도입부가 # 주석과 문자열 안의 #을 구분해 설명한다.",
           "access_method": "page_text"
         }
@@ -1014,7 +1011,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Python Software Foundation",
           "title": "Python 3 Tutorial — An Informal Introduction to Python",
           "url": "https://docs.python.org/3/tutorial/introduction.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "Numbers 절의 공식 예제에 17 % 3의 결과 2가 제시되어 있다.",
           "access_method": "page_text"
         }
@@ -1038,7 +1035,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 국립표준기술연구소 NIST",
           "title": "Dictionary of Algorithms and Data Structures — binary search",
           "url": "https://xlinux.nist.gov/dads/HTML/binarySearch.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "NIST의 정의는 정렬된 배열에서 탐색 구간을 반복해서 절반으로 줄이는 탐색이라고 명시한다.",
           "access_method": "page_text"
         }
@@ -1062,7 +1059,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "미국 국립표준기술연구소 NIST",
           "title": "Dictionary of Algorithms and Data Structures — linear search",
           "url": "https://xlinux.nist.gov/dads/HTML/linearSearch.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "NIST의 정의는 배열이나 리스트의 항목을 한 번에 하나씩 확인하는 탐색이며 sequential search라고도 부른다고 설명한다.",
           "access_method": "page_text"
         }
@@ -1086,7 +1083,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Python Software Foundation",
           "title": "Python 3 Tutorial — Data Structures, 5.1.1–5.1.2",
           "url": "https://docs.python.org/3/tutorial/datastructures.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "5.1.1 Using Lists as Stacks는 마지막으로 넣은 항목을 먼저 꺼내는 동작을 설명한다.",
           "access_method": "page_text"
         }
@@ -1110,7 +1107,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Python Software Foundation",
           "title": "Python 3 Tutorial — Data Structures, 5.1.1–5.1.2",
           "url": "https://docs.python.org/3/tutorial/datastructures.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "5.1.2 Using Lists as Queues는 먼저 넣은 항목을 먼저 꺼내는 동작을 설명한다.",
           "access_method": "page_text"
         }
@@ -1134,7 +1131,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Linux man-pages 프로젝트",
           "title": "getpid(2) — Linux manual page",
           "url": "https://man7.org/linux/man-pages/man2/getpid.2.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "DESCRIPTION은 getpid()가 호출 프로세스의 process ID를 반환한다고 명시한다.",
           "access_method": "page_text"
         }
@@ -1158,7 +1155,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "Linux man-pages 프로젝트",
           "title": "fork(2) — Linux manual page",
           "url": "https://man7.org/linux/man-pages/man2/fork.2.html",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "DESCRIPTION은 fork()가 호출 프로세스를 복제하여 새 프로세스를 만들며 이를 child process라고 부른다고 설명한다.",
           "access_method": "page_text"
         }
@@ -1182,7 +1179,7 @@ globalThis.QUIZ_DATA = {
           "publisher": "IETF / RFC Editor",
           "title": "RFC 9110 — HTTP Semantics, 15.5.5",
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.5",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "RFC 9110 제15.5.5절의 제목은 404 Not Found이며 존재를 공개하지 않는 경우와 일시적·영구적 여부의 한계도 설명한다.",
           "access_method": "page_text"
         }
@@ -1206,9 +1203,36 @@ globalThis.QUIZ_DATA = {
           "publisher": "IETF / RFC Editor",
           "title": "RFC 1034 — Domain Names: Concepts and Facilities, 5.2.1",
           "url": "https://www.rfc-editor.org/rfc/rfc1034.html#section-5.2.1",
-          "checked_on": "2026-10-01",
+          "checked_on": "2026-11-10",
           "evidence_summary": "RFC 1034 제5.2.1절은 대표 기능으로 호스트 이름에서 호스트 주소로의 변환을 제시한다.",
           "access_method": "page_text"
+        }
+      ]
+    }
+  ],
+  "extraQuestions": [
+    {
+      "id": "EX-CS-01",
+      "category": "컴퓨터공학",
+      "difficulty": "입문",
+      "topic": "Python 거듭제곱",
+      "question": "Python 3에서 표현식 2 ** 3의 결과는 무엇인가?",
+      "options": [
+        "6",
+        "9",
+        "8",
+        "5"
+      ],
+      "answer_index": 2,
+      "explanation": "Python의 ** 연산자는 거듭제곱을 계산한다. 2의 3제곱은 8이다.",
+      "review_status": "verified",
+      "sources": [
+        {
+          "publisher": "Python Software Foundation",
+          "title": "An Informal Introduction to Python — Numbers",
+          "url": "https://docs.python.org/3/tutorial/introduction.html#numbers",
+          "checked_on": "2026-11-10",
+          "evidence_summary": "공식 문서의 ** 거듭제곱 설명과 5 ** 2, 2 ** 7 예제를 확인하고 2 ** 3을 계산했다."
         }
       ]
     }

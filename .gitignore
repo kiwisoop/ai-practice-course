@@ -4,4 +4,6 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 memo.txt
+Study-03/reports/
+Study-03/quiz-records*.json
 

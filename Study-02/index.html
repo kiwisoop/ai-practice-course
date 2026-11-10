@@ -106,6 +106,16 @@
 
     <section class="task-card" aria-labelledby="task-form-title">
       <h2 id="task-form-title">새 할 일</h2>
+      <label><input id="auto-category" type="checkbox" checked> 입력 내용으로 카테고리 자동 추천</label>
+      <p id="classification-status" role="status"></p>
+      <button id="reclassify" type="button" class="secondary-button">자동 재분류</button>
+      <details><summary>분류 설정</summary>
+        <p>카테고리별 키워드를 쉼표로 구분하세요. 여러 키워드가 맞으면 긴 단어를 우선합니다. 기존 할 일은 자동 재분류를 눌러야 변경됩니다.</p>
+        <form id="classification-form"><div id="classification-fields"></div>
+          <button type="submit" class="secondary-button">분류 설정 저장</button>
+        </form>
+        <p id="classification-settings-status" role="status"></p>
+      </details>
       <form id="task-form" novalidate>
         <label for="task-input">무엇을 해야 하나요?</label>
         <div class="input-row">
@@ -206,6 +216,7 @@
     </section>
   </main>
 
+  <script src="classification.js"></script>
   <script src="script.js?v=7"></script>
 </body>
 </html>

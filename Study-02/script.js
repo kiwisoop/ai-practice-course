@@ -739,3 +739,60 @@ renderFocus();
 renderTasks();
 if (storageLoadError) announceBackup(`저장된 할 일을 불러오지 못했어요: ${storageLoadError}`, true);
 if (new URLSearchParams(location.search).has("self-test")) runBackupSelfCheck();
+
+
+// Classification suggests the input category; explicit manual changes win for this draft.
+const {defaultRules, validateRules, classify} = globalThis.KIWIBIRD_CLASSIFIER;
+let classificationRules = structuredClone(defaultRules);
+try {
+  const savedRules = localStorage.getItem("kiwibird-category-rules");
+  if (savedRules) classificationRules = validateRules(JSON.parse(savedRules));
+} catch {
+  document.querySelector("#classification-settings-status").textContent = "저장한 분류 설정을 읽지 못해 기본 키워드를 사용합니다.";
+}
+let manualCategory = false;
+const autoCategory = document.querySelector("#auto-category");
+const classificationStatus = document.querySelector("#classification-status");
+categoryInput.addEventListener("change", () => { manualCategory = true; classificationStatus.textContent = "직접 선택한 카테고리를 유지합니다."; });
+function suggestCategory() {
+  if (!autoCategory.checked || manualCategory || editingTaskId !== null) return;
+  const category = classify(input.value, classificationRules);
+  if (category) categoryInput.value = category;
+  classificationStatus.textContent = category ? `키워드 추천: ${category} · 직접 바꿀 수 있어요.` : "일치하는 키워드가 없어 선택한 카테고리를 유지합니다.";
+}
+input.addEventListener("input", suggestCategory);
+autoCategory.addEventListener("change", () => { manualCategory = false; suggestCategory(); });
+form.addEventListener("reset", () => { manualCategory = false; classificationStatus.textContent = ""; });
+const classificationFields = document.querySelector("#classification-fields");
+for (const category of categories) {
+  const label = document.createElement("label");
+  label.textContent = category;
+  const field = document.createElement("input");
+  field.name = category;
+  field.value = classificationRules[category].join(", ");
+  field.maxLength = 600;
+  label.append(field);
+  classificationFields.append(label);
+}
+document.querySelector("#classification-form").addEventListener("submit", event => {
+  event.preventDefault();
+  const status = document.querySelector("#classification-settings-status");
+  try {
+    const rules = Object.fromEntries(categories.map(category => [category,
+      [...new Set(new FormData(event.currentTarget).get(category).split(",").map(word => word.trim()).filter(Boolean))]]));
+    validateRules(rules);
+    localStorage.setItem("kiwibird-category-rules", JSON.stringify(rules));
+    classificationRules = rules;
+    status.textContent = "분류 설정을 저장했습니다.";
+    suggestCategory();
+  } catch (error) { status.textContent = `설정을 저장하지 못했습니다. ${error.message}`; }
+});
+document.querySelector("#reclassify").addEventListener("click", () => {
+  const changes = tasks.filter(task => !task.completed).map(task => ({task, category: classify(task.title, classificationRules)}))
+    .filter(({task, category}) => category && category !== task.category);
+  if (!changes.length) { classificationStatus.textContent = "재분류할 미완료 할 일이 없습니다."; return; }
+  if (!window.confirm(`미완료 할 일 ${changes.length}개의 카테고리를 키워드 기준으로 바꿀까요? 완료된 할 일은 유지됩니다.`)) return;
+  for (const {task, category} of changes) { task.category = category; task.updatedAt = new Date().toISOString(); }
+  renderApp();
+  classificationStatus.textContent = `${changes.length}개 할 일을 재분류했습니다.`;
+});

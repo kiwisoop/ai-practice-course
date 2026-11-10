@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>선생님 대시보드</title><link rel="stylesheet" href="styles.css"><script src="teacher.js" defer></script></head>
+<body><main><header class="brand"><h1>선생님 대시보드</h1></header><p><a href="index.html">퀴즈로 돌아가기</a></p>
+<section class="panel"><h2>퀴즈 기록 분석</h2><p>각 브라우저에서 내보낸 기록 JSON을 선택하세요. 파일은 외부 서버에 전송하지 않습니다. 여러 파일은 한 번에 선택할 수 있으며 같은 기록은 중복 집계하지 않습니다.</p>
+<p>등급은 학습용 예시 기준입니다: 정답률 90% 이상 A, 80% B, 70% C, 60% D, 나머지 F. 공식 수업 성적이 아닙니다.</p>
+<div id="report-controls"><label for="records-file">기록 JSON 파일</label><input id="records-file" type="file" accept=".json,application/json" multiple><label for="report-mode">게임 모드</label><select id="report-mode"><option value="normal">기본</option><option value="speed">스피드</option><option value="practice">분야별 연습</option><option value="daily">일일 퀴즈</option></select><button id="export-csv" type="button">CSV 내보내기</button><button id="export-html" type="button">HTML 보고서 내보내기</button></div>
+<p id="report-status" role="status"></p><p id="report-summary"></p><div style="overflow-x:auto"><table><caption>선택한 모드의 완료 기록</caption><thead><tr><th>순위</th><th>이름</th><th>점수</th><th>정답률</th><th>등급</th><th>완료 시각</th></tr></thead><tbody id="report-rows"></tbody></table></div><h3>분야별 평균 정답 수</h3><ul id="report-categories"></ul>
+<p>이름·점수가 포함됩니다. 내려받은 보고서를 공유하기 전에 개인정보를 확인하세요. 서로 다른 모드의 점수는 합산하지 않습니다.</p></section></main></body></html>

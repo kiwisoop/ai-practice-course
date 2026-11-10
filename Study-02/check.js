@@ -1,0 +1,14 @@
+"use strict";
+const assert = require("node:assert/strict");
+const {classify, defaultRules, validateRules} = require("./classification.js");
+assert.equal(classify("내일 회사 스케줄 확인"), "업무");
+assert.equal(classify("영화 보러 가기"), "취미");
+assert.equal(classify("과제 제출하기"), "과제");
+assert.equal(classify("GITHUB 정리"), "개발");
+assert.equal(classify("아무 키워드 없음"), null);
+assert.equal(classify(""), null);
+const custom = {...defaultRules, 개인: ["회사 스케줄"]};
+assert.equal(classify("회사 스케줄 확인", custom), "개인");
+assert.throws(() => validateRules({...defaultRules, 개인: [""]}));
+assert.throws(() => validateRules({...defaultRules, 개인: ["a".repeat(21)]}));
+console.log("PASS: keyword rules, unknown text, case folding, longest match, invalid settings");

@@ -73,3 +73,9 @@ input { width: 100%; min-height: 48px; border: 1px solid #cdd7cc; border-radius:
   .answer-tag { font-size: 11px; }
   .wide-only { display: none; }
 }
+select { display:block; width:100%; padding:.8rem; border:1px solid #adb9ca; border-radius:.5rem; background:white; color:#172738; font:inherit; margin:.5rem 0 1rem; }
+#hint-button, #choose-mode, #export-records { padding:.75rem; border:1px solid #adb9ca; border-radius:.5rem; background:#f2f6fb; color:#172738; cursor:pointer; }
+#timer-status { font-weight:700; }
+table { border-collapse:collapse; width:100%; text-align:left; }
+th, td { padding:.7rem; border-bottom:1px solid #ccc; }
+#report-controls { display:grid; gap:.6rem; }

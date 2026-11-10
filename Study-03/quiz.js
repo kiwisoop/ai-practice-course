@@ -1,10 +1,25 @@
 "use strict";
 
 const { questions, categories } = globalThis.QUIZ_DATA;
-const game = { started: false, index: 0, answers: [], completedAt: null, saved: false };
+const game = { started: false, index: 0, answers: [], completedAt: null, saved: false, mode: "normal", questions, hints: [], deadline: null };
 const RECORD_KEY = "study03.records.v1";
 
-function startGame() {
+function dailyQuestions(date = new Date().toLocaleDateString("sv-SE")) {
+  let seed = [...date].reduce((value, ch) => (value * 31 + ch.charCodeAt(0)) >>> 0, 1);
+  const pool = [...questions, ...(globalThis.QUIZ_DATA.extraQuestions || [])];
+  for (let i = pool.length - 1; i > 0; i--) {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    const j = seed % (i + 1);
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, 10);
+}
+function startGame(mode = "normal", category = categories[0], now = Date.now()) {
+  if (!["normal", "speed", "practice", "daily"].includes(mode) || !categories.includes(category)) throw new Error("잘못된 게임 설정");
+  game.mode = mode;
+  game.questions = mode === "daily" ? dailyQuestions() : mode === "practice" ? questions.filter(q => q.category === category) : questions;
+  game.hints = [];
+  game.deadline = mode === "speed" ? now + 15000 : null;
   game.started = true;
   game.index = 0;
   game.answers = [];
@@ -12,41 +27,62 @@ function startGame() {
   game.saved = false;
 }
 
-function answer(choice) {
-  if (!game.started || game.index >= questions.length || game.answers[game.index] !== undefined ||
+function answer(choice, now = Date.now()) {
+  if (expireQuestion(now)) return false;
+  if (!game.started || game.index >= game.questions.length || game.answers[game.index] !== undefined ||
       !Number.isInteger(choice) || choice < 0 || choice >= 4) return false;
   game.answers[game.index] = choice;
   return true;
 }
 
+function expireQuestion(now = Date.now()) {
+  if (game.started && game.mode === "speed" && game.index < game.questions.length && game.answers[game.index] === undefined && now >= game.deadline) {
+    game.answers[game.index] = -1;
+    return true;
+  }
+  return false;
+}
+function useHint() {
+  if (!game.started || game.mode === "normal" || game.index >= game.questions.length || game.answers[game.index] !== undefined || game.hints.includes(game.index)) return false;
+  game.hints.push(game.index);
+  return true;
+}
+
 function nextQuestion() {
-  if (!game.started || game.index >= questions.length || game.answers[game.index] === undefined) return false;
+  if (!game.started || game.index >= game.questions.length || game.answers[game.index] === undefined) return false;
   game.index += 1;
-  if (game.index === questions.length) game.completedAt = new Date().toISOString();
+  game.deadline = game.mode === "speed" ? Date.now() + 15000 : null;
+  if (game.index === game.questions.length) game.completedAt = new Date().toISOString();
   return true;
 }
 
 function scores() {
   const byCategory = Object.fromEntries(categories.map(category => [category, 0]));
   game.answers.forEach((choice, index) => {
-    if (choice === questions[index].answer_index) byCategory[questions[index].category] += 1;
+    if (choice === game.questions[index].answer_index) byCategory[game.questions[index].category] += 1;
   });
-  return { byCategory, total: Object.values(byCategory).reduce((sum, score) => sum + score, 0) };
+  const total = Object.values(byCategory).reduce((sum, score) => sum + score, 0);
+  const points = game.answers.reduce((sum, choice, index) => sum + (choice === game.questions[index].answer_index ? (game.mode === "speed" ? 10 - (game.hints.includes(index) ? 2 : 0) : 1) : 0), 0);
+  return { byCategory, total, points };
 }
 
 function validName(name) {
   return typeof name === "string" && name.trim().length >= 1 && name.trim().length <= 20;
 }
 
-function readRecords(storage) {
-  const raw = storage.getItem(RECORD_KEY);
+function recordKey(mode) { return mode === "normal" ? RECORD_KEY : `study03.records.${mode}.v1`; }
+function readRecords(storage, mode = game.mode) {
+  const raw = storage.getItem(recordKey(mode));
   const records = raw === null ? [] : JSON.parse(raw);
   if (!Array.isArray(records) || !records.every(record => {
     if (!record || !validName(record.name) || record.name !== record.name.trim() ||
-        !Number.isInteger(record.total) || record.total < 0 || record.total > 50 ||
+        !Number.isInteger(record.total) || record.total < 0 || record.total > (record.questionCount || 50) ||
         typeof record.completedAt !== "string" || !Number.isFinite(Date.parse(record.completedAt)) ||
         new Date(record.completedAt).toISOString() !== record.completedAt ||
-        !record.byCategory || typeof record.byCategory !== "object") return false;
+        !record.byCategory || typeof record.byCategory !== "object" ||
+        (record.points !== undefined && (!Number.isInteger(record.points) || (mode === "speed" ? record.points < record.total * 8 || record.points > record.total * 10 || record.points % 2 !== 0 : record.points !== record.total))) ||
+        (mode !== "normal" && (record.mode !== mode || record.questionCount !== (mode === "speed" ? 50 : 10) || !Number.isInteger(record.points))) ||
+        (mode === "normal" && ((record.questionCount !== undefined && record.questionCount !== 50) || (record.mode !== undefined && record.mode !== "normal")))) return false;
     const values = categories.map(category => record.byCategory[category]);
     return Object.keys(record.byCategory).length === categories.length &&
       values.every(value => Number.isInteger(value) && value >= 0 && value <= 10) &&
@@ -58,10 +94,10 @@ function readRecords(storage) {
 function rankedRecords(records) {
   let rank = 0;
   let previousScore = null;
-  return [...records].sort((a, b) => b.total - a.total || a.completedAt.localeCompare(b.completedAt))
+  return [...records].sort((a, b) => (b.points ?? b.total) - (a.points ?? a.total) || a.completedAt.localeCompare(b.completedAt))
     .map((record, index) => {
-      if (record.total !== previousScore) rank = index + 1;
-      previousScore = record.total;
+      if ((record.points ?? record.total) !== previousScore) rank = index + 1;
+      previousScore = record.points ?? record.total;
       return { ...record, rank };
     });
 }
@@ -69,13 +105,13 @@ function rankedRecords(records) {
 function saveResult(name, storage) {
   if (!game.completedAt || game.saved || !validName(name)) return false;
   const records = readRecords(storage); // Preserve unreadable records by refusing to overwrite them.
-  records.push({ name: name.trim(), ...scores(), completedAt: game.completedAt });
-  storage.setItem(RECORD_KEY, JSON.stringify(records));
+  records.push({ name: name.trim(), ...scores(), mode: game.mode, questionCount: game.questions.length, completedAt: game.completedAt });
+  storage.setItem(recordKey(game.mode), JSON.stringify(records));
   game.saved = true;
   return true;
 }
 
-if (typeof module !== "undefined") module.exports = { game, startGame, answer, nextQuestion, scores, RECORD_KEY, validName, readRecords, rankedRecords, saveResult };
+if (typeof module !== "undefined") module.exports = { game, startGame, answer, nextQuestion, scores, RECORD_KEY, validName, readRecords, rankedRecords, saveResult, dailyQuestions, expireQuestion, useHint, recordKey };
 
 if (typeof document !== "undefined") {
   const byId = id => document.getElementById(id);
@@ -97,7 +133,7 @@ if (typeof document !== "undefined") {
       records.forEach(record => {
         const row = make("li", "", "ranking-row");
         row.append(make("strong", `${record.rank}위`), make("span", record.name, "ranking-name"),
-          make("strong", `${record.total}점`), make("time", new Date(record.completedAt).toLocaleString("ko-KR")));
+          make("strong", `${record.points ?? record.total}점 · ${record.total}/${record.questionCount || 50} 정답`), make("time", new Date(record.completedAt).toLocaleString("ko-KR")));
         row.lastChild.dateTime = record.completedAt;
         list.append(row);
       });
@@ -107,7 +143,7 @@ if (typeof document !== "undefined") {
   }
 
   function render() {
-    const completed = game.index === questions.length;
+    const completed = game.index === game.questions.length;
     byId("intro").hidden = game.started;
     byId("quiz").hidden = !game.started || completed;
     byId("result").hidden = !game.started || !completed;
@@ -115,30 +151,36 @@ if (typeof document !== "undefined") {
 
     const { total, byCategory } = scores();
     if (completed) {
-      byId("total-score").textContent = total;
-      byId("result-summary").textContent = `50문제 중 ${total}문제를 맞혔습니다. 분야별 결과를 확인해 보세요.`;
+      byId("total-score").textContent = scores().points;
+      byId("score-maximum").textContent = ` / ${game.questions.length * (game.mode === "speed" ? 10 : 1)}점`;
+      byId("result-summary").textContent = `${game.questions.length}문제 중 ${total}문제 정답 · ${scores().points}점. 현재 모드의 결과입니다.`;
       byId("category-scores").replaceChildren(...categories.map(category => {
         const row = document.createElement("div");
-        row.append(make("dt", category), make("dd", `${byCategory[category]} / 10`));
+        row.append(make("dt", category), make("dd", `${byCategory[category]} / ${game.questions.filter(q => q.category === category).length}`));
         return row;
       }));
       renderRanking();
       return;
     }
 
-    const question = questions[game.index];
+    const question = game.questions[game.index];
     const selected = game.answers[game.index];
     const answered = selected !== undefined;
     byId("category").textContent = question.category;
-    byId("position").textContent = `${game.index + 1} / ${questions.length}문제`;
+    byId("position").textContent = `${game.index + 1} / ${game.questions.length}문제`;
+    byId("progress").max = game.questions.length;
     byId("progress").value = game.answers.length;
     byId("topic").textContent = question.topic;
-    byId("current-score").textContent = `현재 ${total}점`;
+    byId("current-score").textContent = `현재 ${scores().points}점`;
     byId("question").textContent = question.question;
     byId("options").replaceChildren(...question.options.map((option, index) => {
       const button = make("button", "", "option");
       button.type = "button";
       button.disabled = answered;
+      if (!answered && game.hints.includes(game.index)) {
+        const wrong = question.options.findIndex((_, i) => i !== question.answer_index);
+        button.disabled = index !== question.answer_index && index !== wrong;
+      }
       button.append(make("span", index + 1, "option-number"), make("span", option));
       if (answered && index === question.answer_index) {
         button.classList.add("correct");
@@ -148,8 +190,9 @@ if (typeof document !== "undefined") {
         button.append(make("span", "선택 · 오답", "answer-tag"));
       }
       button.addEventListener("click", () => {
-        if (answer(index)) {
-          render();
+        const accepted = answer(index);
+        render(); // A click at the deadline may expire the question instead of accepting an answer.
+        if (accepted || game.answers[game.index] === -1) {
           byId("next").focus();
         }
       });
@@ -160,7 +203,7 @@ if (typeof document !== "undefined") {
     feedback.replaceChildren();
     if (answered) {
       const correct = selected === question.answer_index;
-      const title = make("p", correct ? "정답입니다! +1점" : "오답입니다. 해설을 확인해 보세요.", "feedback-title");
+      const title = make("p", correct ? `정답입니다! +${game.mode === "speed" ? (game.hints.includes(game.index) ? 8 : 10) : 1}점` : selected === -1 ? "시간 초과입니다. 해설을 확인해 보세요." : "오답입니다. 해설을 확인해 보세요.", "feedback-title");
       if (!correct) title.classList.add("wrong");
       feedback.append(title, make("p", `정답: ${question.answer_index + 1}번 · ${question.options[question.answer_index]}`), make("p", question.explanation));
       const links = document.createElement("ul");
@@ -177,12 +220,17 @@ if (typeof document !== "undefined") {
       });
       feedback.append(make("p", "출처에서 근거 확인하기"), links);
     }
+    byId("hint-button").hidden = game.mode === "normal";
+    byId("hint-button").disabled = answered || game.hints.includes(game.index);
+    byId("hint-status").textContent = game.hints.includes(game.index) ? "보기 2개로 좁혔습니다. 스피드 모드에서 이 문제의 정답 점수는 8점입니다." : "";
+    byId("timer-status").hidden = game.mode !== "speed";
+    updateCountdown();
     byId("next").disabled = !answered;
-    byId("next").textContent = game.index === questions.length - 1 ? "최종 결과 보기 →" : "다음 문제 →";
+    byId("next").textContent = game.index === game.questions.length - 1 ? "최종 결과 보기 →" : "다음 문제 →";
   }
 
   function begin() {
-    startGame();
+    startGame(byId("game-mode").value, byId("practice-category").value);
     byId("save-form").reset();
     byId("player-name").setCustomValidity("");
     byId("save-record").disabled = false;
@@ -190,8 +238,28 @@ if (typeof document !== "undefined") {
     render();
     byId("question").focus();
   }
+  byId("practice-category").replaceChildren(...categories.map(category => {
+    const option = make("option", category); option.value = category; return option;
+  }));
+  function updateCountdown() {
+    if (game.mode !== "speed" || !game.started || game.index >= game.questions.length) return;
+    const remaining = game.answers[game.index] === undefined ? Math.max(0, Math.ceil((game.deadline - Date.now()) / 1000)) : 0;
+    byId("timer-status").textContent = game.answers[game.index] === -1 ? "시간 초과 · 오답 처리되었습니다." : `제한 시간: ${remaining}초`;
+  }
+  setInterval(() => { if (expireQuestion()) render(); else updateCountdown(); }, 250);
+  byId("hint-button").addEventListener("click", () => { if (useHint()) render(); });
+  byId("export-records").addEventListener("click", () => {
+    try {
+      const records = ["normal", "speed", "practice", "daily"].flatMap(mode => readRecords(window.localStorage, mode).map(record => ({...record, mode: record.mode || "normal"})));
+      const blob = new Blob([JSON.stringify({version: 1, records}, null, 2)], {type: "application/json"});
+      const url = URL.createObjectURL(blob); const a = document.createElement("a");
+      a.href = url; a.download = "quiz-records.json"; a.click(); URL.revokeObjectURL(url);
+      byId("export-status").textContent = "기록을 내보냈습니다. 이름과 점수가 포함되므로 공유 전 확인하세요.";
+    } catch { byId("export-status").textContent = "기록을 읽지 못했습니다. 기존 데이터는 변경하지 않았습니다."; }
+  });
   byId("start").addEventListener("click", begin);
   byId("restart").addEventListener("click", begin);
+  byId("choose-mode").addEventListener("click", () => { game.started = false; render(); byId("game-mode").focus(); });
   byId("player-name").addEventListener("input", () => byId("player-name").setCustomValidity(""));
   byId("save-form").addEventListener("submit", event => {
     event.preventDefault();
@@ -214,7 +282,7 @@ if (typeof document !== "undefined") {
   byId("next").addEventListener("click", () => {
     if (nextQuestion()) {
       render();
-      byId(game.index === questions.length ? "result-title" : "question").focus();
+      byId(game.index === game.questions.length ? "result-title" : "question").focus();
     }
   });
   render();

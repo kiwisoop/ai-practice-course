@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "questions": [
+    {
+      "id": "EX-CS-01",
+      "category": "컴퓨터공학",
+      "difficulty": "입문",
+      "topic": "Python 거듭제곱",
+      "question": "Python 3에서 표현식 2 ** 3의 결과는 무엇인가?",
+      "options": [
+        "6",
+        "9",
+        "8",
+        "5"
+      ],
+      "answer_index": 2,
+      "explanation": "Python의 ** 연산자는 거듭제곱을 계산한다. 2의 3제곱은 8이다.",
+      "review_status": "verified",
+      "sources": [
+        {
+          "publisher": "Python Software Foundation",
+          "title": "An Informal Introduction to Python — Numbers",
+          "url": "https://docs.python.org/3/tutorial/introduction.html#numbers",
+          "checked_on": "2026-11-10",
+          "evidence_summary": "공식 문서의 ** 거듭제곱 설명과 5 ** 2, 2 ** 7 예제를 확인하고 2 ** 3을 계산했다."
+        }
+      ]
+    }
+  ]
+}
