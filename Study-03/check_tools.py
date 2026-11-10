@@ -13,7 +13,7 @@ assert len(tools.daily_questions(rows, '2026-11-10')) == 10
 assert tools.daily_questions(rows, '2026-11-10') == tools.daily_questions(rows, '2026-11-10')
 js = subprocess.check_output(['node', '-e', 'require("./questions-data.js");console.log(JSON.stringify(require("./quiz.js").dailyQuestions("2026-11-10").map(q=>q.id)))'], cwd=tools.ROOT, text=True)
 assert json.loads(js) == [q['id'] for q in tools.daily_questions(rows, '2026-11-10')]
-for key, value in [('answer_index', True), ('options', ['a'] * 4), ('category', 'invalid'), ('sources', [])]:
+for key, value in [('answer_index', True), ('options', ['a'] * 4), ('category', 'invalid'), ('difficulty', {}), ('sources', [])]:
     bad = copy.deepcopy(rows[0]); bad[key] = value
     try: tools.validate_questions([bad], data['categories'])
     except ValueError: pass
@@ -21,6 +21,10 @@ for key, value in [('answer_index', True), ('options', ['a'] * 4), ('category', 
 try: tools.validate_questions(rows + [rows[0]], data['categories'])
 except ValueError: pass
 else: raise AssertionError('duplicate accepted')
+bad = copy.deepcopy(rows[0]); bad['sources'][0]['url'] = 'https://'
+try: tools.validate_questions([bad], data['categories'])
+except ValueError: pass
+else: raise AssertionError('invalid URL accepted')
 with tempfile.TemporaryDirectory() as tmp:
     out = Path(tmp) / 'daily.json'
     tools.write_json(out, {'test': 1})

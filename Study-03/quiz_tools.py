@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
 
@@ -34,12 +35,17 @@ def validate_questions(rows, categories):
             raise ValueError('서로 다른 보기 4개가 필요합니다.')
         if type(q.get('answer_index')) is not int or not 0 <= q['answer_index'] < 4:
             raise ValueError('answer_index는 0~3 정수여야 합니다.')
+        if q.get('difficulty', '입문') not in ('입문', '중급', '고급'):
+            raise ValueError('난이도는 입문·중급·고급 중 하나여야 합니다.')
         if not isinstance(q.get('sources'), list) or not q['sources']:
             raise ValueError('출처가 필요합니다.')
         for source in q['sources']:
             if not isinstance(source, dict) or any(not isinstance(source.get(k), str) or not source[k].strip() for k in ('publisher', 'title', 'url', 'checked_on', 'evidence_summary')) or not source['url'].startswith('https://'):
                 raise ValueError('HTTPS 출처와 확인 근거를 입력하세요.')
             date.fromisoformat(source['checked_on'])
+            url = urlsplit(source['url'])
+            if url.scheme != 'https' or not url.hostname or any(ch.isspace() for ch in source['url']) or url.username or url.password:
+                raise ValueError('인증 정보가 없는 올바른 HTTPS 출처 URL이 필요합니다.')
         ids.add(q['id']); texts.add(q['question'].strip())
 
 
