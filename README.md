@@ -7,5 +7,6 @@
 - [3주차 — MNIST 손글씨 숫자 인식 프로그램](./Study-01/README.md)
 - [4주차 — Kiwibird todo list 개인용 할 일 관리 앱](./Study-02/README.md)
 - [7주차 — 상식 한 바퀴: 출처를 확인하는 50문제 퀴즈](./Study-03/README.md)
+- [API 활용 — FridgeChef: 냉장고 재료 인식·레시피 추천](./Study-04/README.md)
 
 

@@ -1,0 +1,3 @@
+Generated using the built-in image_gen tool.
+
+Use case: photorealistic-natural. Asset type: sample refrigerator photograph for a beginner ingredient recognition app exercise. Generate one realistic photograph, straight-on view into an open ordinary home refrigerator. Clearly visible and separated ingredients on three shelves: six eggs in an open egg carton, three tomatoes, two carrots, one cucumber, a small cabbage, a bunch of green onions, a block of tofu in a plain transparent container, and a bottle of milk with no text. Natural refrigerator interior lighting, believable textures, clear enough to identify each ingredient, modest everyday household styling, no people, no captions, no logos, no watermarks. Square composition.
