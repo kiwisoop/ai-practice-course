@@ -64,11 +64,28 @@ py -3.12 -m venv .venv
 
 브라우저에서 http://127.0.0.1:8501 에 접속한다. 서버는 터미널을 열어 둔 동안 실행되며, `Ctrl+C`로 종료한다. 운영체제별 명령 안내가 모든 환경에서의 실행 검증을 의미하지는 않는다.
 
+## 테스트용 냉장고 사진
+
+사진을 따로 준비하지 않아도 아래 샘플로 재료 인식 기능을 테스트할 수 있다.
+
+**[냉장고 샘플 사진 다운로드](https://raw.githubusercontent.com/kiwisoop/ai-practice-course/main/Study-04/assets/fridge-sample.png)**
+
+링크를 열어 이미지를 저장하거나, 저장소를 내려받았다면 `assets/fridge-sample.png`를 사용한다.
+
+1. 앱에서 로그인하고 본인의 학교 API 키와 사진 인식 모델을 설정한다.
+2. **재료 인식** 탭에서 샘플 사진을 업로드한다.
+3. 전송 안내를 확인한 뒤 **재료 인식 시작**을 누른다.
+4. 인식 결과를 사진과 비교하고, **레시피 생성**으로 이어서 테스트한다.
+
+![테스트용 냉장고 사진 — 달걀, 토마토, 우유, 당근, 오이, 양배추, 대파, 두부](assets/fridge-sample.png)
+
+이 사진은 실습을 위해 AI로 생성한 샘플이며 교재 원본 사진과는 다르다. 모델에 따라 인식 결과가 달라질 수 있다.
+
 ## 실습 순서
 
 1. **로그인**: [데모 계정] 버튼을 누르거나 `demo@example.com / demo1234`로 로그인한다. 두 번째 테스트 계정은 `demo2@example.com / demo1234`이다. 회원가입 탭에서 실습용 로컬 계정을 만들 수도 있다. 비밀번호는 무작위 salt를 붙인 PBKDF2 해시로 저장하며 운영 서비스용 인증은 아니다. 로그인하면 대시보드가 먼저 열린다.
 2. **API 설정**: 왼쪽 위 화살표로 사이드바를 열고 [API 연결 설정]에 키를 직접 입력한 뒤 [API 연결 테스트]를 누른다. 사진 인식용 Claude와 레시피 생성용 텍스트 모델을 각각 선택하고 전송 안내를 확인한다. DeepSeek가 계정에 제공되면 선택할 수 있고 Claude로도 생성할 수 있다.
-3. **재료 인식**: `fridge-sample.png`, LMS의 `냉장고.jpg` 또는 직접 촬영한 JPG·PNG 사진을 올린다. 전송 동의 후 [재료 인식 시작]을 누른다.
+3. **재료 인식**: `assets/fridge-sample.png`, LMS의 `냉장고.jpg` 또는 직접 촬영한 JPG·PNG 사진을 올린다. 전송 동의 후 [재료 인식 시작]을 누른다.
 4. **레시피 생성**: 상단 탭 또는 [이 재료로 레시피 생성]으로 이동한다. [사용 가능한 재료 보기]에서 재료를 편집하고, 난이도·최대 조리 시간·인분·요리 종류·식단 제한을 설정해 생성한다. 사진 없이 재료를 직접 입력해도 된다.
 5. **레시피 저장**: 접히는 요리 패널에서 재료·분량·조리법·시간·인분·추정 칼로리를 확인하고 옆의 [저장]을 누른다. 매칭 점수는 제안된 전체 재료 중 보유 재료의 비율이다. JSON 내보내기, 저장 폴더 선택, 요리명 검색과 필터를 제공한다.
 6. **나의 레시피**: 폴더를 선택하고 저장한 요리를 펼쳐 본다. 요리 완료 횟수·평점을 기록하거나 폴더를 바꿀 수 있다. 삭제는 확인란을 체크해야 실행된다.
@@ -163,7 +180,7 @@ GitHub Pages는 HTML·CSS·JavaScript 정적 사이트용이라 이 Python 앱�
 - 학교 API 안내: https://docs.factchat.kr/docs/mnuaibootcamp/api-gateway/getting-started/overview
 - 학교 인증 안내: https://docs.factchat.kr/docs/mnuaibootcamp/api-gateway/getting-started/authentication
 - 교재 「12. 인공지능활용실습_API 활용」의 5–7쪽, 9–30쪽을 참고했다. 교재의 OpenRouter 연동은 사용자 환경에 맞춰 학교 FactChat으로 조정했다.
-- 샘플 사진은 내장 이미지 생성 도구로 생성했다. 프롬프트는 `fridge-sample-prompt.txt`에 있다.
+- 샘플 사진은 내장 이미지 생성 도구로 생성했다. 프롬프트는 [assets/fridge-sample-prompt.txt](assets/fridge-sample-prompt.txt)에 있다.
 
 ## 학습 포인트와 개선 제안
 
