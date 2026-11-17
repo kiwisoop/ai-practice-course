@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>쇼핑 리스트 — Study-06</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #faf6ed;
+      --card: #fffcf7;
+      --panel: #f4ece0;
+      --ink: #4a3322;
+      --muted: #7a6552;
+      --line: #dfd2c0;
+      --accent: #89583c;
+      --accent-hover: #6f442c;
+      --danger: #9e4732;
+      --danger-bg: #f8ebe6;
+      --focus: #b37637;
+      --done-bg: #f3ece1;
+      --done-ink: #8c7865;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 32px 28px;
+      box-shadow: 0 8px 24px rgba(74, 51, 34, 0.08);
+    }
+
+    header {
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .entry-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      font: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      background: #ffffff;
+      border: 1px solid #cbbba6;
+      border-radius: 8px;
+    }
+
+    input[type="text"]::placeholder {
+      color: #937f6c;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 140ms ease, border-color 140ms ease;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .add-btn {
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fffaf3;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      white-space: nowrap;
+    }
+
+    .add-btn:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .status-message {
+      min-height: 22px;
+      margin: 0 0 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .status-message.is-error {
+      color: var(--danger);
+      background: var(--danger-bg);
+      border: 1px solid #e4c3b8;
+      border-radius: 6px;
+      padding: 8px 12px;
+    }
+
+    .shopping-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .shopping-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .shopping-item.is-completed {
+      background: var(--done-bg);
+    }
+
+    .item-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .item-checkbox {
+      width: 19px;
+      height: 19px;
+      margin: 0;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .item-name {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .shopping-item.is-completed .item-name {
+      text-decoration: line-through;
+      color: var(--done-ink);
+    }
+
+    .delete-btn {
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--danger);
+      background: var(--danger-bg);
+      border: 1px solid #e2bfb4;
+      flex-shrink: 0;
+    }
+
+    .delete-btn:hover {
+      background: #f1dad2;
+    }
+
+    .empty-state {
+      margin: 18px 0;
+      padding: 28px 16px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+      background: var(--panel);
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+    }
+
+    .summary-bar {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .summary-bar strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 14px 40px;
+      }
+
+      .app-shell {
+        padding: 24px 18px;
+      }
+
+      .entry-form {
+        grid-template-columns: 1fr;
+      }
+
+      .add-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header>
+      <p class="eyebrow">STUDY-06 · SHOPPING LIST</p>
+      <h1>쇼핑 리스트</h1>
+      <p class="subtitle">필요한 상품을 적고 구매 완료 상태를 체크해 관리하세요.</p>
+    </header>
+
+    <form id="shopping-form" class="entry-form" novalidate>
+      <label for="item-input" class="sr-only">쇼핑 아이템 이름</label>
+      <input
+        id="item-input"
+        name="item"
+        type="text"
+        maxlength="80"
+         autocomplete="off"
+        placeholder="쇼핑 아이템을 입력하세요..."
+      >
+      <button id="add-button" type="submit" class="add-btn">추가</button>
+    </form>
+
+    <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+
+    <p id="empty-state" class="empty-state">아이템을 추가해 주세요</p>
+
+    <ul id="shopping-list" class="shopping-list" aria-label="쇼핑 아이템 목록"></ul>
+
+    <footer class="summary-bar" aria-label="쇼핑 리스트 요약">
+      <span>전체: <strong id="total-count">0</strong></span>
+      <span>완료: <strong id="completed-count">0</strong></span>
+      <span>남음: <strong id="remaining-count">0</strong></span>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = "study06.shoppingList.v1";
+
+      const form = document.getElementById("shopping-form");
+      const input = document.getElementById("item-input");
+      const listEl = document.getElementById("shopping-list");
+      const emptyEl = document.getElementById("empty-state");
+      const statusEl = document.getElementById("status-message");
+      const totalCountEl = document.getElementById("total-count");
+      const completedCountEl = document.getElementById("completed-count");
+      const remainingCountEl = document.getElementById("remaining-count");
+
+      let items = [];
+      let nextFallbackId = 1;
+
+      function createId() {
+        if (window.crypto && typeof window.crypto.randomUUID === "function") {
+          return window.crypto.randomUUID();
+        }
+        nextFallbackId += 1;
+        return "item-" + Date.now() + "-" + nextFallbackId;
+      }
+
+      function setStatus(message, isError) {
+        statusEl.textContent = message || "";
+        statusEl.classList.toggle("is-error", Boolean(isError));
+      }
+
+      function normalizeItem(raw) {
+        if (!raw || typeof raw !== "object") {
+          return null;
+        }
+        const name = typeof raw.name === "string" ? raw.name.trim() : "";
+        if (!name) {
+          return null;
+        }
+        return {
+          id: typeof raw.id === "string" && raw.id ? raw.id : createId(),
+          name: name.slice(0, 80),
+          completed: Boolean(raw.completed)
+        };
+      }
+
+      function loadItems() {
+        try {
+          const raw = window.localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            return [];
+          }
+          const parsed = JSON.parse(raw);
+          if (!Array.isArray(parsed)) {
+            setStatus("저장된 목록 형식이 올바르지 않아 빈 목록으로 시작합니다.", true);
+            return [];
+          }
+          return parsed.map(normalizeItem).filter(Boolean);
+        } catch (err) {
+          setStatus("브라우저 저장소를 읽지 못해 현재 화면에서만 목록을 유지합니다.", true);
+          return [];
+        }
+      }
+
+      function saveItems() {
+        try {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+          return true;
+        } catch (err) {
+          setStatus("브라우저 저장 공간에 기록하지 못했습니다. 현재 화면에서는 목록이 유지됩니다.", true);
+          return false;
+        }
+      }
+
+      function updateSummary() {
+        const total = items.length;
+        const completed = items.filter(function (item) {
+          return item.completed;
+        }).length;
+        const remaining = total - completed;
+
+        totalCountEl.textContent = String(total);
+        completedCountEl.textContent = String(completed);
+        remainingCountEl.textContent = String(remaining);
+        emptyEl.hidden = total > 0;
+        listEl.hidden = total === 0;
+      }
+
+      function renderList() {
+        listEl.replaceChildren();
+
+        items.forEach(function (item) {
+          const li = document.createElement("li");
+          li.className = "shopping-item" + (item.completed ? " is-completed" : "");
+          li.dataset.id = item.id;
+
+          const label = document.createElement("label");
+          label.className = "item-label";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.className = "item-checkbox";
+          checkbox.checked = item.completed;
+          checkbox.setAttribute("aria-label", item.name + " 구매 완료");
+          checkbox.addEventListener("change", function () {
+            toggleItem(item.id, checkbox.checked);
+          });
+
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "item-name";
+          nameSpan.textContent = item.name;
+
+          label.append(checkbox, nameSpan);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.type = "button";
+          deleteBtn.className = "delete-btn";
+          deleteBtn.textContent = "삭제";
+          deleteBtn.setAttribute("aria-label", item.name + " 삭제");
+          deleteBtn.addEventListener("click", function () {
+            deleteItem(item.id);
+          });
+
+          li.append(label, deleteBtn);
+          listEl.appendChild(li);
+        });
+
+        updateSummary();
+      }
+
+      function addItem(rawText) {
+        const name = (rawText || "").trim();
+        if (!name) {
+          setStatus("상품 이름을 입력해 주세요.", true);
+          input.focus();
+          return;
+        }
+
+        items.push({
+          id: createId(),
+          name: name.slice(0, 80),
+          completed: false
+        });
+
+        const saved = saveItems();
+        if (saved) {
+          setStatus("'" + name + "' 상품을 추가했습니다.", false);
+        }
+        renderList();
+        input.value = "";
+        input.focus();
+      }
+
+      function toggleItem(id, checked) {
+        const target = items.find(function (item) {
+          return item.id === id;
+        });
+        if (!target) {
+          return;
+        }
+        target.completed = Boolean(checked);
+        const saved = saveItems();
+        if (saved) {
+          setStatus(
+            "'" + target.name + "' 상품을 " + (target.completed ? "구매 완료로 표시했습니다." : "구매 예정으로 되돌렸습니다."),
+            false
+          );
+        }
+        renderList();
+      }
+
+      function deleteItem(id) {
+        const index = items.findIndex(function (item) {
+          return item.id === id;
+        });
+        if (index === -1) {
+          return;
+        }
+        const removed = items.splice(index, 1)[0];
+        const saved = saveItems();
+        if (saved) {
+          setStatus("'" + removed.name + "' 상품을 삭제했습니다.", false);
+        }
+        renderList();
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        addItem(input.value);
+      });
+
+      items = loadItems();
+      renderList();
+    })();
+  </script>
+</body>
+</html>
