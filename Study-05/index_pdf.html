@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF 문서 요약</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="diary.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="pdf" class="stationery">
+  <svg class="doodle-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="pdf-document" viewBox="0 0 48 56"><path d="M9 3H30L40 14V52H9Z M30 3V15H40 M17 26H32 M17 34H32 M17 42H27"/></symbol>
+  </defs></svg>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header"><a class="wordmark" href="index_pdf.html">문서 도구<span>PDF 요약</span></a><nav aria-label="실습 앱"><a href="index.html">공감 다이어리</a><a href="index_pdf.html" aria-current="page">PDF 요약</a></nav></header>
+  <main id="main">
+    <section class="intro"><h1>PDF 문서 요약</h1><p>문서를 업로드하고 핵심 내용을 원하는 길이로 정리하세요.</p></section>
+    <details class="connection"><summary>학교 API 연결 설정</summary><div class="settings"><label>API 키<input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="학교 FactChat API 키"></label><button id="load-models" type="button" class="secondary">모델 불러오기</button><label>사용할 모델<select id="model"><option value="">먼저 모델을 불러오세요</option></select></label><p class="hint">키는 현재 화면에서만 사용하며 저장하지 않습니다. 다른 앱으로 이동하면 다시 입력해 주세요.</p></div></details>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <div class="workspace pdf-workspace">
+      <section class="card pdf-paper" aria-labelledby="settings-title">
+        <div class="panel-heading"><h2 id="settings-title">문서 및 요약 설정</h2></div>
+        <form id="pdf-form">
+          <div class="document-pocket">
+            <label for="pdf-file">PDF 파일 선택</label>
+            <input id="pdf-file" type="file" accept="application/pdf,.pdf" required>
+          </div>
+          <p class="hint">최대 10MB · 100쪽 · 추출 텍스트 60,000자<br>스캔본과 암호화된 PDF는 지원하지 않습니다.</p>
+          <fieldset class="reading-modes"><legend>요약 방식</legend>
+            <label class="mode"><input type="radio" name="mode" value="normal" checked><span><strong>일반 요약</strong><small>주제·핵심 내용·결론을 정리</small></span></label>
+            <label class="mode"><input type="radio" name="mode" value="brief"><span><strong>간단 요약</strong><small>핵심만 3~5개 항목으로 정리</small></span></label>
+          </fieldset>
+          <label class="check"><input id="consent" type="checkbox" required><span>PDF에서 추출한 텍스트를 FactChat과 선택한 모델 제공사에 전송하는 데 동의합니다. 계정 크레딧이 차감될 수 있습니다.</span></label>
+          <p class="hint">개인정보·기밀 문서 전송에 주의하세요.<br>파일과 요약은 자동 저장하지 않습니다.</p>
+          <button id="submit" type="submit">요약 생성</button>
+        </form>
+      </section>
+      <section class="card response pdf-result" aria-labelledby="response-title">
+        <div class="panel-heading"><h2 id="response-title">요약 결과</h2><span class="panel-description">문서 핵심 내용</span></div>
+        <div class="summary-paper">
+          <div id="result-empty" class="empty"><svg class="document-icon" aria-hidden="true"><use href="#pdf-document"/></svg><p>문서를 선택한 뒤 ‘요약 생성’을 누르세요.</p><span>요약 결과가 이곳에 표시됩니다.</span></div>
+          <div id="result" hidden><p id="pdf-meta" class="hint"></p><p id="summary" class="result-text"></p></div>
+        </div>
+        <p class="hint ai-note">AI 요약에는 오류나 누락이 있을 수 있습니다. 중요한 정보는 원문과 대조하세요.</p>
+      </section>
+    </div>
+  </main><footer>인공지능활용실습 · 14주차 에이전트 협업</footer>
+</body>
+</html>

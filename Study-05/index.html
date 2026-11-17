@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>하루의 마음 · AI 공감 다이어리</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="diary.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="diary" class="stationery">
+  <svg class="doodle-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="bird" viewBox="0 0 80 64"><path d="M23 24C21 8 44 3 57 17C70 30 60 50 44 51C29 52 17 40 23 24Z M23 24L10 35L24 31 M36 51L34 59 M46 51L49 59"/><circle cx="34" cy="22" r="1.6" fill="currentColor" stroke="none"/><path d="M49 29Q39 31 47 39"/></symbol>
+    <symbol id="sunny" viewBox="0 0 80 72"><use href="#bird" width="80" height="64" y="6"/><path d="M16 13L10 7 M34 5V1 M58 9L64 3 M69 28H76 M12 44L6 48"/></symbol>
+    <symbol id="cloudy" viewBox="0 0 80 72"><path d="M16 51C2 50 7 31 18 33C17 15 40 13 44 28C60 18 75 37 64 47C77 57 60 65 49 61H20C11 61 8 54 16 51Z M44 28L46 36"/></symbol>
+    <symbol id="happy" viewBox="0 0 80 72"><use href="#bird" width="80" height="64" y="6"/><path d="M32 29Q35 23 39 29 M44 32Q50 40 55 30 M62 12L67 7 M70 19L76 16"/></symbol>
+    <symbol id="tired" viewBox="0 0 80 72"><use href="#bird" width="80" height="64" y="6"/><path d="M31 29L39 32 M46 26Q42 35 49 36 M61 4L70 4L62 13L71 13"/></symbol>
+    <symbol id="envelope" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M3 7L12 14L21 7 M3 18L9 12 M21 18L15 12"/></symbol>
+  </defs></svg>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header"><a class="wordmark" href="index.html">하루의 마음<span>키윗새와 함께 쓰는 일기</span></a><nav aria-label="실습 앱"><a href="index.html" aria-current="page">공감 다이어리</a><a href="index_pdf.html">PDF 요약</a></nav></header>
+  <main id="main">
+    <section class="intro"><h1>오늘의 마음을, 조금 가볍게.</h1><p>잘한 일도, 속상한 일도, 예쁘게 쓰려고 애쓰지 않아도 돼요.<br>키윗새에게 오늘의 이야기를 들려주세요.</p></section>
+    <details class="connection"><summary>학교 API 연결 설정</summary><div class="settings"><label>API 키<input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="학교 FactChat API 키"></label><button id="load-models" type="button" class="secondary">모델 불러오기</button><label>사용할 모델<select id="model"><option value="">먼저 모델을 불러오세요</option></select></label><p class="hint">키는 현재 화면에서만 사용하며 저장하지 않습니다. 다른 앱으로 이동하면 다시 입력해 주세요.</p></div></details>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <div class="workspace">
+      <section class="card diary-paper">
+        <form id="diary-form">
+          <time id="diary-date" class="date-stamp"></time>
+          <fieldset class="mood-picker"><legend>오늘의 마음 <span>가까운 기분을 골라보세요 · 선택 사항</span></legend>
+            <label class="mood-option"><input type="radio" name="mood" value="맑음"><span><svg aria-hidden="true"><use href="#sunny"/></svg><span>맑음</span></span></label>
+            <label class="mood-option"><input type="radio" name="mood" value="흐림"><span><svg aria-hidden="true"><use href="#cloudy"/></svg><span>흐림</span></span></label>
+            <label class="mood-option"><input type="radio" name="mood" value="기쁨"><span><svg aria-hidden="true"><use href="#happy"/></svg><span>기쁨</span></span></label>
+            <label class="mood-option"><input type="radio" name="mood" value="지침"><span><svg aria-hidden="true"><use href="#tired"/></svg><span>지침</span></span></label>
+          </fieldset>
+          <label for="diary-text" class="visually-hidden">오늘 있었던 일</label>
+          <textarea id="diary-text" rows="7" maxlength="2000" required placeholder="오늘은 조금 지쳤지만, 집에 오는 길에 본 노을이 참 예뻤어."></textarea>
+          <p class="hint">짧은 한 줄도 좋아요 · 최대 2,000자<br>이름·연락처 등 민감한 개인정보는 적지 마세요.</p>
+          <label class="check"><input id="consent" type="checkbox" required><span>일기 내용을 FactChat과 선택한 모델 제공사에 전송하는 데 동의합니다. 계정 크레딧이 차감될 수 있습니다.</span></label>
+          <label class="check"><input id="persist" type="checkbox" checked><span>일기와 답장을 이 브라우저에 간직하기</span></label>
+          <button id="submit" type="submit">키윗새에게 이야기하기 <svg aria-hidden="true" class="send-icon"><use href="#envelope"/></svg></button>
+        </form>
+      </section>
+      <section class="card response kiwi-letter" aria-labelledby="response-title">
+        <figure class="kiwi-portrait">
+          <span class="postage-stamp" aria-hidden="true"><svg><use href="#bird"/></svg><span>하루의 마음</span></span>
+          <span class="postmark" aria-hidden="true">마음을 담아<br>보냅니다</span>
+          <span class="address-lines" aria-hidden="true"></span>
+          <img src="assets/kiwi-friend.png" width="512" height="512" fetchpriority="high" alt="갈색 키위새 후드를 쓰고 환하게 웃는 키윗새 친구">
+          <figcaption>어떤 하루였든, 여기서 잠깐 쉬어 가요</figcaption>
+        </figure>
+        <div class="letter-content">
+          <h2 id="response-title">키윗새가 건네는 말</h2>
+          <p id="result-empty" class="empty">오늘의 이야기를 들려주면<br>이곳에 다정한 답장을 남겨둘게요.</p>
+          <div id="result" hidden><p id="emotion" class="emotion"></p><p id="message" class="result-text"></p></div>
+          <p class="hint ai-note">답장은 AI가 작성해요. 진단이나 전문 상담을 대신하지 않아요.</p>
+        </div>
+      </section>
+    </div>
+    <section class="history-section" aria-labelledby="history-title"><div class="section-heading"><div><p class="eyebrow">차곡차곡 모인 마음</p><h2 id="history-title">지난 기록</h2></div><button id="clear-history" type="button" class="quiet">기록 전체 삭제</button></div><p class="hint">현재 브라우저에만 저장됩니다. 공용 컴퓨터에서는 저장을 해제하세요.</p><div id="history-status" role="status" aria-live="polite"></div><div id="history"></div></section>
+  </main><footer>인공지능활용실습 · 14주차 에이전트 협업</footer>
+</body>
+</html>
