@@ -242,15 +242,19 @@ def run_tests() -> None:
         corrupted_state = client.eval_state()
         assert_equal(corrupted_state["total"], "0", "손상된 저장소 복구 시 빈 목록 시작")
         assert_equal(corrupted_state["isError"], True, "손상된 저장소 안내 표시")
+        client.call_tool("browser_type", {"element": "손상 기록 보존 검사", "target": "#item-input", "text": "새 상품", "submit": True})
+        assert_equal(client.eval_state()["rawStorage"], "{broken-json", "손상된 원본을 덮어쓰지 않음")
+        invalid_record = json.dumps([{"id": "saved", "name": "사과", "completed": "false"}])
+        client.call_tool("browser_evaluate", {"function": "() => { localStorage.setItem('study06.shoppingList.v1', " + json.dumps(invalid_record) + "); location.reload(); }"})
+        assert_equal(client.eval_state()["total"], "0", "잘못된 저장 필드 거부")
+        client.call_tool("browser_type", {"element": "잘못된 필드 원본 보존 검사", "target": "#item-input", "text": "새 상품", "submit": True})
+        assert_equal(client.eval_state()["rawStorage"], invalid_record, "필드 오류가 있는 원본 보존")
         print("[PASS] 6. 저장 실패 및 손상된 저장 데이터 복구 확인")
 
         print("\nAll Playwright MCP checks passed successfully.")
     finally:
         client.close()
         shutil.rmtree(temp_dir, ignore_errors=True)
-        pw_mcp_dir = STUDY_DIR / ".playwright-mcp"
-        if pw_mcp_dir.exists():
-            shutil.rmtree(pw_mcp_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":
