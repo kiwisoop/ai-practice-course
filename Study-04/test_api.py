@@ -79,6 +79,10 @@ class ApiTests(unittest.TestCase):
         request.return_value = {"choices": [{"message": {"content": json.dumps([{**RECIPE, "minutes": 35}])}}]}
         with self.assertRaisesRegex(ValueError, "최대 조리 시간"):
             generate_recipes("test-key", "deepseek-test", "달걀", "한식", "보통", "", max_minutes=30)
+        for choice in (None, "invalid", []):
+            request.return_value = {"choices": [choice]}
+            with self.subTest(choice=choice), self.assertRaisesRegex(ValueError, "응답 형식"):
+                generate_recipes("test-key", "deepseek-test", "달걀", "한식", "보통", "")
 
 
 if __name__ == "__main__":

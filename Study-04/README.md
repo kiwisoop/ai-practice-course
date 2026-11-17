@@ -2,6 +2,8 @@
 
 교재의 3단계 흐름을 구현한 Python·Streamlit 앱이다. 학교용 FactChat Gateway를 사용한다.
 
+13주차의 역할별 에이전트 리뷰·최적화·UX 개선 기록은 [WEEK13.md](WEEK13.md)에 있다.
+
 ## 프로젝트 한눈에 보기
 
 | 항목 | 내용 |

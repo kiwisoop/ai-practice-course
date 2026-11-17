@@ -1,4 +1,5 @@
 from pathlib import Path
+import io
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -6,10 +7,62 @@ from unittest.mock import patch
 from streamlit.testing.v1 import AppTest
 
 import storage
+from api import prepare_image
 from test_storage import RECIPE
 
 
 class AppTests(unittest.TestCase):
+    def test_recognition_guidance_tracks_missing_requirements(self):
+        with tempfile.TemporaryDirectory() as directory:
+            original_database = storage.database
+            path = Path(directory) / "test.sqlite3"
+            with patch("storage.database", lambda ignored: original_database(path)), \
+                    patch("streamlit.file_uploader", return_value=None) as upload, \
+                    patch("api.list_models", return_value=["claude-test"]):
+                app = AppTest.from_file("app.py", default_timeout=15).run()
+                next(b for b in app.button if b.label == "데모 계정").click().run()
+                app.session_state["nav"] = "📷 재료 인식"
+                app.run()
+                guidance = next(c.value for c in app.caption if "시작 전 필요한 항목" in c.value)
+                for requirement in ("사진 업로드", "API 키 입력", "사진 인식 모델 선택", "전송 동의"):
+                    self.assertIn(requirement, guidance)
+                self.assertTrue(next(b for b in app.button if b.label == "🔍 재료 인식 시작").disabled)
+                next(t for t in app.text_input if t.label == "새 API 키").input("test-key").run()
+                next(b for b in app.button if b.label == "🔌 API 연결 테스트").click().run()
+                app.selectbox(key="model").select("claude-test").run()
+                guidance = next(c.value for c in app.caption if "시작 전 필요한 항목" in c.value)
+                self.assertNotIn("API 키 입력", guidance)
+                self.assertNotIn("사진 인식 모델 선택", guidance)
+                self.assertIn("전송 동의", guidance)
+                upload.return_value = io.BytesIO(Path("assets/fridge-sample.png").read_bytes())
+                app.checkbox(key="api_consent").check().run()
+                self.assertFalse(any("시작 전 필요한 항목" in c.value for c in app.caption))
+                self.assertFalse(next(b for b in app.button if b.label == "🔍 재료 인식 시작").disabled)
+                self.assertFalse(app.exception)
+
+    def test_photo_reuses_preview_and_rejects_invalid_replacement(self):
+        with tempfile.TemporaryDirectory() as directory:
+            original_database = storage.database
+            path = Path(directory) / "test.sqlite3"
+            photo = io.BytesIO(Path("assets/fridge-sample.png").read_bytes())
+            with patch("storage.database", lambda ignored: original_database(path)), \
+                    patch("streamlit.file_uploader", return_value=photo) as upload, \
+                    patch("api.prepare_image", wraps=prepare_image) as prepare:
+                app = AppTest.from_file("app.py", default_timeout=15).run()
+                next(b for b in app.button if b.label == "데모 계정").click().run()
+                app.session_state["nav"] = "📷 재료 인식"
+                app.run()
+                self.assertIn("photo_preview", app.session_state)
+                prepare.assert_called_once()
+                app.run()
+                prepare.assert_called_once()
+                upload.return_value = io.BytesIO(b"invalid image")
+                app.run()
+                self.assertNotIn("photo_preview", app.session_state)
+                self.assertTrue(app.error)
+                self.assertTrue(next(b for b in app.button if b.label == "🔍 재료 인식 시작").disabled)
+                self.assertFalse(app.exception)
+
     def test_signup_and_email_login(self):
         with tempfile.TemporaryDirectory() as directory:
             original_database = storage.database

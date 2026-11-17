@@ -121,9 +121,9 @@ def image_page(api_key, model, consent):
                 st.session_state.pop("photo_preview", None)
                 st.session_state.photo_id = photo_id
             try:
-                prepared = prepare_image(raw)
-                st.session_state.photo_preview = prepared
-                st.image(prepared, caption="업로드된 이미지")
+                if not st.session_state.get("photo_preview"):
+                    st.session_state.photo_preview = prepare_image(raw)
+                st.image(st.session_state.photo_preview, caption="업로드된 이미지")
                 st.success("✅ 이미지 업로드 완료")
             except ValueError as error:
                 st.error(str(error))
@@ -132,6 +132,12 @@ def image_page(api_key, model, consent):
         else:
             st.caption("JPG 또는 PNG, 최대 10MB")
         prepared = st.session_state.get("photo_preview")
+        missing = [label for ready, label in (
+            (prepared, "사진 업로드"), (api_key, "API 키 입력"),
+            (model, "사진 인식 모델 선택"), (consent, "전송 동의"),
+        ) if not ready]
+        if missing:
+            st.caption("시작 전 필요한 항목: " + ", ".join(missing) + ". API 설정은 왼쪽 사이드바에서 확인하세요.")
         if st.button("🔍 재료 인식 시작", type="primary", width="stretch", disabled=not (api_key and model and prepared and consent)):
             try:
                 with st.spinner("AI가 냉장고 재료를 분석하고 있어요…"):
@@ -199,7 +205,7 @@ def recipe_page(api_key, model, consent, user_id):
     servings = c3.number_input("인분", min_value=1, max_value=12, step=1, key="servings")
     c1, c2 = st.columns(2)
     cuisine = c1.selectbox("요리 종류", CUISINES, key="cuisine")
-    diets = c2.multiselect("식단 제한", DIETS, key="diets", placeholder="Choose options")
+    diets = c2.multiselect("식단 제한", DIETS, key="diets", placeholder="식단 제한을 선택하세요")
     st.session_state.recipe_draft = {"ingredients": ingredients, "difficulty": difficulty, "max_minutes": max_minutes, "servings": servings, "cuisine": cuisine, "diets": diets}
     preferences = storage.profile(user_id)["preferences"]
     signature = (ingredients, cuisine, difficulty, preferences, model, max_minutes, servings, tuple(diets))

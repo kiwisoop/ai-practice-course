@@ -3,3 +3,4 @@ __pycache__/
 .env
 .streamlit/secrets.toml
 *.sqlite3*
+backup/

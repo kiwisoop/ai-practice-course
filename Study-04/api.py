@@ -167,6 +167,8 @@ def generate_recipes(api_key, model, ingredients, cuisine, difficulty, preferenc
     })
     try:
         choice = data["choices"][0]
+        if not isinstance(choice, dict):
+            raise ValueError("레시피 응답 형식이 예상과 다릅니다. 다시 생성해 주세요.")
         if choice.get("finish_reason") == "length":
             raise ValueError("레시피 응답이 길어 잘렸습니다. 다른 텍스트 모델로 다시 시도해 주세요.")
         content = choice["message"]["content"]
