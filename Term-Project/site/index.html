@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3년 다이어리</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="static-banner" role="note"><strong>온라인 시연판</strong> · 일기는 이 브라우저에만 저장돼요 · AI 이야기·그림·영상은 미리 만든 결과를 보여 줘요(토큰 사용 없음) · 전체 기능은 로컬 실행 · <a href="https://github.com/kiwisoop/ai-practice-course/tree/main/Term-Project">프로젝트 설명</a></div>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="header-left">
+        <svg class="bookmark-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d="M4 2v20l8-6 8 6V2H4z" fill="currentColor"/>
+        </svg>
+        <h1 class="app-title">3년 다이어리</h1>
+      </div>
+      <nav class="header-nav">
+        <button id="btn-diary" class="nav-btn" aria-pressed="true">일기</button>
+      </nav>
+    </header>
+
+    <div class="main-wrapper">
+      <aside class="sidebar">
+        <section class="calendar-panel">
+          <div class="calendar-header">
+            <label for="select-start-year" class="year-label">시작 연도</label>
+            <select id="select-start-year" class="year-select">
+              <option value="1900">1900</option>
+              <option value="1950">1950</option>
+              <option value="2024" selected>2024</option>
+              <option value="2050">2050</option>
+              <option value="2097">2097</option>
+            </select>
+          </div>
+
+          <div class="month-nav">
+            <button aria-label="이전 달" id="btn-prev-month" class="btn-nav-month">‹</button>
+            <span id="display-month" class="month-display">11월</span>
+            <button aria-label="다음 달" id="btn-next-month" class="btn-nav-month">›</button>
+          </div>
+
+          <label class="year-label" for="calendar-year">달력 기준 연도</label><select id="calendar-year" class="year-select"></select>
+          <table class="calendar-table" aria-label="달력">
+            <thead>
+              <tr>
+                <th>일</th>
+                <th>월</th>
+                <th>화</th>
+                <th>수</th>
+                <th>목</th>
+                <th>금</th>
+                <th>토</th>
+              </tr>
+            </thead>
+            <tbody id="calendar-body">
+            </tbody>
+          </table>
+
+          <button id="btn-today" class="btn-today">오늘</button>
+        </section>
+
+        <section class="demo-panel">
+          <button id="btn-load-demo" class="btn-demo">시연 기록 불러오기</button>
+          <a href="shorts.html" class="btn-demo long-demo-link">쇼츠 예시 보기</a>
+          <p class="demo-label">발표 시연용 가상 기록입니다</p>
+        </section>
+        <details id="image-settings" class="image-settings">
+          <summary>수채화 생성 설정</summary>
+          <p>GPT Image 2.5 Sunburst<br>한 번에 1장 · 약 15크레딧</p>
+          <p id="image-api-status" role="status">연결 설정 확인 중…</p>
+          <label><input type="checkbox" id="image-consent" disabled> 일기 저장 시 수채화 생성에 동의</label>
+          <p>일기 본문이 학교 이미지 서비스로 전송됩니다. 기존 그림이 있으면 다시 열 때 추가 생성하지 않습니다.</p>
+        </details>
+      </aside>
+
+      <main class="content-area">
+        <div class="date-selector">
+          <button aria-label="전날" id="btn-prev-day" class="btn-day-nav">‹</button>
+          <div><div id="display-date" class="date-display">11월 17일</div><p class="date-subtitle">같은 날, 쌓여가는 세 해의 이야기</p><p id="daily-question" class="daily-question"></p><div id="past-banner" class="past-banner" role="status" aria-live="polite" hidden><span id="past-banner-text"></span> <button id="past-banner-read" type="button">지난 기록 먼저 읽기</button></div><button id="three-year-video" class="btn-generate">같은 날, 3년 쇼츠 만들기</button> <label for="three-year-music" class="music-label">음악</label> <select id="three-year-music" class="music-select"></select><p class="image-status">세 해의 저장된 일기와 수채화를 연결해요. 마지막 장면에서는 더 밝은 곡으로 바뀌어요. 새 이야기 구성에는 학교 크레딧이 사용돼요.</p><p id="three-year-music-credit" class="image-status"></p></div>
+          <button aria-label="다음 날" id="btn-next-day" class="btn-day-nav">›</button>
+        </div>
+
+        <div id="diary-sections" class="diary-sections">
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="dialog-shorts" aria-labelledby="shorts-title" class="dialog-info shorts-dialog">
+    <h2 id="shorts-title">이 일기로 쇼츠 만들기</h2>
+    <p id="shorts-date"></p>
+    <p>일기 속 사건과 마음의 흐름을 짧은 이야기로 자동 구성해요. 확인 후 영상으로 남겨 보세요.</p>
+    <img id="shorts-image" alt="쇼츠에 사용할 일기 수채화">
+    <details><summary>저장한 일기 확인</summary><p id="shorts-original"></p></details>
+    <ol id="shorts-story" aria-label="일기로 구성한 이야기"></ol>
+    <details id="shorts-edit" hidden><summary>구성된 이야기 수정하기</summary>
+      <label for="shorts-captions">장면별 문장</label>
+      <textarea id="shorts-captions" rows="6" maxlength="519"></textarea>
+      <p class="demo-label">수정은 선택이에요. 1~8개 장면, 장면당 64자 이내. 원문은 바뀌지 않아요. 쇼츠를 완성하면 수정한 문장을 다음 쇼츠와 3년 쇼츠에서 다시 사용해요.</p>
+    </details>
+    <button id="retry-story" class="btn-delete" hidden>이야기 구성 다시 시도</button>
+    <button id="make-scene-images" class="btn-generate" disabled>이야기에 맞는 장면 그림 준비</button>
+    <p class="demo-label">최대 3장 · 새 그림 장당 약 15크레딧(최대 약 45). 같은 일기·장면은 재사용해요. 실패해도 준비된 그림은 보존해요. 새로 만들 장수와 예상 크레딧을 확인한 뒤 일기와 장면을 학교 API로 보내요.</p>
+    <div id="scene-previews" aria-label="장면 그림"></div>
+    <p id="shorts-status" role="status"></p>
+    <label for="shorts-music" class="music-label">배경음악</label> <select id="shorts-music" class="music-select"></select>
+    <p id="shorts-music-credit" class="demo-label"></p>
+    <button id="make-shorts" class="btn-save" disabled>이 이야기로 쇼츠 만들기</button>
+    <button id="close-shorts" class="btn-delete">닫기</button>
+    <video id="shorts-video" controls playsinline hidden></video>
+    <a id="download-shorts" download="오늘의일기_쇼츠.mp4" hidden>MP4 저장</a>
+    <p class="demo-label">이야기 구성은 학교 AI를 사용하고, 저장된 그림의 확대·패닝과 영상 합성은 추가 AI 호출 없이 처리해요. 음원 출처는 선택한 곡 아래에 표시돼요.</p>
+  </dialog>
+  <dialog id="dialog-videos" class="dialog-info shorts-dialog" aria-labelledby="videos-title">
+    <h2 id="videos-title">보관한 쇼츠</h2>
+    <p id="videos-status" role="status"></p>
+    <div id="saved-videos"></div>
+    <button id="close-videos" class="btn-delete">닫기</button>
+  </dialog>
+  <dialog id="dialog-image" class="dialog-image">
+    <div class="dialog-content">
+      <img id="dialog-image-preview" alt="수채화 확대 이미지">
+      <button id="btn-close-image" class="btn-close-dialog">닫기</button>
+    </div>
+  </dialog>
+
+  <dialog aria-labelledby="dialog-title" id="dialog-info" class="dialog-info">
+    <div class="dialog-content">
+      <h2 id="dialog-title"></h2>
+      <p id="dialog-message"></p>
+      <button id="btn-close-info" class="btn-modal">확인</button>
+    </div>
+  </dialog>
+
+  <div id="status-message" class="status-message" role="status" aria-live="polite"></div>
+
+  <script src="mock-api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

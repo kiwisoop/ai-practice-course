@@ -12,6 +12,7 @@
 | **12·13주차** | [FridgeChef — 냉장고 재료 인식·레시피 추천](Study-04/README.md) | 냉장고 재료 인식·레시피 저장과 역할별 에이전트 리뷰·최적화·UX 개선을 실습합니다. | Python·라이브러리·이용자 본인의 API 키 |
 | **14주차** | [AI 공감 다이어리·PDF 문서 요약](Study-05/README.md) | 역할별 AI 개발팀으로 일기 감정 분석·브라우저 기록과 PDF 일반/간단 요약 앱을 제작합니다. | Python·pypdf·이용자 본인의 API 키 |
 | **15주차** | [쇼핑 리스트와 MCP 자동 검증](Study-06/README.md) | MCP(Sequential Thinking·Context7·Playwright) 실습 기록과 로컬 스토리지 기반 쇼핑 리스트 웹 앱·브라우저 자동 테스트를 제공합니다. | 브라우저만 필요 (자동 재검사는 Node.js·Python) |
+| **기말 프로젝트** | [3년 다이어리 — 같은 날, 세 해의 이야기](Term-Project/README.md) | 같은 날짜의 일기를 3년 동안 쌓고, AI가 일기를 이야기·수채화·세로 쇼츠 영상으로 만듭니다. [온라인 시연판](https://kiwisoop.github.io/ai-practice-course/Term-Project/)에서 바로 볼 수 있습니다. | 시연판은 브라우저만 필요 · 전체 기능은 Python·FFmpeg·이용자 본인의 API 키 |
 
 처음 이용한다면 각 프로젝트 이름을 눌러 **실행 방법**부터 확인하세요. Study-02·03·06은 파일을 내려받아 HTML 파일(`index.html` 또는 `shopping-list.html`)을 열면 되고, Study-01·04·05는 Python으로 프로그램 또는 서버를 실행해야 합니다.
 
