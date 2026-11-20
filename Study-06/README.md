@@ -2,6 +2,8 @@
 
 교재 15·16번 PDF의 Notion·Sequential Thinking·Context7·Playwright·GitHub 실습을 정리했다. 기존 작업을 재사용하고 남아 있던 Notion 저장과 검증을 완료했다.
 
+> **2026-11-20 다시 하기:** 아래 기록은 처음에 Codex 도구로 대신한 버전이다. 교재대로 Claude Code에 MCP를 직접 설치해 다시 한 기록은 **[claude-code-rerun/](claude-code-rerun/README.md)**에 있고, GitHub 실습 결과는 [kiwisoop/shopping-list-app](https://github.com/kiwisoop/shopping-list-app) 저장소다.
+
 ![Playwright MCP 검사 화면](screenshots/shopping-list-test.png)
 
 ## 실행

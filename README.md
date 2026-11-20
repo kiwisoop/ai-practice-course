@@ -66,10 +66,10 @@ flowchart LR
       <sub>🐍 Python · pypdf · 🔑 API 키</sub>
     </td>
     <td width="50%" valign="top">
-      <a href="Study-06/README.md"><img src="Study-06/screenshots/shopping-list-test.png" alt="Playwright로 검사한 쇼핑 리스트"></a>
+      <a href="Study-06/claude-code-rerun/README.md"><img src="Study-06/claude-code-rerun/shopping-list-test.png" alt="Playwright로 검사한 쇼핑 리스트"></a>
       <h3>06 · 쇼핑 리스트 + MCP</h3>
       <sub>교재 15–16</sub>
-      <p>Notion·Sequential Thinking·Context7·Playwright·GitHub MCP를 실습하고, 쇼핑 리스트 앱을 브라우저에서 자동으로 검사했습니다.</p>
+      <p>Claude Code에 Notion·Sequential Thinking·Context7·Playwright·GitHub MCP를 설치해, 쇼핑 리스트 앱을 자동 검사하고 <a href="https://github.com/kiwisoop/shopping-list-app">별도 저장소</a>에 올렸습니다.</p>
       <sub>🌐 브라우저만 있으면 실행</sub>
     </td>
   </tr>
@@ -115,8 +115,8 @@ flowchart LR
 | 12 | 3단계 PRD로 API 앱 만들기 | [Study-04](Study-04/README.md) |
 | 13 | 리뷰·최적화·UX 서브에이전트 | [Study-04 13주차 기록](Study-04/WEEK13.md) |
 | 14 | AI 개발팀으로 앱 2개 만들기 | [Study-05](Study-05/README.md) |
-| 15 | Notion·Sequential Thinking MCP | [Study-06 노트](Study-06/notion-notes) |
-| 16 | Context7·Playwright·GitHub MCP | [Study-06](Study-06/README.md) |
+| 15 | Notion·Sequential Thinking MCP | [Claude Code 실행 기록](Study-06/claude-code-rerun/README.md) (Notion 페이지 3개) |
+| 16 | Context7·Playwright·GitHub MCP | [Claude Code 실행 기록](Study-06/claude-code-rerun/README.md) · [shopping-list-app](https://github.com/kiwisoop/shopping-list-app) |
 
 <details>
 <summary>교재와 다르게 진행한 부분</summary>
@@ -125,7 +125,7 @@ flowchart LR
 - **API:** 교재의 OpenRouter 대신 학교에서 제공한 API 게이트웨이를 사용했습니다.
 - **교재 09:** 보고서 예시는 가상 학생 10명의 기록(`examples/sample-records.json`)으로 만들었습니다.
 - **교재 10:** Claudian 플러그인 설치와 연결 확인까지 했습니다. 공고 분석 노트·발표 슬라이드 예제는 저장소에 기록이 없습니다.
-- **교재 15·16:** MCP를 Claude Code에 직접 설치하지 않고 Codex에 연결된 도구와 로컬 실행으로 대신했습니다. `shopping-list-app` 저장소를 따로 만들지 않고 이 저장소의 Study-06에 올렸습니다.
+- **교재 15·16:** 처음에는 Codex에 연결된 도구로 대신했다가, 이후 Claude Code에 MCP를 직접 설치해 교재 프롬프트 그대로 다시 했습니다([실행 기록](Study-06/claude-code-rerun/README.md)). 처음 버전은 Study-06 README에 남겨 두었습니다.
 
 </details>
 
