@@ -2,7 +2,7 @@
 
 교재 15·16번 PDF의 Notion·Sequential Thinking·Context7·Playwright·GitHub 실습을 정리했다. 기존 작업을 재사용하고 남아 있던 Notion 저장과 검증을 완료했다.
 
-> **2026-11-20 다시 하기:** 아래 기록은 처음에 Codex 도구로 대신한 버전이다. 교재대로 Claude Code에 MCP를 직접 설치해 다시 한 기록은 **[claude-code-rerun/](claude-code-rerun/README.md)**에 있고, GitHub 실습 결과는 [kiwisoop/shopping-list-app](https://github.com/kiwisoop/shopping-list-app) 저장소다.
+> **2026-11-20 다시 하기:** 아래 기록은 처음에 Codex 도구로 대신한 버전이다. 교재대로 Claude Code에 MCP를 직접 설치해 다시 한 기록은 [claude-code-rerun/](claude-code-rerun/README.md) 폴더에 있고, GitHub 실습 결과는 [kiwisoop/shopping-list-app](https://github.com/kiwisoop/shopping-list-app) 저장소다.
 
 ![Playwright MCP 검사 화면](screenshots/shopping-list-test.png)
 
@@ -19,7 +19,7 @@
 
 공유 컴퓨터의 브라우저 기록은 다른 이용자에게 보일 수 있다. 기밀·개인정보를 입력하지 않는다.
 
-## 15주차 도구 수행 기록
+## 15주차 도구 수행 기록 (처음 버전 · Codex로 대신)
 
 | 도구 | 실제 수행 |
 | --- | --- |
@@ -27,9 +27,9 @@
 | Sequential Thinking | 기존 계획의 6단계 요청을 실제 stdio 서버 v2.1.1에서 재검증. 가설 수정 요청 포함 |
 | Context7 | 연결된 MCP로 `/microsoft/playwright-mcp`를 조회해 격리 브라우저·평가·스크린샷 문서 확인 |
 | Playwright MCP | 실제 격리 브라우저로 6개 시나리오와 저장 원본 보존 회귀 검사 통과 |
-| GitHub | 별도 저장소 대신 기존 `kiwisoop/ai-practice-course`의 Study-06을 사용 |
+| GitHub | 처음에는 별도 저장소 없이 이 저장소의 Study-06에 보관. 다시 하기에서 GitHub MCP로 [shopping-list-app](https://github.com/kiwisoop/shopping-list-app) 저장소를 만듦 |
 
-교재의 Claude Code 설정 화면을 그대로 실행한 것은 아니다. 이미 연결된 Codex Notion·Context7·GitHub와 로컬 MCP를 재사용한다. 토큰을 코드나 환경 파일에 넣지 않는다.
+이 표는 처음 버전 기록이다. 이때는 Claude Code에 MCP를 설치하지 않고, 이미 연결된 Codex의 Notion·Context7·GitHub와 로컬 MCP를 재사용했다. Claude Code에 직접 설치해 교재대로 다시 한 기록은 [claude-code-rerun/](claude-code-rerun/README.md) 폴더에 있다. 두 버전 모두 토큰을 코드나 환경 파일에 넣지 않았다.
 
 ## Notion 결과
 
@@ -68,5 +68,6 @@ python3 test_shopping_list.py
 - `TEST_REPORT.md`: 수행 내역·검증·한계
 - `screenshots/`: 자동 검사 캡처
 - `notion-notes/`: 리서치·비교 문서와 기존 Sequential Thinking 실행 기록
+- `claude-code-rerun/`: Claude Code로 다시 한 실습 기록과 그때 만든 앱·`CLAUDE.md`·스크린샷
 
 GitHub 업로드는 실습 자료 보관이다. LMS 제출·퀴즈·출석 완료는 별도 확인해야 한다.
