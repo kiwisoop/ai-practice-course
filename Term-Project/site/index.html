@@ -78,7 +78,7 @@
       <main class="content-area">
         <div class="date-selector">
           <button aria-label="전날" id="btn-prev-day" class="btn-day-nav">‹</button>
-          <div><div id="display-date" class="date-display">11월 17일</div><p class="date-subtitle">같은 날, 쌓여가는 세 해의 이야기</p><p id="daily-question" class="daily-question"></p><div id="past-banner" class="past-banner" role="status" aria-live="polite" hidden><span id="past-banner-text"></span> <button id="past-banner-read" type="button">지난 기록 먼저 읽기</button></div><button id="three-year-video" class="btn-generate">같은 날, 3년 쇼츠 만들기</button> <label for="three-year-music" class="music-label">음악</label> <select id="three-year-music" class="music-select"></select><p class="image-status">세 해의 저장된 일기와 수채화를 연결해요. 마지막 장면에서는 더 밝은 곡으로 바뀌어요. 새 이야기 구성에는 학교 크레딧이 사용돼요.</p><p id="three-year-music-credit" class="image-status"></p></div>
+          <div><div id="display-date" class="date-display">11월 17일</div><p class="date-subtitle">같은 날, 쌓여가는 세 해의 이야기</p><p id="daily-question" class="daily-question"></p><div id="past-banner" class="past-banner" role="status" aria-live="polite" hidden><span id="past-banner-text"></span> <button id="past-banner-read" type="button">지난 기록 먼저 읽기</button></div><button id="three-year-video" class="btn-generate">같은 날, 3년 쇼츠 만들기</button> <label for="three-year-music" class="music-label">음악</label> <select id="three-year-music" class="music-select"></select> <label class="music-label narration-option" hidden><input type="checkbox" id="three-year-narration" checked> 일기 읽어 주기(AI 음성)</label><p class="image-status">세 해의 저장된 일기와 수채화를 연결해요. 마지막 장면에서는 더 밝은 곡으로 바뀌어요. 새 이야기 구성에는 학교 크레딧이 사용돼요.</p><p id="three-year-music-credit" class="image-status"></p></div>
           <button aria-label="다음 날" id="btn-next-day" class="btn-day-nav">›</button>
         </div>
 
@@ -106,6 +106,7 @@
     <div id="scene-previews" aria-label="장면 그림"></div>
     <p id="shorts-status" role="status"></p>
     <label for="shorts-music" class="music-label">배경음악</label> <select id="shorts-music" class="music-select"></select>
+    <label class="music-label narration-option" hidden><input type="checkbox" id="shorts-narration" checked> 자막을 목소리로 읽어 주기(AI 음성 · 이 컴퓨터에서 생성, 크레딧 없음)</label>
     <p id="shorts-music-credit" class="demo-label"></p>
     <button id="make-shorts" class="btn-save" disabled>이 이야기로 쇼츠 만들기</button>
     <button id="close-shorts" class="btn-delete">닫기</button>

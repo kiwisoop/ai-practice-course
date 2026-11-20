@@ -12,6 +12,7 @@ from urllib.parse import urlsplit, parse_qs
 from storage import Database, KST
 import image_api
 import story_api
+import narration
 from video_export import export_video, item_duration, make_card, make_ending, MUSIC, DEFAULT_MUSIC, ending_music
 
 ROOT = Path(__file__).resolve().parent
@@ -171,6 +172,7 @@ def create_scene(db, data):
 
 def create_three_year_video(db, data):
     music = chosen_music(data)  # validate before any paid story call
+    narrate = chosen_narration(data)
     selection = data.get('items')
     if not isinstance(selection, list) or len(selection) != 3 or any(not isinstance(i, dict) for i in selection):
         raise ValueError('같은 날짜의 세 해 일기를 선택해 주세요.')
@@ -214,7 +216,7 @@ def create_three_year_video(db, data):
     # Closing montage: the three years' watercolors side by side (already checked above, no new pictures).
     items.append(make_ending('같은 날, 세 해', [media_file(db, e['image_path']) for e in entries], [e['date'][:4] for e in entries]))
     return render_and_save_video(db, items, {e['date']: e['content_hash'] for e in entries}, 'three-year', True,
-                                 music, ending_music(music))
+                                 music, ending_music(music), narrate)
 
 
 def chosen_music(data):
@@ -224,7 +226,17 @@ def chosen_music(data):
     return music
 
 
-def render_and_save_video(db, items, sources, kind, shorts, music=DEFAULT_MUSIC, switch_music=None):
+def chosen_narration(data):
+    """Narration is opt-in per request and checked before any paid call."""
+    value = data.get('narration', False)
+    if not isinstance(value, bool):
+        raise ValueError('내레이션 선택을 확인해 주세요.')
+    if value and not narration.available():
+        raise ValueError('내레이션 음성 모델이 설치되지 않았어요. 내레이션을 끄고 다시 시도해 주세요.')
+    return value
+
+
+def render_and_save_video(db, items, sources, kind, shorts, music=DEFAULT_MUSIC, switch_music=None, narrate=False):
     if not VIDEO_LOCK.acquire(blocking=False):
         return 409, {'error': '다른 영상을 만들고 있어요. 잠시 기다려 주세요.'}
     try:
@@ -232,6 +244,14 @@ def render_and_save_video(db, items, sources, kind, shorts, music=DEFAULT_MUSIC,
         folder.mkdir(exist_ok=True)
         filename = uuid.uuid4().hex + '.mp4'
         output = folder / filename
+        if narrate and shorts:
+            # Local voice (no credits); cached per sentence, so remaking a video reuses the same audio.
+            scenes = [item for item in items if item.get('card') is not True]
+            voices = narration.synthesize([item['caption'] for item in scenes], Path(db.db_path).parent / 'narration')
+            items = [dict(item) for item in items]
+            scene_items = iter(item for item in items if item.get('card') is not True)
+            for voice in voices:
+                next(scene_items)['narration'] = voice
         try:
             export_video(items, output, **({'shorts': True} if shorts else {}), music=music, switch_music=switch_music)
         except Exception:
@@ -240,6 +260,8 @@ def render_and_save_video(db, items, sources, kind, shorts, music=DEFAULT_MUSIC,
         metadata = {'url': '/videos/' + filename, 'seconds': sum(item_duration(i, shorts) for i in items),
                     'sources': sources, 'kind': kind, 'created_at': datetime.now(KST).isoformat(),
                     'music': [MUSIC[name][2] for name in dict.fromkeys(m for m in (music, switch_music) if m)]}
+        if narrate and shorts:
+            metadata['voice'] = narration.CREDIT
         db.save_video(filename[:-4], metadata)
         return 200, metadata
     finally:
@@ -285,7 +307,7 @@ def create_video(db, data, shorts=False):
                     raise ValueError('이 이야기의 장면 그림을 먼저 준비해 주세요.')
                 item['image_path'] = image
     status, result = render_and_save_video(db, items, {i['date']: i['content_hash'] for i in selection}, 'day' if shorts else 'memory', shorts,
-                                           chosen_music(data))
+                                           chosen_music(data), None, chosen_narration(data))
     if shorts and status == 200:
         remember_edited_story(db, entry, [caption.strip() for caption in captions])
     return status, result
@@ -427,6 +449,7 @@ class DiaryHandler(BaseHTTPRequestHandler):
                     result['image_api'] = {'configured': image_api.configured(), 'model': image_api.MODEL,
                                            'estimated_credits': image_api.DEFAULT_CREDITS}
                     result['music'] = {'default': DEFAULT_MUSIC, 'tracks': [{'id': key, 'label': label, 'credit': credit} for key, (_, label, credit) in MUSIC.items()]}
+                    result['narration'] = {'available': narration.available(), 'credit': narration.CREDIT}
             elif path == '/api/memories':
                 result = {'entries': db.list_diaries(db.get_setting('start_year', 2024))}
             elif path == '/api/videos':

@@ -19,11 +19,13 @@
     ],
   };
   // 미리 렌더링한 예시 영상 (previews/)
-  const DAY_VIDEO = {date: '2024-11-17', url: MEDIA + 'previews/example-day.mp4', seconds: 24,
+  const DAY_VIDEO = {date: '2024-11-17', url: MEDIA + 'previews/example-day.mp4', seconds: 27,
     music: ['Redwood Trail — Jason Shaw (audionautix.com), CC BY 3.0']};
   const THREE_DATES = ['2024-11-17', '2025-11-17', '2026-11-17'];
-  const THREE_VIDEO = {url: MEDIA + 'previews/example-three-year.mp4', seconds: 34.5,
+  const THREE_VIDEO = {url: MEDIA + 'previews/example-three-year.mp4', seconds: 36.5,
     music: ['Warm Sunset — MusicLFiles, CC BY 4.0', 'Ukulele Rising — Squire Tuck, CC BY 4.0']};
+  // 예시 영상의 내레이션은 로컬에서 미리 만든 것. 시연판은 음성을 새로 만들지 않는다.
+  const VOICE = 'AI 음성: Supertonic 3 (Supertone, OpenRAIL-M) · F1';
 
   const read = (key, fallback) => {
     try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch { return fallback; }
@@ -104,7 +106,7 @@
       if (!entry || !entry.is_demo || item.date !== DAY_VIDEO.date)
         return json(409, {error: '온라인 시연판에는 2024년 11월 17일 하루 쇼츠만 미리 만들어 두었어요. 영상 합성(FFmpeg)은 로컬 실행에서 동작해요.'});
       const videos = read(VIDEOS, []);
-      videos.unshift({kind: 'day', sources: {[item.date]: entry.content_hash}, url: DAY_VIDEO.url, seconds: DAY_VIDEO.seconds, music: DAY_VIDEO.music, created_at: now()});
+      videos.unshift({kind: 'day', sources: {[item.date]: entry.content_hash}, url: DAY_VIDEO.url, seconds: DAY_VIDEO.seconds, music: DAY_VIDEO.music, voice: VOICE, created_at: now()});
       write(VIDEOS, videos.slice(0, 20));
       return json(200, {url: DAY_VIDEO.url, seconds: DAY_VIDEO.seconds, prerendered: true});
     }
@@ -114,7 +116,7 @@
       if (!ok) return json(409, {error: '온라인 시연판에는 시연 기록(11월 17일)의 3년 쇼츠만 미리 만들어 두었어요.'});
       const videos = read(VIDEOS, []);
       videos.unshift({kind: 'three-year', sources: Object.fromEntries(items.map(it => [it.date, it.content_hash])), url: THREE_VIDEO.url,
-        seconds: THREE_VIDEO.seconds, music: THREE_VIDEO.music, created_at: now()});
+        seconds: THREE_VIDEO.seconds, music: THREE_VIDEO.music, voice: VOICE, created_at: now()});
       write(VIDEOS, videos.slice(0, 20));
       return json(200, {url: THREE_VIDEO.url, seconds: THREE_VIDEO.seconds, prerendered: true});
     }

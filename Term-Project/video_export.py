@@ -5,6 +5,7 @@ import tempfile
 from pathlib import Path
 from datetime import datetime
 import math
+import wave
 
 # Preferred first: ffmpeg-full ships drawtext (subtitles). Plain builds may not.
 FFMPEG_CANDIDATES = [
@@ -133,10 +134,27 @@ def _validate_card(item, i):
         raise ValueError(f'카드 {i}의 시간은 1/24초 단위여야 합니다')
 
 
+NARRATION_START = 0.3  # The voice starts with the first caption phrase.
+NARRATION_TAIL = 0.6   # A short pause after the voice before the next scene.
+NARRATION_GAIN = '8dB'  # Supertonic F1 is about -25 LUFS; brings the voice above the -18 LUFS music.
+NARRATION_CREDIT = 'Supertonic 3 F1 (Supertone, OpenRAIL-M), AI-generated voice'
+
+
+def narration_seconds(path):
+    with wave.open(str(path), 'rb') as audio:
+        return audio.getnframes() / float(audio.getframerate())
+
+
 def item_duration(item, shorts=False):
     if item.get('card') is True:
         return item['seconds']
-    return scene_duration(item['caption']) if shorts else 4
+    if not shorts:
+        return 4
+    seconds = scene_duration(item['caption'])
+    if item.get('narration'):
+        # Long enough for the whole sentence to be read, in half-second steps (whole frames at 24 fps).
+        seconds = max(seconds, math.ceil((NARRATION_START + narration_seconds(item['narration']) + NARRATION_TAIL) * 2) / 2)
+    return seconds
 
 
 PANEL_REVEAL = 0.45
@@ -230,6 +248,10 @@ def _validate_items(items):
             raise ValueError(f'항목 {i}의 이미지 파일이 없습니다')
         if not image_path.is_file():
             raise ValueError(f'항목 {i}의 image_path는 파일이어야 합니다')
+        if item.get('narration') is not None:
+            voice = Path(item['narration'])
+            if voice.suffix.lower() != '.wav' or not voice.is_file():
+                raise ValueError(f'항목 {i}의 내레이션 음성 파일이 없습니다')
 
 def _wrap_caption(text, max_width=36):
     """자막 줄바꿈 (한글 18자 기준, 최대 4줄)"""
@@ -412,10 +434,10 @@ REVEAL_SECONDS = 0.4
 CAPTION_BOTTOM = 1010  # Keeps captions above the Shorts/Reels buttons at the bottom of the screen.
 
 
-def _create_shorts_scene(image_path, date_str, caption, output_video, font_path, temp_dir, scene_index=0):
+def _create_shorts_scene(image_path, date_str, caption, output_video, font_path, temp_dir, scene_index=0, seconds=None):
     date_text = datetime.strptime(date_str, '%Y-%m-%d').strftime('%Y.%m.%d')
-    seconds = scene_duration(caption)
-    frames = seconds * 24 - 1
+    seconds = scene_duration(caption) if seconds is None else seconds
+    frames = round(seconds * 24) - 1
     pan = f'on/{frames}' if scene_index % 2 == 0 else f'1-on/{frames}'
     lines = caption_lines(caption)
     fontsize = 36 if len(lines) >= 4 else 42
@@ -467,9 +489,9 @@ def ending_music(music):
     return 'bright' if music == 'hopeful' else 'hopeful'
 
 
-def music_filter(duration, switch_at=None):
+def music_filter(duration, switch_at=None, out='a'):
     """Audio graph: input 1 is the main track; with switch_at, input 2 crossfades in for the ending."""
-    tail = f'{MUSIC_LOUDNESS},aresample=48000,afade=t=in:d=1,afade=t=out:st={duration - 1.5}:d=1.5[a]'
+    tail = f'{MUSIC_LOUDNESS},aresample=48000,afade=t=in:d=1,afade=t=out:st={duration - 1.5}:d=1.5[{out}]'
     if switch_at is None:
         return f'[1:a]aresample=48000,{tail}'
     fade = MUSIC_CROSSFADE
@@ -477,6 +499,26 @@ def music_filter(duration, switch_at=None):
     return (f'[1:a]aresample=48000,atrim=0:{switch_at + fade},afade=t=out:st={switch_at}:d={fade},asetpts=PTS-STARTPTS[m];'
             f'[2:a]aresample=48000,atrim=0:{duration - switch_at},asetpts=PTS-STARTPTS,afade=t=in:d={fade},adelay=delays={delay}:all=1[e];'
             f'[m][e]amix=inputs=2:normalize=0:duration=longest,{tail}')
+
+
+def narration_filter(duration, voices, first_input, switch_at=None):
+    """Music plus scene narration. voices: [(start_seconds, ...)] in input order from first_input.
+
+    The music is ducked (sidechain compression) while the voice speaks, then mixed under it.
+    """
+    parts = [music_filter(duration, switch_at, out='music')]
+    labels = []
+    for index, start in enumerate(voices):
+        delay = round((start + NARRATION_START) * 1000)
+        parts.append(f'[{first_input + index}:a]aresample=48000,aformat=channel_layouts=stereo,volume={NARRATION_GAIN},'
+                     f'adelay=delays={delay}:all=1[v{index}]')
+        labels.append(f'[v{index}]')
+    mix = f'amix=inputs={len(labels)}:normalize=0:duration=longest,' if len(labels) > 1 else ''
+    parts.append(f'{"".join(labels)}{mix}apad,atrim=0:{duration},asplit=2[vk][vm]')
+    parts.append('[music]aformat=channel_layouts=stereo[ms]')
+    parts.append('[ms][vk]sidechaincompress=threshold=0.02:ratio=6:attack=20:release=400[duck]')
+    parts.append('[duck][vm]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.9[a]')
+    return ';'.join(parts)
 
 
 def export_video(items, output_path, shorts=False, music=DEFAULT_MUSIC, switch_music=None):
@@ -511,7 +553,15 @@ def export_video(items, output_path, shorts=False, music=DEFAULT_MUSIC, switch_m
     if any(not track.is_file() for track in tracks):
         raise ValueError('배경음악 파일이 없습니다')
     credits = ' / '.join(dict.fromkeys(MUSIC[name][2] for name in ([music] + ([switch_music] if switch_at is not None else []))))
-    
+    # Narration (shorts only): one WAV per scene, starting with that scene.
+    voices, voice_files, start = [], [], 0
+    for item in items:
+        if shorts and item.get('card') is not True and item.get('narration'):
+            voices.append(start)
+            voice_files.append(str(item['narration']))
+        start += item_duration(item, shorts)
+    metadata = f'Music: {credits}' + (f' | Voice: {NARRATION_CREDIT}' if voices else '')
+
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_path = Path(temp_dir)
         scene_videos = []
@@ -534,7 +584,7 @@ def export_video(items, output_path, shorts=False, music=DEFAULT_MUSIC, switch_m
                     font_path,
                     temp_dir,
                     # Pan direction alternates over pictures only, so cards do not break the rhythm.
-                    **({'scene_index': scene_index} if shorts else {})
+                    **({'scene_index': scene_index, 'seconds': item_duration(item, True)} if shorts else {})
                 )
                 scene_index += 1
                 scene_videos.append(str(scene_output))
@@ -551,16 +601,18 @@ def export_video(items, output_path, shorts=False, music=DEFAULT_MUSIC, switch_m
                 '-safe', '0',
                 '-i', concat_file,
                 *[arg for track in tracks for arg in ('-stream_loop', '-1', '-i', str(track))],
+                *[arg for voice in voice_files for arg in ('-i', voice)],
                 '-c:v', 'libx264',
                 '-preset', 'fast',
                 '-c:a', 'aac',
-                '-filter_complex', music_filter(duration, switch_at),
+                '-filter_complex', (narration_filter(duration, voices, 1 + len(tracks), switch_at) if voices
+                                    else music_filter(duration, switch_at)),
                 '-map', '0:v:0',
                 '-map', '[a]',
                 '-pix_fmt', 'yuv420p',
                 '-r', '24',
                 # CC BY attribution travels with the file itself.
-                '-metadata', f'comment=Music: {credits}',
+                '-metadata', f'comment={metadata}',
                 '-t', str(duration), '-movflags', 'faststart',
                 str(output_path)
             ]

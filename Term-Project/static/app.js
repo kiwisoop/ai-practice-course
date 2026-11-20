@@ -85,6 +85,7 @@ class DiaryApp {
         ? '키가 설정되어 있어요. 실제 연결은 첫 생성 때 확인합니다.'
         : '학교 API 키를 로컬 설정 파일에 입력해 주세요. 일기 저장은 연결 없이도 가능합니다.';
       this.setupMusic(data.music);
+      this.setupNarration(data.narration);
       this.updateStartYearSelect();
     } catch (error) {
       console.error('Settings load error:', error);
@@ -105,6 +106,19 @@ class DiaryApp {
       select.addEventListener('change', show);
       show();
     }
+  }
+
+  // Narration options appear only when the local voice model is installed (never in the online demo).
+  setupNarration(info) {
+    this.narrationAvailable = !!info && info.available === true;
+    this.narrationCredit = this.narrationAvailable && typeof info.credit === 'string' ? info.credit : '';
+    const options = typeof document.querySelectorAll === 'function' ? document.querySelectorAll('.narration-option') : [];
+    for (const option of options) option.hidden = !this.narrationAvailable;
+  }
+
+  wantsNarration(id) {
+    const box = document.getElementById(id);
+    return this.narrationAvailable === true && !!box && box.checked === true;
   }
 
   musicCredit(id) {
@@ -942,7 +956,8 @@ class DiaryApp {
         const video = document.createElement('video'); video.src = saved.url; video.controls = true; video.playsInline = true; video.preload = 'metadata';
         const link = document.createElement('a'); link.href = saved.url; link.download = '일기_쇼츠.mp4'; link.textContent = 'MP4 저장';
         const credit = document.createElement('p'); credit.className = 'demo-label';
-        credit.textContent = Array.isArray(saved.music) && saved.music.length ? '음악: ' + saved.music.join(' / ') : '음악: AcousticGuitarSample — RyGuy, Public Domain';
+        credit.textContent = (Array.isArray(saved.music) && saved.music.length ? '음악: ' + saved.music.join(' / ') : '음악: AcousticGuitarSample — RyGuy, Public Domain')
+          + (typeof saved.voice === 'string' && saved.voice ? ' · ' + saved.voice : '');
         section.append(title,video,link,credit); container.appendChild(section);
       }
       document.getElementById('videos-status').textContent = data.videos.length ? '일기를 바꿔도 완성된 영상은 보관돼요.' : '아직 이 날짜에 만든 영상이 없어요.';
@@ -962,7 +977,7 @@ class DiaryApp {
     const preventClose=e=>e.preventDefault(); dialog.addEventListener('cancel',preventClose);
     this.requestInProgress = true; document.getElementById('close-videos').disabled = true;
     try {
-      const response = await fetch('/api/three-year-video',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:entries.map(e=>({date:e.date,content_hash:e.content_hash})),consent:true,music:this.selectedMusic('three-year-music')})});
+      const response = await fetch('/api/three-year-video',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:entries.map(e=>({date:e.date,content_hash:e.content_hash})),consent:true,music:this.selectedMusic('three-year-music'),narration:this.wantsNarration('three-year-narration')})});
       const data = await response.json();
       if (!response.ok) throw Object.assign(new Error(data.error || '3년 영상을 만들지 못했어요.'), {free: (response.status === 400 || response.status === 409) && data.may_charge !== true});
       await this.loadSavedVideos(entries[0].date);
@@ -988,9 +1003,9 @@ class DiaryApp {
     document.getElementById('shorts-captions').disabled = true;
     const dialog = document.getElementById('dialog-shorts');
     const preventClose = event => event.preventDefault(); dialog.addEventListener('cancel', preventClose);
-    status.textContent = '그림과 기타, 자막으로 쇼츠를 만들고 있어요…';
+    status.textContent = this.wantsNarration('shorts-narration') ? '자막을 목소리로 읽고 그림·음악과 합쳐 쇼츠를 만들고 있어요…' : '그림과 음악, 자막으로 쇼츠를 만들고 있어요…';
     try {
-      const response = await fetch('/api/shorts', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:[{date:entry.date,content_hash:entry.content_hash,caption:captions[0]}],captions,scene_images:this.sceneImagesReady === true,music:this.selectedMusic('shorts-music')})});
+      const response = await fetch('/api/shorts', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:[{date:entry.date,content_hash:entry.content_hash,caption:captions[0]}],captions,scene_images:this.sceneImagesReady === true,music:this.selectedMusic('shorts-music'),narration:this.wantsNarration('shorts-narration')})});
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || '쇼츠 생성 실패');
       const video = document.getElementById('shorts-video'); video.src = data.url; video.hidden = false;

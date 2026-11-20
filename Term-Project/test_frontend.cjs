@@ -215,4 +215,19 @@ function v2Checks() {
   assert.match(mus['shorts-music-credit'].textContent, /Acoustic Meditation/, '곡을 바꾸면 출처 표기도 바뀜');
   assert.equal(app.selectedMusic('missing'), undefined, '선택 칸이 없으면 서버 기본 곡');
   console.log('배경음악 선택·출처 표기 검사 통과');
+  // Narration: options shown only when the local voice exists; the checkbox decides the request value.
+  const opts = [{hidden:true},{hidden:true}];
+  const boxes = {'shorts-narration':{checked:true}, 'three-year-narration':{checked:false}};
+  context.document = {getElementById: id => boxes[id], querySelectorAll: sel => sel === '.narration-option' ? opts : []};
+  app.setupNarration({available:false, credit:'AI 음성'});
+  assert.ok(opts.every(o => o.hidden), '음성 모델이 없으면 선택지 숨김');
+  assert.equal(app.wantsNarration('shorts-narration'), false, '모델이 없으면 체크돼 있어도 요청하지 않음');
+  app.setupNarration({available:true, credit:'AI 음성: Supertonic 3 · F1'});
+  assert.ok(opts.every(o => !o.hidden));
+  assert.equal(app.wantsNarration('shorts-narration'), true);
+  assert.equal(app.wantsNarration('three-year-narration'), false, '체크를 끄면 내레이션 없이');
+  assert.equal(app.wantsNarration('missing'), false);
+  app.setupNarration(undefined);
+  assert.equal(app.narrationAvailable, false, '시연판(설정 없음)에서는 꺼짐');
+  console.log('내레이션 선택 검사 통과');
 }

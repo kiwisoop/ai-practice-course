@@ -11,3 +11,11 @@
 | 기존 기타 샘플 | guitar.ogg | AcousticGuitarSample — RyGuy (2009) | Public Domain | https://commons.wikimedia.org/wiki/File:AcousticGuitarSample.ogg |
 
 영상에서는 곡마다 음량을 맞추고(loudnorm, 약 -18 LUFS) 처음·끝을 페이드한다. 3년 쇼츠는 마무리 장면에서 1.5초 동안 다른 곡(희망찬 우쿨렐레, 이미 그 곡을 고른 경우 경쾌한 어쿠스틱)으로 겹쳐 바뀐다. 원곡 파일은 편집하지 않는다.
+
+## 내레이션 음성
+
+| 앱 표시 | 모델 · 목소리 | 라이선스 | 출처 |
+|---|---|---|---|
+| 일기 읽어 주기(AI 음성) | Supertonic 3 · F1 (Supertone) | BigScience OpenRAIL-M (사용 제한 조항 있음, AI 생성 음성임을 밝혀야 함) | https://huggingface.co/supertone-oss-archive/supertonic-3 |
+
+모델 파일은 저장소에 넣지 않는다(약 385MB, README의 설치 방법으로 각자 받음). 생성한 음성은 영상 안에만 들어가고, MP4 comment 메타데이터와 보관함에 "AI-generated voice"로 표시한다.
