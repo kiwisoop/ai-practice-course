@@ -31,9 +31,9 @@
 
 이 표는 처음 버전 기록이다. 이때는 Claude Code에 MCP를 설치하지 않고, 이미 연결된 Codex의 Notion·Context7·GitHub와 로컬 MCP를 재사용했다. Claude Code에 직접 설치해 교재대로 다시 한 기록은 [claude-code-rerun/](claude-code-rerun/README.md) 폴더에 있다. 두 버전 모두 토큰을 코드나 환경 파일에 넣지 않았다.
 
-## Notion 결과
+## Notion 결과 (처음 버전)
 
-아래 페이지는 Notion 개인 초안으로 저장했다. 개인 페이지 주소는 공개 저장소에 포함하지 않고 사용자에게 채팅으로 전달한다.
+처음 버전에서 Notion 개인 초안으로 저장한 페이지다. 개인 페이지라 주소는 공개 저장소에 넣지 않았다. 다시 하기에서 Claude Code로 만든 페이지는 [claude-code-rerun/](claude-code-rerun/README.md)에 따로 정리했다.
 
 1. Claude Code 최신 업데이트 리서치 노트
 2. 체류 시간 늘리기 — 일반 방식
