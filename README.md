@@ -84,10 +84,11 @@ flowchart LR
     <td width="34%"><img src="Term-Project/docs/images/day-shorts.gif" alt="하루 일기로 만든 쇼츠"></td>
     <td valign="top">
       <h3><a href="Term-Project/README.md">같은 날, 세 해의 이야기</a></h3>
-      <p>같은 날짜의 일기를 3년 동안 쌓으면, AI가 일기를 <b>짧은 이야기 · 수채화 · 세로 쇼츠 영상</b>으로 만들어 줍니다.</p>
+      <p>같은 날짜의 일기를 3년 동안 쌓으면, AI가 일기를 <b>짧은 이야기 · 수채화 · 목소리가 담긴 세로 쇼츠 영상</b>으로 만들어 줍니다.</p>
       <ul>
         <li>학교 API로 Claude가 이야기를 쓰고 GPT Image가 수채화를 그립니다</li>
         <li>FFmpeg로 자막·배경음악을 넣어 720×1280 세로 영상을 합성합니다</li>
+        <li>오픈소스 AI 음성(Supertonic 3)이 자막을 읽어 주고, 목소리가 나올 때 음악을 줄입니다. 음성은 로컬에서 만들어 API 크레딧이 들지 않습니다</li>
         <li>호출 전에 동의와 예상 비용을 확인하고, 같은 일기는 이전 결과를 다시 씁니다</li>
       </ul>
       <p><a href="https://kiwisoop.github.io/ai-practice-course/Term-Project/"><b>▶ 온라인 시연판</b></a>: API를 호출하지 않고 미리 만든 결과로 체험합니다</p>
@@ -136,7 +137,7 @@ flowchart LR
 | --- | --- |
 | 브라우저만 | Study-02 · Study-03 · Study-06 · 기말 시연판 |
 | Python | Study-01 |
-| Python + 본인 API 키 | Study-04 · Study-05 · 기말 프로젝트 전체 기능 |
+| Python + 본인 API 키 | Study-04 · Study-05 · 기말 프로젝트 전체 기능 (음성 내레이션은 음성 모델을 따로 설치하면 사용) |
 
 설치 순서는 각 프로젝트 README의 **실행 방법**에 있습니다. API 키는 `.env`에만 저장하며 저장소에는 올리지 않습니다.
 
