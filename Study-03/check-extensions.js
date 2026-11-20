@@ -43,6 +43,17 @@ const hostile = [{...records[0],name:"<img src=x>"}];
 assert.ok(createReport(hostile,"normal","html").includes("&lt;img src=x&gt;"));
 assert.ok(!createReport(hostile,"normal","html").includes("<img src=x>"));
 assert.throws(()=>createReport(records,"invalid","csv"));
+// Textbook 09: relative grading (/create-report) and detailed CSV (/export-report).
+const sample = validateRecords(JSON.parse(require("node:fs").readFileSync(__dirname + "/examples/sample-records.json","utf8")));
+const relative = summarizeRecords(sample,"normal","relative").rows.map(r=>r.grade).join("");
+assert.equal(relative,"ABBCCCCDDF");
+assert.equal(summarizeRecords(sample,"normal").rows[0].grade,"A");
+assert.throws(()=>summarizeRecords(sample,"normal","curve"));
+const tied = summarizeRecords([{...sample[0]},{...sample[0],name:"동점",completedAt:"2026-11-20T11:00:00+09:00"}],"normal","relative").rows;
+assert.equal(tied[0].grade,tied[1].grade);
+const detailed = createReport(sample,"normal","csv-detailed","relative").split("\r\n");
+assert.ok(detailed[0].includes('"한국사"') && detailed[0].includes('"컴퓨터공학"'));
+assert.equal(detailed.length, sample.length + 1);
 map.set(recordKey("daily"),"{");
 assert.throws(()=>readRecords(storage,"daily"));
 assert.equal(map.get(recordKey("daily")),"{");

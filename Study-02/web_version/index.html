@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="오늘 할 일을 가볍게 정리하는 Kiwibird 할 일 관리 앱">
+  <title>Kiwibird</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div class="brand-mark" aria-hidden="true">
+        <span class="bird-eye"></span>
+      </div>
+      <div>
+        <p class="eyebrow">MY DAILY NEST</p>
+        <h1>Kiwibird</h1>
+        <p class="tagline">오늘 할 일을 가볍게 정리해요.</p>
+      </div>
+    </header>
+
+    <section class="task-card" aria-labelledby="task-form-title">
+      <h2 id="task-form-title">새 할 일</h2>
+      <form id="task-form" novalidate>
+        <label for="task-input">무엇을 해야 하나요?</label>
+        <div class="input-row">
+          <input
+            id="task-input"
+            name="task"
+            type="text"
+            maxlength="100"
+            placeholder="예: 과제 제출하기"
+            autocomplete="off"
+          >
+          <button type="submit" class="primary-button">추가</button>
+        </div>
+      </form>
+      <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="task-card" aria-labelledby="task-list-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">TODAY</p>
+          <h2 id="task-list-title">할 일 목록</h2>
+        </div>
+      </div>
+
+      <p id="empty-state" class="empty-state">
+        아직 등록한 할 일이 없어요.<br>
+        오늘 해야 할 일을 하나 적어 보세요.
+      </p>
+      <ul id="task-list" class="task-list" aria-label="등록한 할 일"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

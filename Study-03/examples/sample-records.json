@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "note": "가상 학생 10명의 예시 기록. 실제 학생 정보가 아님.",
+  "records": [
+    {
+      "name": "학생A",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 47,
+      "points": 47,
+      "byCategory": {
+        "한국사": 10,
+        "과학": 9,
+        "지리": 9,
+        "일반상식": 10,
+        "컴퓨터공학": 9
+      },
+      "completedAt": "2026-11-20T10:00:00+09:00"
+    },
+    {
+      "name": "학생B",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 43,
+      "points": 43,
+      "byCategory": {
+        "한국사": 9,
+        "과학": 9,
+        "지리": 8,
+        "일반상식": 9,
+        "컴퓨터공학": 8
+      },
+      "completedAt": "2026-11-20T10:03:00+09:00"
+    },
+    {
+      "name": "학생C",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 40,
+      "points": 40,
+      "byCategory": {
+        "한국사": 8,
+        "과학": 8,
+        "지리": 8,
+        "일반상식": 9,
+        "컴퓨터공학": 7
+      },
+      "completedAt": "2026-11-20T10:06:00+09:00"
+    },
+    {
+      "name": "학생D",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 38,
+      "points": 38,
+      "byCategory": {
+        "한국사": 8,
+        "과학": 7,
+        "지리": 8,
+        "일반상식": 7,
+        "컴퓨터공학": 8
+      },
+      "completedAt": "2026-11-20T10:09:00+09:00"
+    },
+    {
+      "name": "학생E",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 35,
+      "points": 35,
+      "byCategory": {
+        "한국사": 7,
+        "과학": 7,
+        "지리": 6,
+        "일반상식": 8,
+        "컴퓨터공학": 7
+      },
+      "completedAt": "2026-11-20T10:12:00+09:00"
+    },
+    {
+      "name": "학생F",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 32,
+      "points": 32,
+      "byCategory": {
+        "한국사": 7,
+        "과학": 6,
+        "지리": 7,
+        "일반상식": 6,
+        "컴퓨터공학": 6
+      },
+      "completedAt": "2026-11-20T10:15:00+09:00"
+    },
+    {
+      "name": "학생G",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 30,
+      "points": 30,
+      "byCategory": {
+        "한국사": 6,
+        "과학": 6,
+        "지리": 5,
+        "일반상식": 7,
+        "컴퓨터공학": 6
+      },
+      "completedAt": "2026-11-20T10:18:00+09:00"
+    },
+    {
+      "name": "학생H",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 25,
+      "points": 25,
+      "byCategory": {
+        "한국사": 5,
+        "과학": 6,
+        "지리": 5,
+        "일반상식": 5,
+        "컴퓨터공학": 4
+      },
+      "completedAt": "2026-11-20T10:21:00+09:00"
+    },
+    {
+      "name": "학생I",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 24,
+      "points": 24,
+      "byCategory": {
+        "한국사": 5,
+        "과학": 4,
+        "지리": 5,
+        "일반상식": 5,
+        "컴퓨터공학": 5
+      },
+      "completedAt": "2026-11-20T10:24:00+09:00"
+    },
+    {
+      "name": "학생J",
+      "mode": "normal",
+      "questionCount": 50,
+      "total": 20,
+      "points": 20,
+      "byCategory": {
+        "한국사": 4,
+        "과학": 4,
+        "지리": 3,
+        "일반상식": 5,
+        "컴퓨터공학": 4
+      },
+      "completedAt": "2026-11-20T10:27:00+09:00"
+    }
+  ]
+}

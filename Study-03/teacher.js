@@ -16,14 +16,22 @@ function validateRecords(data) {
   }
   return data.records.map(r => ({...r, name: r.name.trim(), mode: r.mode || "normal", questionCount: r.questionCount ?? 50, points: r.points ?? r.total}));
 }
-function summarizeRecords(records, mode) {
+// Relative grading (textbook 09 /create-report): rank share 10% A, 30% B, 70% C, 90% D, rest F. Ties share a grade.
+function relativeGrade(rank, count) {
+  const share = rank / count;
+  return share <= 0.1 ? "A" : share <= 0.3 ? "B" : share <= 0.7 ? "C" : share <= 0.9 ? "D" : "F";
+}
+function summarizeRecords(records, mode, grading = "absolute") {
+  if (!["absolute", "relative"].includes(grading)) throw new Error("Unknown grading");
   const selected = records.filter(r => r.mode === mode).sort((a, b) => b.points - a.points || a.completedAt.localeCompare(b.completedAt));
   let previous = null, rank = 0;
   const rows = selected.map((r, i) => {
     if (r.points !== previous) rank = i + 1;
     previous = r.points;
     const percent = 100 * r.total / r.questionCount;
-    return {...r, rank, percent, grade: percent >= 90 ? "A" : percent >= 80 ? "B" : percent >= 70 ? "C" : percent >= 60 ? "D" : "F"};
+    const grade = grading === "relative" ? relativeGrade(rank, selected.length)
+      : percent >= 90 ? "A" : percent >= 80 ? "B" : percent >= 70 ? "C" : percent >= 60 ? "D" : "F";
+    return {...r, rank, percent, grade};
   });
   return {rows, average: rows.length ? rows.reduce((s, r) => s + r.percent, 0) / rows.length : 0,
     categories: Object.fromEntries(reportCategories.map(c => [c, rows.length ? rows.reduce((s, r) => s + r.byCategory[c], 0) / rows.length : 0]))};

@@ -3,9 +3,7 @@
 > 국립목포대학교 **인공지능활용실습** 수업에서 AI 코딩 도구(Claude Code·Codex)와 함께 만든 결과물입니다.
 > 손글씨 인식으로 시작해 API·에이전트·MCP를 차례로 익혔고, 기말 프로젝트 **3년 다이어리**로 마무리했습니다.
 
-**[▶ 기말 프로젝트 온라인 시연](https://kiwisoop.github.io/ai-practice-course/Term-Project/)** · 프로젝트 7개 · 교재 16장 실습
-
-![3년 다이어리 메인 화면](Term-Project/docs/images/01-main.jpg)
+프로젝트 7개 · 교재 16장 실습 · 아래 순서는 수업 진행 순서입니다
 
 ---
 
@@ -77,7 +75,9 @@ flowchart LR
   </tr>
 </table>
 
-### ⭐ 기말 프로젝트 · 3년 다이어리
+### ⭐ 07 · 기말 프로젝트 · 3년 다이어리
+
+<a href="Term-Project/README.md"><img src="Term-Project/docs/images/01-main.jpg" alt="3년 다이어리 메인 화면"></a>
 
 <table>
   <tr>
@@ -106,11 +106,11 @@ flowchart LR
 | 03 | Claude Code 설치, 손글씨 인식 | [Study-01](Study-01/README.md) |
 | 04 | `/init`·`/model` 등 단계별 프롬프트 | [Study-02](Study-02/README.md) |
 | 05 | `/compact`·`/resume`, 자동 분류 | [Study-02](Study-02/README.md) |
-| 06 | 화면 캡처로 UI 개선 | [Study-02](Study-02/README.md) |
+| 06 | 화면 캡처로 UI 개선, 이전 버전 보관 | [Study-02/web_version](Study-02/web_version/README.md) |
 | 07 | 출처 확인으로 할루시네이션 막기 | [Study-03 출처 검토](Study-03/SOURCE_REVIEW.md) |
 | 08 | 커스텀 명령어 만들기 | [Study-03 명령어](Study-03/.claude/commands) |
-| 09 | 명령어 체이닝·선생님 모드 | [Study-03 확장 기능](Study-03/EXTENSIONS.md) |
-| 10 | Obsidian·Claudian | 개인 볼트에서 진행 (저장소 밖) |
+| 09 | 명령어 체이닝·상대평가 보고서·CSV | [Study-03 확장 기능](Study-03/EXTENSIONS.md) · [report_detailed.csv](Study-03/report_detailed.csv) |
+| 10 | Obsidian·Claudian | 플러그인 설치·연결 확인까지 (개인 볼트) |
 | 11 | API 키 설정·`.gitignore` | [Study-04](Study-04/README.md) |
 | 12 | 3단계 PRD로 API 앱 만들기 | [Study-04](Study-04/README.md) |
 | 13 | 리뷰·최적화·UX 서브에이전트 | [Study-04 13주차 기록](Study-04/WEEK13.md) |
@@ -121,11 +121,11 @@ flowchart LR
 <details>
 <summary>교재와 다르게 진행한 부분</summary>
 
-- **도구:** 교재는 Claude Code 기준이지만 일부 실습은 Codex와 함께 했습니다. 그래서 일부 폴더에는 `CLAUDE.md` 대신 `AGENTS.md`가 있습니다.
+- **도구:** 교재는 Claude Code 기준이지만 일부 실습은 Codex와 함께 했습니다. 작업 규칙은 `AGENTS.md`에 있고, 각 폴더의 `CLAUDE.md`가 이를 불러옵니다.
 - **API:** 교재의 OpenRouter 대신 학교에서 제공한 API 게이트웨이를 사용했습니다.
-- **교재 06:** 이전 화면을 `web_version` 폴더에 따로 보관하지 않고, 같은 폴더에서 화면을 개선했습니다.
-- **교재 09:** `/create-report`·`/export-report` 대신 `/teacher-dashboard`와 교사 화면의 CSV·HTML 내보내기로 구현했습니다.
-- **교재 16:** `shopping-list-app` 저장소를 새로 만들지 않고 이 저장소의 Study-06에 올렸습니다.
+- **교재 09:** 보고서 예시는 가상 학생 10명의 기록(`examples/sample-records.json`)으로 만들었습니다.
+- **교재 10:** Claudian 플러그인 설치와 연결 확인까지 했습니다. 공고 분석 노트·발표 슬라이드 예제는 저장소에 기록이 없습니다.
+- **교재 15·16:** MCP를 Claude Code에 직접 설치하지 않고 Codex에 연결된 도구와 로컬 실행으로 대신했습니다. `shopping-list-app` 저장소를 따로 만들지 않고 이 저장소의 Study-06에 올렸습니다.
 
 </details>
 

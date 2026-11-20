@@ -46,7 +46,7 @@ node check-extensions.js
 python3 check_tools.py
 ```
 
-`.claude/commands/`에 quiz-validate, quiz-range, quiz-add, quiz-check, quiz-stats, quiz-leaderboard, quiz-daily, teacher-dashboard를 제공한다. 해당 폴더를 프로젝트로 연 Claude에서 사용할 명령 파일이며, 이번에는 동일 기능의 CLI를 Codex에서 실제 실행했다. Claude 호출 자체는 검사하지 않았다.
+`.claude/commands/`에 quiz-validate, quiz-range, quiz-add, quiz-check, quiz-stats, quiz-leaderboard, quiz-daily, create-report, export-report, teacher-dashboard를 제공한다. 교재 09의 상대평가(`--grading relative`)와 분야별 점수 CSV(`--format csv-detailed` → `report_detailed.csv`, 가상 학생 예시 기록 `examples/sample-records.json`)도 구현했다. 해당 폴더를 프로젝트로 연 Claude에서 사용할 명령 파일이며, 이번에는 동일 기능의 CLI를 Codex에서 실제 실행했다. Claude 호출 자체는 검사하지 않았다. create-report·export-report의 CLI 동작(상대평가·report_detailed.csv 생성)은 2026-11-20 Claude Code에서 실행하고 check-extensions.js로 검사했다.
 
 quiz-add는 분야·난이도를 인수로 받아 후보를 만들고 출처를 대조하는 절차이다. 실제 파일 추가는 아래 CLI가 수행한다. 예제 1문제는 이미 추가되어 있으므로 그대로 다시 적용하면 중복 오류가 나는 것이 정상이다.
 
