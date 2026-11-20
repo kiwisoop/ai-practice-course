@@ -129,7 +129,7 @@
   }
 
   window.fetch = async (input, init = {}) => {
-    const raw = typeof input === 'string' ? input : input.url;
+    const raw = input instanceof Request ? input.url : String(input);
     if (!raw.startsWith('/api/')) return realFetch(input, init);
     const url = new URL(raw, 'https://static.invalid');
     const method = (init.method || 'GET').toUpperCase();
