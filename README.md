@@ -110,7 +110,7 @@ flowchart LR
 | 07 | 출처 확인으로 할루시네이션 막기 | [Study-03 출처 검토](Study-03/SOURCE_REVIEW.md) |
 | 08 | 커스텀 명령어 만들기 | [Study-03 명령어](Study-03/.claude/commands) |
 | 09 | 명령어 체이닝·상대평가 보고서·CSV | [Study-03 확장 기능](Study-03/EXTENSIONS.md) · [report_detailed.csv](Study-03/report_detailed.csv) |
-| 10 | Obsidian·Claudian | [Textbook-10](Textbook-10/README.md) (공고 분석 노트 · 발표 pptx v1→v2) |
+| 10 | Obsidian·Claudian | 플러그인 설치·연결 확인 (개인 볼트) |
 | 11 | API 키 설정·`.gitignore` | [Study-04](Study-04/README.md) |
 | 12 | 3단계 PRD로 API 앱 만들기 | [Study-04](Study-04/README.md) |
 | 13 | 리뷰·최적화·UX 서브에이전트 | [Study-04 13주차 기록](Study-04/WEEK13.md) |
@@ -124,7 +124,6 @@ flowchart LR
 - **도구:** 교재는 Claude Code 기준이지만 일부 실습은 Codex와 함께 했습니다. 작업 규칙은 `AGENTS.md`에 있고, 각 폴더의 `CLAUDE.md`가 이를 불러옵니다.
 - **API:** 교재의 OpenRouter 대신 학교에서 제공한 API 게이트웨이를 사용했습니다.
 - **교재 09:** 보고서 예시는 가상 학생 10명의 기록(`examples/sample-records.json`)으로 만들었습니다.
-- **교재 10:** 클로디언 입력창 대신 같은 볼트 폴더에서 Claude Code를 터미널로 실행했고, pptx 공고 대신 PDF 공고를 썼습니다([기록](Textbook-10/README.md)).
 - **교재 15·16:** 처음에는 Codex에 연결된 도구로 대신했다가, 이후 Claude Code에 MCP를 직접 설치해 교재 프롬프트 그대로 다시 했습니다([실행 기록](Study-06/claude-code-rerun/README.md)). 처음 버전은 Study-06 README에 남겨 두었습니다.
 
 </details>
@@ -151,7 +150,6 @@ ai-practice-course/
 ├── Study-04/      FridgeChef + 서브에이전트
 ├── Study-05/      공감 다이어리 · PDF 요약
 ├── Study-06/      쇼핑 리스트 + MCP
-├── Textbook-10/  옵시디언·클로디언 실습 결과
 ├── Term-Project/  기말 프로젝트 · 3년 다이어리
 └── docs/images/   README용 화면 캡처
 ```
