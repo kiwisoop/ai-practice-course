@@ -38,7 +38,8 @@ flowchart LR
       <h3>02 · Kiwibird 할 일 관리</h3>
       <sub>교재 04–06</sub>
       <p>할 일을 모두 끝내면 둥지의 알이 키위새로 바뀝니다. 마감일·우선순위·집중 타이머·자동 분류를 지원합니다.</p>
-      <sub>🌐 브라우저만 있으면 실행</sub>
+      <sub>🌐 브라우저만 있으면 실행</sub><br>
+      <a href="https://kiwisoop.github.io/ai-practice-course/Study-02/"><b>▶ 온라인으로 열기</b></a>
     </td>
   </tr>
   <tr>
@@ -47,7 +48,8 @@ flowchart LR
       <h3>03 · 상식 한 바퀴 퀴즈</h3>
       <sub>교재 07–09</sub>
       <p>모든 문제에 출처가 붙은 50문제 퀴즈입니다. 커스텀 명령어 8개와 교사용 대시보드·보고서를 만들었습니다.</p>
-      <sub>🌐 브라우저만 있으면 실행</sub>
+      <sub>🌐 브라우저만 있으면 실행</sub><br>
+      <a href="https://kiwisoop.github.io/ai-practice-course/Study-03/"><b>▶ 온라인으로 열기</b></a>
     </td>
     <td width="50%" valign="top">
       <a href="Study-04/README.md"><img src="Study-04/screenshots/dashboard.jpg" alt="FridgeChef 대시보드"></a>
@@ -70,7 +72,8 @@ flowchart LR
       <h3>06 · 쇼핑 리스트 + MCP</h3>
       <sub>교재 15–16</sub>
       <p>Claude Code에 Notion·Sequential Thinking·Context7·Playwright·GitHub MCP를 설치해, 쇼핑 리스트 앱을 자동 검사하고 <a href="https://github.com/kiwisoop/shopping-list-app">별도 저장소</a>에 올렸습니다.</p>
-      <sub>🌐 브라우저만 있으면 실행</sub>
+      <sub>🌐 브라우저만 있으면 실행</sub><br>
+      <a href="https://kiwisoop.github.io/ai-practice-course/Study-06/claude-code-rerun/shopping-list.html"><b>▶ 온라인으로 열기</b></a>
     </td>
   </tr>
 </table>
