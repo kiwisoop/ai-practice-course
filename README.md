@@ -300,7 +300,7 @@ python3 test_shopping_list.py   # Playwright MCP로 6개 시나리오 자동 검
 | 07 | 출처 확인으로 할루시네이션 막기 | [Study-03 출처 검토](./Study-03/SOURCE_REVIEW.md) |
 | 08 | 커스텀 명령어 만들기 | [Study-03 명령어](./Study-03/.claude/commands) |
 | 09 | 명령어 체이닝·상대평가 보고서·CSV | [Study-03 확장 기능](./Study-03/EXTENSIONS.md) · [report_detailed.csv](./Study-03/report_detailed.csv) |
-| 10 | Obsidian·Claudian | [교재 10 설치 화면](./Textbook-10/README.md) (BRAT·Claudian 설치, 개인 볼트라 노트 파일 없음) |
+| 10 | Obsidian·Claudian | [교재 10 설치 화면](./Textbook-10/README.md) (BRAT·Claudian 설치, "현재 상태 출력" 실행) |
 | 11 | API 키 설정·`.gitignore` | [Study-04](./Study-04/README.md) |
 | 12 | 3단계 PRD로 API 앱 만들기 | [Study-04](./Study-04/README.md) |
 | 13 | 리뷰·최적화·UX 서브에이전트 | [Study-04 13주차 기록](./Study-04/WEEK13.md) |
