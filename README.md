@@ -1,7 +1,7 @@
 # AI Practice Course (인공지능활용실습 프로젝트)
 
 본 저장소는 국립목포대학교 **인공지능활용실습** 수업의 실습 과제와 결과물을 관리하는 저장소입니다.  
-AI 코딩 도구(Claude Code·Codex)와 함께 만든 **일곱 개의 실습 폴더**(`Study-00` ~ `Study-06`)와, 별도 저장소로 분리한 **기말 프로젝트**로 구성되어 있습니다.
+AI 코딩 도구(Claude Code·Codex)와 함께 만든 **일곱 개의 실습 폴더**(`Study-00` ~ `Study-06`)로 구성되어 있습니다.
 
 > 📸 **프로그램을 실행하지 않고 화면으로 바로 보고 싶다면 → [실행 화면 갤러리 (SCREENSHOTS.md)](./SCREENSHOTS.md)**  
 > 프로젝트별 자세한 화면은 아래 표의 **보기** 링크(각 폴더의 `SCREENSHOTS.md`)에 있습니다.  
@@ -28,9 +28,8 @@ AI 코딩 도구(Claude Code·Codex)와 함께 만든 **일곱 개의 실습 폴
 | 🤖 AI 앱 | **[`Study-04`](./Study-04/)** | **FridgeChef 냉장고 요리사** | 11–13 | 냉장고 사진에서 재료를 인식하고 레시피를 추천·저장하는 앱 + 서브에이전트 개선 | Python, Streamlit, SQLite, FactChat API | [보기](./Study-04/SCREENSHOTS.md) |
 | 🤖 AI 앱 | **[`Study-05`](./Study-05/)** | **공감 다이어리 · PDF 요약** | 14 | AI 개발팀(서브에이전트 5개)과 만든 일기 공감 앱과 PDF 요약 앱 | Python, pypdf, HTML·CSS·JS, FactChat API | [보기](./Study-05/SCREENSHOTS.md) |
 | 🌐 웹 | **[`Study-06`](./Study-06/)** | **쇼핑 리스트 + MCP** | 15–16 | MCP 5개(Notion·Sequential Thinking·Context7·Playwright·GitHub)로 자동 검사·문서화·배포 | HTML, CSS, Vanilla JS, MCP | [보기](./Study-06/SCREENSHOTS.md) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-06/claude-code-rerun/shopping-list.html) |
-| ⭐ 기말 | **[`same-day-diary`](https://github.com/kiwisoop/same-day-diary)** | **3년 다이어리** | — | 같은 날짜의 일기를 3년간 모으고, AI가 이야기·수채화·음성 쇼츠 영상으로 만들어 줌 | 별도 저장소 참고 | [저장소](https://github.com/kiwisoop/same-day-diary) |
 
-> 수업 진행 순서: 프롬프트(00) → Claude Code 시작(01) → 단계별 개발(02) → 커스텀 명령어(03) → API 연결(04) → 서브에이전트(04·05) → MCP(06) → 기말 프로젝트
+> 수업 진행 순서: 프롬프트(00) → Claude Code 시작(01) → 단계별 개발(02) → 커스텀 명령어(03) → API 연결(04) → 서브에이전트(04·05) → MCP(06)
 
 ---
 
@@ -276,14 +275,6 @@ Claude Code에 **MCP 5개를 직접 설치**하고 교재 15·16의 프롬프트
 cd Study-06
 python3 test_shopping_list.py   # Playwright MCP로 6개 시나리오 자동 검사 (Node.js 필요)
 ```
-
----
-
-## ⭐ 7. 기말 프로젝트 · 3년 다이어리
-
-기말 프로젝트는 별도 저장소로 분리했습니다. → **[kiwisoop/same-day-diary](https://github.com/kiwisoop/same-day-diary)**
-
-같은 날짜의 일기를 3년 동안 쌓으면, AI가 일기를 짧은 이야기·수채화·목소리가 담긴 세로 쇼츠 영상으로 만들어 줍니다.
 
 ---
 
