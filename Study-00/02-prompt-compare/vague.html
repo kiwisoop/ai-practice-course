@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>멋진 시작 홈페이지</title>
+<!-- Result of the vague prompt: "'멋진' 나만의 시작 홈페이지를 만들어 줘."
+     With no requirements given, every choice below (dark theme, greeting, quote,
+     bookmark tiles) was decided arbitrarily. -->
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: system-ui, sans-serif; color: #fff; text-align: center;
+    background: linear-gradient(135deg, #1e1b4b, #6d28d9 55%, #db2777);
+  }
+  h1 { font-size: clamp(32px, 7vw, 64px); margin: 0 0 8px; font-weight: 800; }
+  .quote { font-style: italic; opacity: .85; max-width: 520px; margin: 0 20px 40px; }
+  .links { display: grid; grid-template-columns: repeat(4, 96px); gap: 16px; }
+  .links a {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    height: 96px; border-radius: 18px; color: #fff; text-decoration: none; font-size: 13px;
+    background: rgba(255,255,255,.12);
+  }
+  .links a span { font-size: 28px; }
+  .links a:hover { background: rgba(255,255,255,.24); }
+  @media (max-width: 480px) { .links { grid-template-columns: repeat(2, 96px); } }
+</style>
+</head>
+<body>
+  <h1 id="greeting">안녕하세요 ✨</h1>
+  <p class="quote" id="quote"></p>
+  <nav class="links" aria-label="즐겨찾기">
+    <a href="https://www.youtube.com" target="_blank" rel="noopener"><span>▶️</span>YouTube</a>
+    <a href="https://github.com" target="_blank" rel="noopener"><span>🐙</span>GitHub</a>
+    <a href="https://www.naver.com" target="_blank" rel="noopener"><span>🟢</span>Naver</a>
+    <a href="https://mail.google.com" target="_blank" rel="noopener"><span>✉️</span>Gmail</a>
+  </nav>
+<script>
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "좋은 아침이에요 ☀️" : hour < 18 ? "좋은 오후예요 🌤️" : "좋은 저녁이에요 🌙";
+  document.getElementById("greeting").textContent = greeting;
+  const quotes = [
+    "오늘 할 수 있는 일을 내일로 미루지 말자.",
+    "작은 걸음이 모여 큰 변화를 만든다.",
+    "시작이 반이다."
+  ];
+  document.getElementById("quote").textContent = "“" + quotes[Math.floor(Math.random() * quotes.length)] + "”";
+</script>
+</body>
+</html>

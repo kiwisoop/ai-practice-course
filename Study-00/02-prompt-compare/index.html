@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프롬프트 비교 — 모호한 요청 vs 구체적인 요청</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; background: #f6f7f9; color: #1f2328; }
+  header { max-width: 1200px; margin: 0 auto; padding: 32px 20px 8px; }
+  h1 { margin: 0 0 8px; font-size: 26px; }
+  header p { margin: 0; color: #57606a; }
+  .compare { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  article { background: #fff; border: 1px solid #d0d7de; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+  .label { padding: 16px 18px 12px; border-bottom: 1px solid #d0d7de; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 999px; margin-bottom: 8px; }
+  .tag.bad { background: #ffebe9; color: #a40e26; }
+  .tag.good { background: #dafbe1; color: #116329; }
+  blockquote { margin: 0; padding: 10px 12px; background: #f6f8fa; border-left: 4px solid #8c959f; border-radius: 4px; font-size: 14px; }
+  blockquote + blockquote { margin-top: 6px; }
+  iframe { width: 100%; height: 520px; border: 0; background: #fff; }
+  .open { padding: 10px 18px; font-size: 14px; border-top: 1px solid #d0d7de; }
+  .open a { color: #0969da; }
+  table { width: calc(100% - 40px); max-width: 1160px; margin: 0 auto 40px; border-collapse: collapse; background: #fff; border: 1px solid #d0d7de; border-radius: 12px; overflow: hidden; }
+  th, td { padding: 10px 14px; border-bottom: 1px solid #d0d7de; text-align: left; font-size: 14px; vertical-align: top; }
+  th { background: #f6f8fa; }
+  h2 { max-width: 1200px; margin: 8px auto 12px; padding: 0 20px; font-size: 20px; }
+  @media (max-width: 860px) { .compare { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>교재 02 · 프롬프트 비교</h1>
+  <p>같은 "시작 홈페이지"를 요청해도 프롬프트가 얼마나 구체적인지에 따라 결과가 달라집니다.</p>
+</header>
+
+<section class="compare">
+  <article>
+    <div class="label">
+      <span class="tag bad">모호한 프롬프트</span>
+      <blockquote>'멋진' 나만의 시작 홈페이지를 만들어 줘.</blockquote>
+    </div>
+    <iframe src="vague.html" title="모호한 프롬프트 결과"></iframe>
+    <div class="open"><a href="vague.html" target="_blank" rel="noopener">새 탭에서 열기 ↗</a></div>
+  </article>
+
+  <article>
+    <div class="label">
+      <span class="tag good">구체적인 프롬프트 (교재 01 결과)</span>
+      <blockquote>오늘의 날씨와 주요 뉴스를 보여 주는 나만의 시작 홈페이지를 만들고 싶어.</blockquote>
+      <blockquote>밝고 깔끔한 스타일을 선호해. 시계와 검색바도 추가해 줘. 기술 관련 뉴스를 보여 줘.</blockquote>
+    </div>
+    <iframe src="../01-start-page/index.html" title="구체적인 프롬프트 결과"></iframe>
+    <div class="open"><a href="../01-start-page/index.html" target="_blank" rel="noopener">새 탭에서 열기 ↗</a></div>
+  </article>
+</section>
+
+<h2>무엇이 달라졌나</h2>
+<table>
+  <thead><tr><th>항목</th><th>모호한 프롬프트</th><th>구체적인 프롬프트</th></tr></thead>
+  <tbody>
+    <tr><td>디자인</td><td>"멋지다"를 AI가 임의로 해석해 어두운 보라색 그라데이션</td><td>요청대로 밝고 깔끔한 스타일</td></tr>
+    <tr><td>콘텐츠</td><td>인사말·명언·즐겨찾기처럼 AI가 고른 요소</td><td>날씨·기술 뉴스·시계·검색바 등 요청한 기능</td></tr>
+    <tr><td>실제 정보</td><td>고정된 문구뿐, 매일 새로운 정보 없음</td><td>서울 날씨와 최신 기술 뉴스를 실시간으로 불러옴</td></tr>
+    <tr><td>수정 횟수</td><td>원하는 결과와 다르면 처음부터 다시 설명해야 함</td><td>요구사항이 분명해 이후 수정(구글 스타일, 할 일, 메모지 배치)이 작은 단위로 가능</td></tr>
+  </tbody>
+</table>
+</body>
+</html>

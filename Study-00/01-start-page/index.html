@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나의 시작 페이지</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --text: #202124;
+    --muted: #5f6368;
+    --line: #dadce0;
+    --blue: #1a73e8;
+    --note-yellow: #fff8c5;
+    --note-blue: #e3f0ff;
+    --note-green: #e6f6e9;
+    --note-pink: #fde7ef;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 56px 20px 64px; }
+
+  /* Google-style header and search */
+  .brand { text-align: center; font-size: 44px; font-weight: 700; letter-spacing: -1px; margin: 0 0 24px; }
+  .brand span:nth-child(1) { color: #4285f4; }
+  .brand span:nth-child(2) { color: #ea4335; }
+  .brand span:nth-child(3) { color: #fbbc05; }
+  .brand span:nth-child(4) { color: #34a853; }
+  .search {
+    display: flex; align-items: center; gap: 10px;
+    max-width: 584px; margin: 0 auto 40px;
+    background: #fff; border: 1px solid var(--line); border-radius: 24px;
+    padding: 4px 6px 4px 18px;
+  }
+  .search:focus-within, .search:hover { box-shadow: 0 1px 6px rgba(32,33,36,.28); border-color: transparent; }
+  .search input { flex: 1; border: 0; outline: 0; font-size: 16px; padding: 10px 0; background: transparent; }
+  .search button {
+    border: 0; background: var(--blue); color: #fff; font-size: 14px;
+    padding: 9px 18px; border-radius: 20px; cursor: pointer;
+  }
+  .search button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  /* Memo-note widgets, two per row */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .note {
+    position: relative; min-height: 230px; padding: 28px 24px 22px;
+    border-radius: 4px 4px 18px 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 8px 16px rgba(0,0,0,.06);
+  }
+  .note::before {
+    content: ""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg);
+    width: 84px; height: 22px; background: rgba(255,255,255,.65); border: 1px solid rgba(0,0,0,.06);
+  }
+  .note:nth-child(1) { background: var(--note-yellow); transform: rotate(-.6deg); }
+  .note:nth-child(2) { background: var(--note-green); transform: rotate(.5deg); }
+  .note:nth-child(3) { background: var(--note-blue); transform: rotate(.4deg); }
+  .note:nth-child(4) { background: var(--note-pink); transform: rotate(-.5deg); }
+  .note h2 { margin: 0 0 14px; font-size: 17px; }
+  .muted { color: var(--muted); font-size: 14px; }
+
+  .clock-time { font-size: 52px; font-weight: 700; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+
+  .todo-form { display: flex; gap: 8px; margin-bottom: 12px; }
+  .todo-form input { flex: 1; padding: 8px 10px; border: 1px solid rgba(0,0,0,.15); border-radius: 6px; font-size: 14px; background: rgba(255,255,255,.7); }
+  .todo-form button, .todo-del { border: 0; border-radius: 6px; cursor: pointer; font-size: 13px; }
+  .todo-form button { background: #188038; color: #fff; padding: 8px 12px; }
+  .todo-list { list-style: none; margin: 0; padding: 0; max-height: 150px; overflow: auto; }
+  .todo-list li { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px dashed rgba(0,0,0,.12); font-size: 14px; }
+  .todo-list li.done span { text-decoration: line-through; color: var(--muted); }
+  .todo-list span { flex: 1; word-break: break-all; }
+  .todo-del { background: transparent; color: var(--muted); padding: 2px 6px; }
+  .todo-del:hover { color: #d93025; }
+
+  .weather-main { display: flex; align-items: center; gap: 16px; }
+  .weather-icon { font-size: 52px; line-height: 1; }
+  .weather-temp { font-size: 40px; font-weight: 700; }
+  .weather-extra { margin-top: 12px; }
+
+  .news-list { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.5; }
+  .news-list li { margin-bottom: 6px; }
+  .news-list a { color: var(--text); text-decoration: none; }
+  .news-list a:hover, .news-list a:focus-visible { color: var(--blue); text-decoration: underline; }
+
+  footer { margin-top: 40px; text-align: center; }
+
+  @media (max-width: 680px) {
+    main { padding-top: 32px; }
+    .brand { font-size: 34px; }
+    .grid { grid-template-columns: 1fr; }
+    .note { transform: none !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1 class="brand" aria-label="Start"><span>S</span><span>t</span><span>a</span><span>rt</span></h1>
+
+  <form class="search" id="searchForm" role="search">
+    <input id="searchInput" type="search" placeholder="Google에서 검색하기" aria-label="검색어" autocomplete="off">
+    <button type="submit">검색</button>
+  </form>
+
+  <div class="grid">
+    <section class="note" aria-labelledby="clockTitle">
+      <h2 id="clockTitle">🕐 현재 시간</h2>
+      <div class="clock-time" id="clockTime">--:--:--</div>
+      <div class="muted" id="clockDate"></div>
+    </section>
+
+    <section class="note" aria-labelledby="todoTitle">
+      <h2 id="todoTitle">✅ 오늘의 할 일</h2>
+      <form class="todo-form" id="todoForm">
+        <input id="todoInput" type="text" maxlength="80" placeholder="할 일을 입력하세요" aria-label="할 일">
+        <button type="submit">추가</button>
+      </form>
+      <ul class="todo-list" id="todoList"></ul>
+      <p class="muted" id="todoEmpty">아직 할 일이 없습니다.</p>
+    </section>
+
+    <section class="note" aria-labelledby="weatherTitle">
+      <h2 id="weatherTitle">🌤️ 오늘의 날씨 · 서울</h2>
+      <div id="weatherBody" class="muted">날씨를 불러오는 중…</div>
+    </section>
+
+    <section class="note" aria-labelledby="newsTitle">
+      <h2 id="newsTitle">📰 최신 기술 뉴스</h2>
+      <div id="newsBody" class="muted">뉴스를 불러오는 중…</div>
+    </section>
+  </div>
+
+  <footer class="muted">날씨: Open-Meteo · 뉴스: Hacker News 인기 글</footer>
+</main>
+
+<script>
+"use strict";
+
+// Search: open Google results in a new tab
+document.getElementById("searchForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const query = document.getElementById("searchInput").value.trim();
+  if (!query) return;
+  window.open("https://www.google.com/search?q=" + encodeURIComponent(query), "_blank", "noopener");
+});
+
+// Clock
+const clockTime = document.getElementById("clockTime");
+const clockDate = document.getElementById("clockDate");
+function updateClock() {
+  const now = new Date();
+  clockTime.textContent = [now.getHours(), now.getMinutes(), now.getSeconds()]
+    .map((n) => String(n).padStart(2, "0")).join(":");
+  clockDate.textContent = now.toLocaleDateString("ko-KR", { year: "numeric", month: "long", day: "numeric", weekday: "long" });
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// To-do list (saved in this browser)
+const TODO_KEY = "start-page-todos";
+const todoList = document.getElementById("todoList");
+const todoEmpty = document.getElementById("todoEmpty");
+function loadTodos() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(TODO_KEY));
+    return Array.isArray(saved) ? saved.filter((t) => t && typeof t.text === "string") : [];
+  } catch {
+    return [];
+  }
+}
+let todos = loadTodos();
+function saveTodos() {
+  try { localStorage.setItem(TODO_KEY, JSON.stringify(todos)); } catch { /* storage unavailable: keep in memory */ }
+}
+function renderTodos() {
+  todoList.replaceChildren();
+  todos.forEach((todo, index) => {
+    const li = document.createElement("li");
+    if (todo.done) li.classList.add("done");
+    const box = document.createElement("input");
+    box.type = "checkbox";
+    box.checked = Boolean(todo.done);
+    box.setAttribute("aria-label", todo.text + " 완료");
+    box.addEventListener("change", () => { todos[index].done = box.checked; saveTodos(); renderTodos(); });
+    const text = document.createElement("span");
+    text.textContent = todo.text;
+    const del = document.createElement("button");
+    del.className = "todo-del";
+    del.type = "button";
+    del.textContent = "✕";
+    del.setAttribute("aria-label", todo.text + " 삭제");
+    del.addEventListener("click", () => { todos.splice(index, 1); saveTodos(); renderTodos(); });
+    li.append(box, text, del);
+    todoList.append(li);
+  });
+  todoEmpty.hidden = todos.length > 0;
+}
+document.getElementById("todoForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const input = document.getElementById("todoInput");
+  const text = input.value.trim();
+  if (!text) return;
+  todos.push({ text, done: false });
+  input.value = "";
+  saveTodos();
+  renderTodos();
+});
+renderTodos();
+
+// Weather (Seoul, Open-Meteo, no API key)
+const WEATHER_CODES = {
+  0: ["☀️", "맑음"], 1: ["🌤️", "대체로 맑음"], 2: ["⛅", "구름 조금"], 3: ["☁️", "흐림"],
+  45: ["🌫️", "안개"], 48: ["🌫️", "안개"], 51: ["🌦️", "이슬비"], 53: ["🌦️", "이슬비"], 55: ["🌦️", "이슬비"],
+  61: ["🌧️", "비"], 63: ["🌧️", "비"], 65: ["🌧️", "강한 비"], 71: ["🌨️", "눈"], 73: ["🌨️", "눈"], 75: ["❄️", "많은 눈"],
+  80: ["🌦️", "소나기"], 81: ["🌦️", "소나기"], 82: ["⛈️", "강한 소나기"], 95: ["⛈️", "뇌우"]
+};
+async function loadWeather() {
+  const body = document.getElementById("weatherBody");
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.978"
+    + "&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m"
+    + "&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FSeoul&forecast_days=1";
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    const c = data.current;
+    const [icon, label] = WEATHER_CODES[c.weather_code] || ["🌡️", "알 수 없음"];
+    const main = document.createElement("div");
+    main.className = "weather-main";
+    const iconEl = document.createElement("div");
+    iconEl.className = "weather-icon";
+    iconEl.textContent = icon;
+    const info = document.createElement("div");
+    const temp = document.createElement("div");
+    temp.className = "weather-temp";
+    temp.textContent = Math.round(c.temperature_2m) + "°C";
+    const desc = document.createElement("div");
+    desc.className = "muted";
+    desc.textContent = label + " · 최고 " + Math.round(data.daily.temperature_2m_max[0]) + "° / 최저 " + Math.round(data.daily.temperature_2m_min[0]) + "°";
+    info.append(temp, desc);
+    main.append(iconEl, info);
+    const extra = document.createElement("div");
+    extra.className = "weather-extra muted";
+    extra.textContent = "💧 습도 " + c.relative_humidity_2m + "%   🌬️ 바람 " + c.wind_speed_10m + " km/h";
+    body.className = "";
+    body.replaceChildren(main, extra);
+  } catch {
+    body.textContent = "날씨 정보를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.";
+  }
+}
+
+// Tech news (Hacker News front page via Algolia, no API key)
+async function loadNews() {
+  const body = document.getElementById("newsBody");
+  try {
+    const res = await fetch("https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=6");
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    const list = document.createElement("ol");
+    list.className = "news-list";
+    data.hits.forEach((hit) => {
+      const fallback = "https://news.ycombinator.com/item?id=" + encodeURIComponent(hit.objectID);
+      const href = /^https?:\/\//.test(hit.url || "") ? hit.url : fallback;
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = href;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = hit.title;
+      li.append(a);
+      list.append(li);
+    });
+    body.className = "";
+    body.replaceChildren(list);
+  } catch {
+    body.textContent = "뉴스를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.";
+  }
+}
+
+loadWeather();
+loadNews();
+</script>
+</body>
+</html>

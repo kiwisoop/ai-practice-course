@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한서윤 | 프리랜서 퍼포먼스 마케터</title>
+<meta name="description" content="데이터로 성장을 설계하는 5년 차 퍼포먼스 마케터 한서윤의 포트폴리오 (실습용 가상 인물)">
+<style>
+  :root {
+    --ink: #1c1917;
+    --muted: #57534e;
+    --paper: #fafaf9;
+    --accent: #e85d3f;
+    --accent-dark: #c2410c;
+    --tone-hero: #fff7ed;
+    --tone-metrics: #1c1917;
+    --tone-about: #ffffff;
+    --tone-cases: #f0f9ff;
+    --tone-skills: #f7fee7;
+    --tone-services: #fdf4ff;
+    --tone-testimonials: #fefce8;
+    --tone-contact: #1e293b;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    margin: 0; color: var(--ink); background: var(--paper);
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    line-height: 1.65;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 96px 0; }
+  h2 { font-size: clamp(26px, 4vw, 36px); line-height: 1.25; margin: 0 0 12px; letter-spacing: -0.5px; }
+  .eyebrow { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 10px; }
+  .lead { color: var(--muted); max-width: 640px; margin: 0 0 40px; }
+
+  /* Header */
+  #site-header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(250,250,249,.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e7e5e4;
+  }
+  #site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 800; text-decoration: none; font-size: 18px; }
+  .logo span { color: var(--accent); }
+  #site-header nav { display: flex; gap: 22px; font-size: 14px; }
+  #site-header nav a { text-decoration: none; color: var(--muted); }
+  #site-header nav a:hover { color: var(--ink); }
+
+  /* Hero */
+  #hero-introduction { background: var(--tone-hero); padding: 80px 0 96px; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  .hero-grid h1 { font-size: clamp(36px, 6vw, 58px); line-height: 1.15; margin: 0 0 18px; letter-spacing: -1.5px; }
+  .hero-grid h1 em { font-style: normal; color: var(--accent); }
+  .hero-role { font-weight: 700; color: var(--muted); margin: 0 0 8px; }
+  .hero-copy { font-size: 18px; color: var(--muted); margin: 0 0 32px; }
+  .btn {
+    display: inline-block; padding: 14px 26px; border-radius: 999px; font-weight: 700; text-decoration: none;
+    background: var(--accent); color: #fff; transition: transform .15s, background .15s;
+  }
+  .btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--ink); margin-left: 10px; }
+  .btn.ghost:hover { background: var(--ink); color: #fff; }
+  .chart-card { margin: 0; background: #fff; border-radius: var(--radius); padding: 24px; box-shadow: 0 20px 40px -20px rgba(194,65,12,.35); }
+  .chart-card h3 { margin: 0 0 4px; font-size: 16px; }
+  .chart-card p { margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+  .chart-card svg { display: block; width: 100%; height: auto; }
+  .chart-legend { display: flex; gap: 16px; font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .chart-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  /* Metrics */
+  #performance-metrics { background: var(--tone-metrics); color: #fafaf9; }
+  #performance-metrics .eyebrow { color: #fdba74; }
+  #performance-metrics .lead { color: #a8a29e; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .stat.wide { grid-column: 1 / -1; display: grid; grid-template-columns: 180px 1fr; gap: 8px 24px; align-items: center; }
+  .stat.wide ul { margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .stat.wide li { border-top: 0; border-left: 2px solid #fdba74; padding: 2px 0 2px 12px; }
+  .stat { border: 1px solid #44403c; border-radius: var(--radius); padding: 24px; }
+  .stat strong { display: block; font-size: 36px; line-height: 1.1; color: #fdba74; letter-spacing: -1px; }
+  .stat span { color: #d6d3d1; font-size: 14px; }
+  .stat ul { margin: 10px 0 0; padding: 0; list-style: none; font-size: 13px; color: #d6d3d1; }
+  .stat li { padding: 4px 0; border-top: 1px solid #44403c; }
+  .stat li b { color: #fff; }
+
+  /* About */
+  #about-me { background: var(--tone-about); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; align-items: start; }
+  .principles { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
+  .principles li { padding: 18px 20px; border-left: 4px solid var(--accent); background: var(--paper); border-radius: 0 12px 12px 0; }
+  .principles b { display: block; margin-bottom: 2px; }
+
+  /* Case studies */
+  #case-studies { background: var(--tone-cases); }
+  .cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .case { background: #fff; border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; border: 1px solid #e0f2fe; }
+  .case .tag { align-self: flex-start; font-size: 12px; font-weight: 700; color: #0369a1; background: #e0f2fe; padding: 4px 10px; border-radius: 999px; margin-bottom: 14px; }
+  .case h3 { margin: 0 0 12px; font-size: 19px; line-height: 1.35; }
+  .case dl { margin: 0 0 18px; font-size: 14px; }
+  .case dt { font-weight: 700; color: #0369a1; margin-top: 10px; }
+  .case dd { margin: 2px 0 0; color: var(--muted); }
+  .case .result { margin-top: auto; display: flex; gap: 12px; }
+  .case .result div { flex: 1; background: #f0f9ff; border-radius: 10px; padding: 10px; text-align: center; }
+  .case .result b { display: block; font-size: 22px; color: #0c4a6e; }
+  .case .result small { color: var(--muted); }
+
+  /* Skills */
+  #skills-tools { background: var(--tone-skills); }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .bar { margin-bottom: 18px; }
+  .bar-label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .bar-track { height: 10px; background: #d9f99d; border-radius: 999px; overflow: hidden; }
+  .bar-fill { height: 100%; background: #4d7c0f; border-radius: 999px; }
+  .tools { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .tools li { background: #fff; border: 1px solid #d9f99d; padding: 8px 14px; border-radius: 999px; font-size: 14px; }
+
+  /* Services */
+  #services { background: var(--tone-services); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .service { background: #fff; border-radius: var(--radius); padding: 28px; border: 1px solid #f5d0fe; }
+  .service .icon { font-size: 30px; }
+  .service h3 { margin: 12px 0 8px; font-size: 18px; }
+  .service p { margin: 0; color: var(--muted); font-size: 15px; }
+  .process { display: flex; gap: 12px; margin: 40px 0 0; padding: 0; list-style: none; counter-reset: step; }
+  .process li { flex: 1; background: #fff; border-radius: 12px; padding: 16px; font-size: 14px; border: 1px dashed #e879f9; }
+  .process li::before { counter-increment: step; content: "STEP " counter(step); display: block; font-size: 12px; font-weight: 800; color: #a21caf; }
+
+  /* Testimonials */
+  #testimonials { background: var(--tone-testimonials); }
+  .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .quotes figure { margin: 0; background: #fff; border-radius: var(--radius); padding: 28px; border: 1px solid #fef08a; }
+  .quotes blockquote { margin: 0 0 16px; font-size: 17px; }
+  .quotes blockquote::before { content: "“"; font-size: 48px; line-height: 0; vertical-align: -18px; color: #ca8a04; margin-right: 4px; }
+  .quotes figcaption { font-size: 14px; color: var(--muted); }
+
+  /* Contact */
+  #contact { background: var(--tone-contact); color: #f1f5f9; text-align: center; }
+  #contact .eyebrow { color: #fdba74; }
+  #contact .lead { color: #cbd5e1; margin: 0 auto 32px; }
+  .contact-mail { display: inline-block; font-size: clamp(22px, 4vw, 32px); font-weight: 800; color: #fff; margin-bottom: 28px; text-decoration-color: var(--accent); text-underline-offset: 8px; }
+  #site-footer { background: #0f172a; color: #94a3b8; font-size: 13px; text-align: center; padding: 20px 24px; }
+  #site-footer a { color: #cbd5e1; }
+
+  @media (max-width: 900px) {
+    html { scroll-padding-top: 112px; }
+    #site-header .wrap { flex-direction: column; align-items: stretch; height: auto; padding-top: 10px; }
+    #site-header nav { overflow-x: auto; gap: 18px; padding: 8px 0 10px; white-space: nowrap; scrollbar-width: none; }
+    #site-header nav::-webkit-scrollbar { display: none; }
+    .hero-grid, .about-grid, .skills-grid, .quotes { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat.wide { grid-template-columns: 1fr; }
+    .stat.wide ul { grid-template-columns: 1fr; }
+    .cases, .services-grid { grid-template-columns: 1fr; }
+    .process { flex-direction: column; }
+    section { padding: 72px 0; }
+  }
+</style>
+</head>
+<body>
+  <header id="site-header">
+    <div class="wrap">
+      <a class="logo" href="#hero-introduction">한서윤<span>.</span></a>
+      <nav aria-label="섹션 이동">
+        <a href="#performance-metrics">성과</a>
+        <a href="#about-me">소개</a>
+        <a href="#case-studies">프로젝트</a>
+        <a href="#skills-tools">역량</a>
+        <a href="#services">서비스</a>
+        <a href="#testimonials">추천사</a>
+        <a href="#contact">연락처</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- hero-introduction: name, pitch, CTA, Before/After chart (moved here from case-studies) -->
+    <section id="hero-introduction">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="hero-role">프리랜서 퍼포먼스 마케터 · 5년 차</p>
+          <h1>데이터로 <em>성장</em>을<br>설계하는 마케터,<br>한서윤입니다.</h1>
+          <p class="hero-copy">광고비는 줄이고 매출은 늘리는 실험을 반복합니다. 스타트업과 D2C 브랜드의 첫 1억, 다음 10억을 함께 만들어 왔습니다.</p>
+          <a class="btn" href="#contact">프로젝트 문의하기</a>
+          <a class="btn ghost" href="#case-studies">성과 보기</a>
+        </div>
+        <figure class="chart-card" aria-labelledby="chartTitle">
+          <h3 id="chartTitle">함께한 브랜드의 월 매출 변화</h3>
+          <p>캠페인 시작 전(Before) vs 6개월 후(After), 단위: 백만 원</p>
+          <svg id="beforeAfterChart" viewBox="0 0 420 240" role="img" aria-label="세 브랜드의 월 매출이 Before 대비 After에 각각 증가한 막대 차트"></svg>
+          <div class="chart-legend"><span><i style="background:#d6d3d1"></i>Before</span><span><i style="background:var(--accent)"></i>After</span></div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- performance-metrics: Quick Stats -->
+    <section id="performance-metrics">
+      <div class="wrap">
+        <span class="eyebrow">Quick Stats</span>
+        <h2>숫자로 보는 지난 5년</h2>
+        <p class="lead">모든 수치는 클라이언트 대시보드 기준의 캠페인 결과입니다.</p>
+        <div class="stats">
+          <div class="stat"><strong>5년</strong><span>퍼포먼스 마케팅 경력</span></div>
+          <div class="stat"><strong>38억</strong><span>누적 관리 광고비 (원)</span></div>
+          <div class="stat"><strong>420%</strong><span>평균 ROAS</span></div>
+          <div class="stat wide">
+            <div><strong>27건</strong><span>최근 3년 프로젝트</span></div>
+            <ul>
+              <li><b>2024</b> · 7건 — D2C 런칭 3, 리브랜딩 2, 앱 설치 2</li>
+              <li><b>2025</b> · 9건 — 그로스 실험 4, 커머스 광고 5</li>
+              <li><b>2026</b> · 11건 — 프리랜스 장기 계약 6, 단기 컨설팅 5</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- about-me -->
+    <section id="about-me">
+      <div class="wrap about-grid">
+        <div>
+          <span class="eyebrow">About</span>
+          <h2>숫자 뒤의 사람을<br>보는 마케터</h2>
+        </div>
+        <div>
+          <p>광고대행사에서 4년간 커머스·앱 광고를 운영했고, 지금은 프리랜서로 스타트업의 마케팅 팀 역할을 합니다. 클릭률보다 "왜 이 사람이 샀을까"를 먼저 묻고, 그 답을 실험으로 확인합니다.</p>
+          <ul class="principles">
+            <li><b>가설 → 실험 → 학습</b>매주 하나 이상의 A/B 테스트로 감이 아닌 근거를 쌓습니다.</li>
+            <li><b>투명한 리포트</b>성과가 나쁜 주에도 숫자를 그대로 공유하고 다음 행동을 제안합니다.</li>
+            <li><b>팀처럼 일하기</b>디자이너·개발자와 같은 목표 지표를 보고 함께 우선순위를 정합니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- case-studies -->
+    <section id="case-studies">
+      <div class="wrap">
+        <span class="eyebrow">Case Studies</span>
+        <h2>대표 프로젝트</h2>
+        <p class="lead">과제 → 실행 → 결과 순서로 정리했습니다.</p>
+        <div class="cases">
+          <article class="case" id="case-1">
+            <span class="tag">D2C 뷰티 · 런칭</span>
+            <h3>비건 스킨케어 '그린모먼트' 첫 6개월 매출 성장</h3>
+            <dl>
+              <dt>과제</dt><dd>신규 브랜드, 인지도 0에서 월 매출 목표 1억</dd>
+              <dt>실행</dt><dd>크리에이터 50명 시딩 → 반응 좋은 후기를 광고 소재로 재활용, 리타기팅 퍼널 설계</dd>
+            </dl>
+            <div class="result"><div><b>4.1배</b><small>월 매출</small></div><div><b>-38%</b><small>CPA</small></div></div>
+          </article>
+          <article class="case" id="case-2">
+            <span class="tag">핀테크 앱 · 그로스</span>
+            <h3>가계부 앱 '머니노트' 설치 단가 절감</h3>
+            <dl>
+              <dt>과제</dt><dd>앱 설치 비용 상승, 가입 후 이탈률 62%</dd>
+              <dt>실행</dt><dd>소재 120종 A/B 테스트, 온보딩 3단계 축소 실험을 개발팀과 공동 진행</dd>
+            </dl>
+            <div class="result"><div><b>-45%</b><small>설치 단가</small></div><div><b>+21%p</b><small>7일 유지율</small></div></div>
+          </article>
+          <article class="case" id="case-3">
+            <span class="tag">로컬 F&amp;B · 리브랜딩</span>
+            <h3>베이커리 '오븐앤도어' 온라인 주문 전환</h3>
+            <dl>
+              <dt>과제</dt><dd>오프라인 매장 중심, 온라인 주문 비중 5%</dd>
+              <dt>실행</dt><dd>지역 타기팅 광고와 첫 주문 쿠폰, 인스타그램 예약 주문 동선 개편</dd>
+            </dl>
+            <div class="result"><div><b>31%</b><small>온라인 비중</small></div><div><b>2.6배</b><small>재주문율</small></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- skills-tools -->
+    <section id="skills-tools">
+      <div class="wrap skills-grid">
+        <div>
+          <span class="eyebrow">Skills</span>
+          <h2>역량</h2>
+          <div class="bar"><div class="bar-label"><span>퍼포먼스 광고 운영</span><span>95</span></div><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div></div>
+          <div class="bar"><div class="bar-label"><span>데이터 분석·리포팅</span><span>90</span></div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div></div>
+          <div class="bar"><div class="bar-label"><span>그로스 실험 설계</span><span>85</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+          <div class="bar"><div class="bar-label"><span>콘텐츠·카피라이팅</span><span>80</span></div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
+        </div>
+        <div>
+          <span class="eyebrow">Tools</span>
+          <h2>사용 도구</h2>
+          <ul class="tools">
+            <li>Meta 광고</li><li>Google Ads</li><li>네이버 검색광고</li><li>카카오모먼트</li>
+            <li>GA4</li><li>Looker Studio</li><li>Amplitude</li><li>AppsFlyer</li>
+            <li>SQL</li><li>Notion</li><li>Figma</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- services -->
+    <section id="services">
+      <div class="wrap">
+        <span class="eyebrow">Services</span>
+        <h2>이런 일을 함께할 수 있어요</h2>
+        <p class="lead">단기 진단부터 장기 운영까지, 팀 상황에 맞춰 범위를 정합니다.</p>
+        <div class="services-grid">
+          <div class="service"><div class="icon">📊</div><h3>광고 계정 진단</h3><p>2주 동안 기존 계정과 데이터를 분석해 바로 실행할 개선안 10가지를 드립니다.</p></div>
+          <div class="service"><div class="icon">🚀</div><h3>퍼포먼스 광고 운영</h3><p>매체 선정부터 소재 테스트, 주간 리포트까지 월 단위로 직접 운영합니다.</p></div>
+          <div class="service"><div class="icon">🧪</div><h3>그로스 실험 컨설팅</h3><p>퍼널의 병목을 찾고 실험 로드맵을 함께 세워 팀이 스스로 돌릴 수 있게 돕습니다.</p></div>
+        </div>
+        <ol class="process">
+          <li>무료 30분 상담으로 목표와 현황 공유</li>
+          <li>데이터 진단과 제안서 전달</li>
+          <li>실행 · 주간 리포트</li>
+          <li>성과 리뷰와 다음 단계 제안</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- testimonials -->
+    <section id="testimonials">
+      <div class="wrap">
+        <span class="eyebrow">Testimonials</span>
+        <h2>함께한 분들의 이야기</h2>
+        <p class="lead">프로젝트를 마친 클라이언트가 남긴 후기입니다.</p>
+        <div class="quotes">
+          <figure>
+            <blockquote>숫자가 나쁜 주에도 먼저 원인과 대안을 들고 오셨어요. 마케터라기보다 공동 창업자 같았습니다.</blockquote>
+            <figcaption>— 그린모먼트 대표</figcaption>
+          </figure>
+          <figure>
+            <blockquote>개발팀과 같은 지표로 대화하는 마케터는 처음이었습니다. 온보딩 실험 덕분에 유지율이 눈에 띄게 올랐어요.</blockquote>
+            <figcaption>— 머니노트 그로스 리드</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section id="contact">
+      <div class="wrap">
+        <span class="eyebrow">Contact</span>
+        <h2>다음 성장을 함께 만들어요</h2>
+        <p class="lead">정규직 채용과 장기 프리랜스 프로젝트 모두 열려 있습니다. 평일 기준 하루 안에 답장드립니다.</p>
+        <a class="contact-mail" href="mailto:hello@example.com">hello@example.com</a><br>
+        <a class="btn" href="mailto:hello@example.com?subject=%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EB%AC%B8%EC%9D%98">이메일로 문의하기</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer">
+    © 2026 한서윤 · <a href="#hero-introduction">맨 위로 ↑</a><br>
+    이 페이지는 인공지능활용실습 교재 02 실습용 예시이며, 인물·브랜드·수치는 모두 가상입니다.
+  </footer>
+
+<script>
+"use strict";
+// Before/After bar chart drawn with plain SVG (no external library).
+// The viewBox follows the real width so labels keep their pixel size on phones.
+const chartData = [
+  { label: "그린모먼트", before: 24, after: 98 },
+  { label: "머니노트", before: 40, after: 72 },
+  { label: "오븐앤도어", before: 18, after: 46 }
+];
+const chartSvg = document.getElementById("beforeAfterChart");
+function drawChart() {
+  const data = chartData;
+  const svg = chartSvg;
+  const NS = "http://www.w3.org/2000/svg";
+  const W = Math.max(260, Math.round(svg.parentElement.clientWidth - 48));
+  const H = 240, top = 18, bottom = 36, left = 32;
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.replaceChildren();
+  const max = 100;
+  const plotH = H - top - bottom;
+  const groupW = (W - left) / data.length;
+  const barW = Math.min(34, Math.floor(groupW / 2) - 6);
+
+  function el(name, attrs, text) {
+    const node = document.createElementNS(NS, name);
+    Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+    if (text !== undefined) node.textContent = text;
+    svg.appendChild(node);
+    return node;
+  }
+
+  [0, 50, 100].forEach((tick) => {
+    const y = top + plotH - (tick / max) * plotH;
+    el("line", { x1: left, x2: W, y1: y, y2: y, stroke: "#e7e5e4" });
+    el("text", { x: left - 6, y: y + 4, "text-anchor": "end", "font-size": 11, fill: "#78716c" }, tick);
+  });
+
+  data.forEach((d, i) => {
+    const cx = left + groupW * i + groupW / 2;
+    [["before", "#d6d3d1", -barW - 2], ["after", "#e85d3f", 2]].forEach(([key, color, offset]) => {
+      const h = (d[key] / max) * plotH;
+      el("rect", { x: cx + offset, y: top + plotH - h, width: barW, height: h, rx: 5, fill: color });
+      el("text", { x: cx + offset + barW / 2, y: top + plotH - h - 5, "text-anchor": "middle", "font-size": 11, "font-weight": 700, fill: "#44403c" }, d[key]);
+    });
+    el("text", { x: cx, y: H - 12, "text-anchor": "middle", "font-size": 12, fill: "#44403c" }, d.label);
+  });
+}
+drawChart();
+new ResizeObserver(drawChart).observe(chartSvg.parentElement);
+</script>
+</body>
+</html>
