@@ -195,4 +195,4 @@ GitHub Pages는 HTML·CSS·JavaScript 정적 사이트용이라 이 Python 앱�
 - 모델별 비용·속도·응답 형식 차이를 비교한 기록 추가
 - 실제 모바일 기기에서 주요 사용자 흐름 추가 검증
 
-[전체 과제 목록으로 돌아가기](../README.md)
+[📸 실행 화면 보기](./SCREENSHOTS.md) · [전체 과제 목록으로 돌아가기](../README.md)

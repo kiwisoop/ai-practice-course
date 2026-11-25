@@ -20,13 +20,13 @@ AI 코딩 도구(Claude Code·Codex)와 함께 만든 **일곱 개의 실습 폴
 
 | 분류 | 프로젝트 | 프로그램 명 | 교재 | 설명 | 기술 스택 | 실행 화면 |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| 🌐 웹 | **[`Study-00`](./Study-00/)** | **시작 홈페이지 · 마케팅 포트폴리오** | 01–02 | 교재 프롬프트로 만든 시작 페이지, 모호한/구체적 프롬프트 비교, PRD 기반 포트폴리오 | HTML, CSS, Vanilla JS | [보기](./SCREENSHOTS.md#0-study-00--시작-홈페이지--마케팅-포트폴리오) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-00/01-start-page/) |
-| 🐍 Python | **[`Study-01`](./Study-01/)** | **손글씨 숫자 인식** | 03 | 숫자를 그리면 MNIST로 학습한 CNN이 숫자와 신뢰도를 알려 주는 데스크톱·웹 프로그램 | Python, TensorFlow/Keras, Tkinter | [보기](./SCREENSHOTS.md#1-study-01--손글씨-숫자-인식) |
-| 🌐 웹 | **[`Study-02`](./Study-02/)** | **Kiwibird 할 일 관리** | 04–06 | 할 일을 모두 끝내면 둥지의 알이 키위새로 바뀌는 개인용 할 일 관리 앱 | HTML, CSS, Vanilla JS, localStorage | [보기](./SCREENSHOTS.md#2-study-02--kiwibird-할-일-관리) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-02/) |
-| 🌐 웹 | **[`Study-03`](./Study-03/)** | **상식 한 바퀴 퀴즈** | 07–09 | 모든 문제에 출처가 붙은 50문제 퀴즈 + 커스텀 명령어 10개 + 교사용 보고서 | HTML, CSS, Vanilla JS, Python·Node.js 검사 도구 | [보기](./SCREENSHOTS.md#3-study-03--상식-한-바퀴-퀴즈) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-03/) |
-| 🤖 AI 앱 | **[`Study-04`](./Study-04/)** | **FridgeChef 냉장고 요리사** | 11–13 | 냉장고 사진에서 재료를 인식하고 레시피를 추천·저장하는 앱 + 서브에이전트 개선 | Python, Streamlit, SQLite, FactChat API | [보기](./SCREENSHOTS.md#4-study-04--fridgechef-냉장고-요리사) |
-| 🤖 AI 앱 | **[`Study-05`](./Study-05/)** | **공감 다이어리 · PDF 요약** | 14 | AI 개발팀(서브에이전트 5개)과 만든 일기 공감 앱과 PDF 요약 앱 | Python, pypdf, HTML·CSS·JS, FactChat API | [보기](./SCREENSHOTS.md#5-study-05--공감-다이어리--pdf-요약) |
-| 🌐 웹 | **[`Study-06`](./Study-06/)** | **쇼핑 리스트 + MCP** | 15–16 | MCP 5개(Notion·Sequential Thinking·Context7·Playwright·GitHub)로 자동 검사·문서화·배포 | HTML, CSS, Vanilla JS, MCP | [보기](./SCREENSHOTS.md#6-study-06--쇼핑-리스트--mcp) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-06/claude-code-rerun/shopping-list.html) |
+| 🌐 웹 | **[`Study-00`](./Study-00/)** | **시작 홈페이지 · 마케팅 포트폴리오** | 01–02 | 교재 프롬프트로 만든 시작 페이지, 모호한/구체적 프롬프트 비교, PRD 기반 포트폴리오 | HTML, CSS, Vanilla JS | [보기](./Study-00/SCREENSHOTS.md) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-00/01-start-page/) |
+| 🐍 Python | **[`Study-01`](./Study-01/)** | **손글씨 숫자 인식** | 03 | 숫자를 그리면 MNIST로 학습한 CNN이 숫자와 신뢰도를 알려 주는 데스크톱·웹 프로그램 | Python, TensorFlow/Keras, Tkinter | [보기](./Study-01/SCREENSHOTS.md) |
+| 🌐 웹 | **[`Study-02`](./Study-02/)** | **Kiwibird 할 일 관리** | 04–06 | 할 일을 모두 끝내면 둥지의 알이 키위새로 바뀌는 개인용 할 일 관리 앱 | HTML, CSS, Vanilla JS, localStorage | [보기](./Study-02/SCREENSHOTS.md) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-02/) |
+| 🌐 웹 | **[`Study-03`](./Study-03/)** | **상식 한 바퀴 퀴즈** | 07–09 | 모든 문제에 출처가 붙은 50문제 퀴즈 + 커스텀 명령어 10개 + 교사용 보고서 | HTML, CSS, Vanilla JS, Python·Node.js 검사 도구 | [보기](./Study-03/SCREENSHOTS.md) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-03/) |
+| 🤖 AI 앱 | **[`Study-04`](./Study-04/)** | **FridgeChef 냉장고 요리사** | 11–13 | 냉장고 사진에서 재료를 인식하고 레시피를 추천·저장하는 앱 + 서브에이전트 개선 | Python, Streamlit, SQLite, FactChat API | [보기](./Study-04/SCREENSHOTS.md) |
+| 🤖 AI 앱 | **[`Study-05`](./Study-05/)** | **공감 다이어리 · PDF 요약** | 14 | AI 개발팀(서브에이전트 5개)과 만든 일기 공감 앱과 PDF 요약 앱 | Python, pypdf, HTML·CSS·JS, FactChat API | [보기](./Study-05/SCREENSHOTS.md) |
+| 🌐 웹 | **[`Study-06`](./Study-06/)** | **쇼핑 리스트 + MCP** | 15–16 | MCP 5개(Notion·Sequential Thinking·Context7·Playwright·GitHub)로 자동 검사·문서화·배포 | HTML, CSS, Vanilla JS, MCP | [보기](./Study-06/SCREENSHOTS.md) · [▶ 실행](https://kiwisoop.github.io/ai-practice-course/Study-06/claude-code-rerun/shopping-list.html) |
 | ⭐ 기말 | **[`same-day-diary`](https://github.com/kiwisoop/same-day-diary)** | **3년 다이어리** | — | 같은 날짜의 일기를 3년간 모으고, AI가 이야기·수채화·음성 쇼츠 영상으로 만들어 줌 | 별도 저장소 참고 | [저장소](https://github.com/kiwisoop/same-day-diary) |
 
 > 수업 진행 순서: 프롬프트(00) → Claude Code 시작(01) → 단계별 개발(02) → 커스텀 명령어(03) → API 연결(04) → 서브에이전트(04·05) → MCP(06) → 기말 프로젝트

@@ -85,4 +85,4 @@ node test_frontend.cjs
 
 ---
 
-[전체 과제 목록으로 돌아가기](../README.md)
+[📸 실행 화면 보기](./SCREENSHOTS.md) · [전체 과제 목록으로 돌아가기](../README.md)

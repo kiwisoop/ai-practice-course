@@ -3,11 +3,15 @@
 프로그램을 설치·실행하지 않고도 각 프로젝트의 실제 화면을 확인할 수 있습니다.  
 브라우저 앱(Study-02·03·06)은 **▶ 온라인으로 열기** 링크로 직접 실행해 볼 수도 있습니다.
 
+각 프로젝트의 화면을 기능별로 자세히 보려면 섹션 아래 **📂 화면 자세히 보기** 링크를 누르세요.
+
 [← 전체 안내(README)로 돌아가기](./README.md)
 
 ---
 
 ## 0. Study-00 · 시작 홈페이지 · 마케팅 포트폴리오
+
+[📂 Study-00 화면 자세히 보기](./Study-00/SCREENSHOTS.md)
 
 | 시작 홈페이지 (교재 01) | 마케팅 포트폴리오 (교재 02) |
 | :---: | :---: |
@@ -23,6 +27,8 @@
 
 ## 1. Study-01 · 손글씨 숫자 인식
 
+[📂 Study-01 화면 자세히 보기](./Study-01/SCREENSHOTS.md)
+
 숫자를 그리고 `Recognize`를 누르면 예측 숫자와 신뢰도가 표시됩니다.
 
 ![손글씨 숫자 입력 화면](./docs/images/study01.jpg)
@@ -30,6 +36,8 @@
 ---
 
 ## 2. Study-02 · Kiwibird 할 일 관리
+
+[📂 Study-02 화면 자세히 보기](./Study-02/SCREENSHOTS.md)
 
 [▶ 온라인으로 열기](https://kiwisoop.github.io/ai-practice-course/Study-02/)
 
@@ -41,6 +49,8 @@
 
 ## 3. Study-03 · 상식 한 바퀴 퀴즈
 
+[📂 Study-03 화면 자세히 보기](./Study-03/SCREENSHOTS.md)
+
 [▶ 온라인으로 열기](https://kiwisoop.github.io/ai-practice-course/Study-03/)
 
 답을 고르면 정답·해설과 함께 출처가 표시됩니다.
@@ -50,6 +60,8 @@
 ---
 
 ## 4. Study-04 · FridgeChef 냉장고 요리사
+
+[📂 Study-04 화면 자세히 보기](./Study-04/SCREENSHOTS.md)
 
 | 로그인 | 대시보드 |
 | :---: | :---: |
@@ -61,6 +73,8 @@
 
 ## 5. Study-05 · 공감 다이어리 · PDF 요약
 
+[📂 Study-05 화면 자세히 보기](./Study-05/SCREENSHOTS.md)
+
 | 공감 다이어리 (데스크톱) | 공감 다이어리 (모바일) |
 | :---: | :---: |
 | ![다이어리 데스크톱](./Study-05/screenshots/diary-desktop.png) | <img src="./Study-05/screenshots/diary-mobile.png" alt="다이어리 모바일" width="260"> |
@@ -70,6 +84,8 @@
 ---
 
 ## 6. Study-06 · 쇼핑 리스트 + MCP
+
+[📂 Study-06 화면 자세히 보기](./Study-06/SCREENSHOTS.md)
 
 [▶ 온라인으로 열기](https://kiwisoop.github.io/ai-practice-course/Study-06/claude-code-rerun/shopping-list.html)
 
