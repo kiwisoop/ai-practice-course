@@ -1,7 +1,7 @@
 "use strict";
 
 const { questions, categories } = globalThis.QUIZ_DATA;
-const game = { started: false, index: 0, answers: [], completedAt: null, saved: false, mode: "normal", questions, hints: [], deadline: null };
+const game = { started: false, index: 0, answers: [], completedAt: null, saved: false, mode: "normal", questions, hints: [], hintKeep: {}, deadline: null };
 const RECORD_KEY = "study03.records.v1";
 
 function dailyQuestions(date = new Date().toLocaleDateString("sv-SE")) {
@@ -19,6 +19,7 @@ function startGame(mode = "normal", category = categories[0], now = Date.now()) 
   game.mode = mode;
   game.questions = mode === "daily" ? dailyQuestions() : mode === "practice" ? questions.filter(q => q.category === category) : questions;
   game.hints = [];
+  game.hintKeep = {};
   game.deadline = mode === "speed" ? now + 15000 : null;
   game.started = true;
   game.index = 0;
@@ -42,8 +43,11 @@ function expireQuestion(now = Date.now()) {
   }
   return false;
 }
-function useHint() {
+function useHint(random = Math.random) {
   if (!game.started || game.mode === "normal" || game.index >= game.questions.length || game.answers[game.index] !== undefined || game.hints.includes(game.index)) return false;
+  // Keep a randomly chosen wrong option so the remaining pair does not reveal the answer by position.
+  const wrongOptions = [0, 1, 2, 3].filter(i => i !== game.questions[game.index].answer_index);
+  game.hintKeep[game.index] = wrongOptions[Math.min(wrongOptions.length - 1, Math.floor(random() * wrongOptions.length))];
   game.hints.push(game.index);
   return true;
 }
@@ -178,8 +182,7 @@ if (typeof document !== "undefined") {
       button.type = "button";
       button.disabled = answered;
       if (!answered && game.hints.includes(game.index)) {
-        const wrong = question.options.findIndex((_, i) => i !== question.answer_index);
-        button.disabled = index !== question.answer_index && index !== wrong;
+        button.disabled = index !== question.answer_index && index !== game.hintKeep[game.index];
       }
       button.append(make("span", index + 1, "option-number"), make("span", option));
       if (!answered && button.disabled) {

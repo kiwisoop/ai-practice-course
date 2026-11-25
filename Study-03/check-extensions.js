@@ -57,4 +57,15 @@ assert.equal(detailed.length, sample.length + 1);
 map.set(recordKey("daily"),"{");
 assert.throws(()=>readRecords(storage,"daily"));
 assert.equal(map.get(recordKey("daily")),"{");
+// The hint keeps one wrong option, chosen at random among the three wrong ones.
+const kept = new Set();
+for (const r of [0, 0.4, 0.99]) {
+  startGame("speed", "한국사", Date.now());
+  assert.equal(useHint(() => r), true);
+  const keep = game.hintKeep[0];
+  assert.notEqual(keep, game.questions[0].answer_index);
+  assert.ok(Number.isInteger(keep) && keep >= 0 && keep < 4);
+  kept.add(keep);
+}
+assert.equal(kept.size, 3);
 console.log("PASS: modes, deadlines, hints, daily selection, isolated records, reports, input validation and output escaping.");
