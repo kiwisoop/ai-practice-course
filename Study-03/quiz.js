@@ -182,6 +182,10 @@ if (typeof document !== "undefined") {
         button.disabled = index !== question.answer_index && index !== wrong;
       }
       button.append(make("span", index + 1, "option-number"), make("span", option));
+      if (!answered && button.disabled) {
+        button.classList.add("eliminated");
+        button.append(make("span", "힌트로 제외", "answer-tag"));
+      }
       if (answered && index === question.answer_index) {
         button.classList.add("correct");
         button.append(make("span", index === selected ? "선택 · 정답" : "정답", "answer-tag"));

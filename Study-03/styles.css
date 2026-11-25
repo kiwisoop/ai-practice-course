@@ -37,6 +37,8 @@ progress::-moz-progress-bar { background: #386148; }
 .option.correct { background: #eaf3e8; border-color: #32613d; }
 .option.wrong { background: #fff0ea; border-color: #a65135; }
 .option:disabled { opacity: 1; }
+.option.eliminated { background: #f3f4f1; border-style: dashed; color: #7a857e; }
+.option.eliminated > span:nth-child(2) { text-decoration: line-through; }
 .answer-tag { font-size: 12px; margin-left: auto; flex-shrink: 0; font-weight: 650; }
 #feedback:empty { display: none; }
 #feedback { background: #f2f5ed; border-radius: 12px; margin-top: 20px; padding: 18px; overflow-wrap: anywhere; }
