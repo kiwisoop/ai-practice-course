@@ -80,24 +80,9 @@ flowchart LR
 
 ### ⭐ 07 · 기말 프로젝트 · 3년 다이어리
 
-<a href="Term-Project/README.md"><img src="Term-Project/docs/images/01-main.jpg" alt="3년 다이어리 메인 화면"></a>
+기말 프로젝트는 별도 저장소로 분리했습니다.
 
-<table>
-  <tr>
-    <td width="34%"><img src="Term-Project/docs/images/day-shorts.gif" alt="하루 일기로 만든 쇼츠"></td>
-    <td valign="top">
-      <h3><a href="Term-Project/README.md">같은 날, 세 해의 이야기</a></h3>
-      <p>같은 날짜의 일기를 3년 동안 쌓으면, AI가 일기를 <b>짧은 이야기 · 수채화 · 목소리가 담긴 세로 쇼츠 영상</b>으로 만들어 줍니다.</p>
-      <ul>
-        <li>학교 API로 Claude가 이야기를 쓰고 GPT Image가 수채화를 그립니다</li>
-        <li>FFmpeg로 자막·배경음악을 넣어 720×1280 세로 영상을 합성합니다</li>
-        <li>오픈소스 AI 음성(Supertonic 3)이 자막을 읽어 주고, 목소리가 나올 때 음악을 줄입니다. 음성은 로컬에서 만들어 API 크레딧이 들지 않습니다</li>
-        <li>호출 전에 동의와 예상 비용을 확인하고, 같은 일기는 이전 결과를 다시 씁니다</li>
-      </ul>
-      <p><a href="https://kiwisoop.github.io/ai-practice-course/Term-Project/"><b>▶ 온라인 시연판</b></a>: API를 호출하지 않고 미리 만든 결과로 체험합니다</p>
-    </td>
-  </tr>
-</table>
+**👉 [kiwisoop/term-project](https://github.com/kiwisoop/term-project)**: 같은 날짜의 일기를 3년 동안 쌓으면, AI가 일기를 짧은 이야기·수채화·목소리가 담긴 세로 쇼츠 영상으로 만들어 줍니다.
 
 ---
 
@@ -154,6 +139,5 @@ ai-practice-course/
 ├── Study-04/      FridgeChef + 서브에이전트
 ├── Study-05/      공감 다이어리 · PDF 요약
 ├── Study-06/      쇼핑 리스트 + MCP
-├── Term-Project/  기말 프로젝트 · 3년 다이어리
 └── docs/images/   README용 화면 캡처
 ```
