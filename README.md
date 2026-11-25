@@ -300,7 +300,7 @@ python3 test_shopping_list.py   # Playwright MCP로 6개 시나리오 자동 검
 | 07 | 출처 확인으로 할루시네이션 막기 | [Study-03 출처 검토](./Study-03/SOURCE_REVIEW.md) |
 | 08 | 커스텀 명령어 만들기 | [Study-03 명령어](./Study-03/.claude/commands) |
 | 09 | 명령어 체이닝·상대평가 보고서·CSV | [Study-03 확장 기능](./Study-03/EXTENSIONS.md) · [report_detailed.csv](./Study-03/report_detailed.csv) |
-| 10 | Obsidian·Claudian | 플러그인 설치·연결 확인 (개인 볼트라 결과 파일 없음) |
+| 10 | Obsidian·Claudian | [교재 10 설치 화면](./Textbook-10/README.md) (BRAT·Claudian 설치, 개인 볼트라 노트 파일 없음) |
 | 11 | API 키 설정·`.gitignore` | [Study-04](./Study-04/README.md) |
 | 12 | 3단계 PRD로 API 앱 만들기 | [Study-04](./Study-04/README.md) |
 | 13 | 리뷰·최적화·UX 서브에이전트 | [Study-04 13주차 기록](./Study-04/WEEK13.md) |
@@ -380,11 +380,14 @@ ai-practice-course/
 │   ├── .claude/agents/            # AI 개발팀 서브에이전트 5개
 │   ├── screenshots/               # 실행 화면
 │   └── README.md
-└── Study-06/                      # [프로젝트 6] 쇼핑 리스트 + MCP (Web)
-    ├── claude-code-rerun/         # ⭐ Claude Code + MCP 실행 기록 (먼저 볼 자료)
-    ├── shopping-list.html         # 처음 버전 앱
-    ├── test_shopping_list.py      # Playwright MCP 자동 검사
-    ├── notion-notes/              # Notion·Sequential Thinking 결과 원본
-    ├── screenshots/               # 실행 화면과 자동 검사 캡처
+├── Study-06/                      # [프로젝트 6] 쇼핑 리스트 + MCP (Web)
+│   ├── claude-code-rerun/         # ⭐ Claude Code + MCP 실행 기록 (먼저 볼 자료)
+│   ├── shopping-list.html         # 처음 버전 앱
+│   ├── test_shopping_list.py      # Playwright MCP 자동 검사
+│   ├── notion-notes/              # Notion·Sequential Thinking 결과 원본
+│   ├── screenshots/               # 실행 화면과 자동 검사 캡처
+│   └── README.md
+└── Textbook-10/                   # 교재 10 Obsidian·Claudian 설치 화면
+    ├── screenshots/
     └── README.md
 ```

@@ -101,3 +101,13 @@
 | ![추가](./Study-06/screenshots/01-added-items.png) | ![체크](./Study-06/screenshots/02-checked-items.png) | ![삭제](./Study-06/screenshots/03-after-delete.png) |
 
 </details>
+
+---
+
+## 교재 10 · Obsidian + Claudian
+
+[📂 교재 10 화면 자세히 보기](./Textbook-10/README.md)
+
+**BRAT·Claudian 플러그인 설치 화면**
+
+![커뮤니티 플러그인](./Textbook-10/screenshots/01_community_plugins.jpg)
