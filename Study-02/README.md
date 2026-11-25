@@ -14,6 +14,10 @@ Kiwibird는 해야 할 일을 둥지에 하나씩 모아 가는 개인용 할 �
 | 특징 | 키위새·둥지 이미지로 진행 상태 표현, 우선순위 추천과 집중 타이머 |
 | 설치·API·계정 | 모두 불필요. 외부 AI 호출 없이 동작 |
 
+![Kiwibird 메인 대시보드](screenshots/01_main.jpg)
+
+[모두 완료한 화면](screenshots/02_all_done.jpg) · [집중 타이머](screenshots/05_focus_timer.jpg) · [다크 모드](screenshots/06_dark_mode.jpg) · [전체 화면 보기](SCREENSHOTS.md)
+
 ## 주요 기능
 
 - 할 일 추가, 수정, 완료, 삭제

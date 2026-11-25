@@ -4,6 +4,7 @@
 AI 코딩 도구(Claude Code·Codex)와 함께 만든 **일곱 개의 실습 폴더**(`Study-00` ~ `Study-06`)와, 별도 저장소로 분리한 **기말 프로젝트**로 구성되어 있습니다.
 
 > 📸 **프로그램을 실행하지 않고 화면으로 바로 보고 싶다면 → [실행 화면 갤러리 (SCREENSHOTS.md)](./SCREENSHOTS.md)**  
+> 프로젝트별 자세한 화면은 아래 표의 **보기** 링크(각 폴더의 `SCREENSHOTS.md`)에 있습니다.  
 > ▶ 브라우저 앱(Study-00·02·03·06)은 **설치 없이 온라인으로 바로 실행**할 수 있습니다.
 
 ---
@@ -138,7 +139,7 @@ node check.js   # 자동 분류 규칙 검사
 
 ### ✨ 주요 기능
 - **📚 출처가 붙은 50문제**: 모든 문제에 고유 ID·출처·확인 기록 보관
-- **🎮 4가지 모드**: 기본 50문제 / 스피드(문제당 15초, 힌트) / 분야별 연습 / 오늘의 퀴즈(날짜별 10문제)
+- **🎮 4가지 모드**: 기본 50문제 / 스피드(문제당 15초, 힌트로 오답 2개 제외) / 분야별 연습 / 오늘의 퀴즈(날짜별 10문제)
 - **🏆 순위 저장**: 이름을 입력한 결과를 브라우저에 저장, 공동 순위 표시
 - **👩‍🏫 교사 대시보드**: 학생 기록 JSON을 모아 순위·평균·학습용 등급 확인, CSV·HTML 보고서 내보내기
 - **🛠️ 커스텀 명령어 10개** ([`.claude/commands/`](./Study-03/.claude/commands)): 문제 추가(`/quiz-add`), 검증(`/quiz-validate`, `/quiz-check`), 통계(`/quiz-stats`, `/quiz-range`), 보고서(`/create-report`, `/export-report`) 등
@@ -159,8 +160,9 @@ node check.js   # 자동 분류 규칙 검사
 ### 🧪 테스트 실행
 ```bash
 cd Study-03
-python3 build_data.py   # 문제 원본(questions.json) → 실행용 데이터 생성
-node check.js           # 50문제 구성·채점·순위 저장 검사
+python3 build_data.py      # 문제 원본(questions.json) → 실행용 데이터 생성
+node check.js              # 50문제 구성·채점·순위 저장 검사
+node check-extensions.js   # 4개 모드·타이머·힌트·교사 보고서 검사
 ```
 
 ---
@@ -235,7 +237,7 @@ python3 -m venv .venv
 
 ### 🧪 테스트 실행
 ```bash
-.venv/bin/python -m unittest discover -v   # 서버·AI 모듈 (모의 API)
+.venv/bin/python -m unittest discover -v   # 서버·AI 모듈 테스트 12개 (모의 API)
 node test_frontend.cjs                     # 프런트엔드 검사
 ```
 
@@ -324,6 +326,7 @@ python3 test_shopping_list.py   # Playwright MCP로 6개 시나리오 자동 검
 ai-practice-course/
 ├── README.md                      # 저장소 전체 안내 및 프로젝트 설명서
 ├── SCREENSHOTS.md                 # 전체 프로젝트 실행 화면 갤러리
+│                                  # (각 Study 폴더에도 자세한 SCREENSHOTS.md가 있음)
 ├── docs/images/                   # README용 화면 캡처
 ├── Study-00/                      # [프로젝트 0] 교재 01·02 웹페이지 실습 (Web)
 │   ├── 01-start-page/             # 교재 01 시작 홈페이지
@@ -346,15 +349,18 @@ ai-practice-course/
 │   ├── assets/                    # 키위새·둥지 이미지
 │   ├── web_version/               # 화면 개선 전 첫 버전 보관 (교재 06)
 │   ├── PRD.md / PROMPTS.md        # 요구사항과 5단계 구현 프롬프트
+│   ├── screenshots/               # 실행 화면
 │   └── README.md
 ├── Study-03/                      # [프로젝트 3] 상식 한 바퀴 퀴즈 (Web)
 │   ├── index.html / styles.css / quiz.js     # 퀴즈 화면과 동작
 │   ├── teacher_report.html / teacher.js      # 교사 대시보드
 │   ├── questions.json             # 문제·정답·해설·출처 원본
 │   ├── build_data.py / check.js   # 실행용 데이터 생성과 검사
+│   ├── check-extensions.js        # 4개 모드·힌트·교사 보고서 검사
 │   ├── .claude/commands/          # 커스텀 명령어 10개
 │   ├── SOURCE_REVIEW.md           # 출처 재검토 기록
 │   ├── EXTENSIONS.md              # 확장 기능 사용법
+│   ├── screenshots/               # 실행 화면
 │   └── README.md
 ├── Study-04/                      # [프로젝트 4] FridgeChef (Streamlit + AI)
 │   ├── app.py                     # Streamlit 화면
@@ -379,6 +385,6 @@ ai-practice-course/
     ├── shopping-list.html         # 처음 버전 앱
     ├── test_shopping_list.py      # Playwright MCP 자동 검사
     ├── notion-notes/              # Notion·Sequential Thinking 결과 원본
-    ├── screenshots/               # 자동 검사 캡처
+    ├── screenshots/               # 실행 화면과 자동 검사 캡처
     └── README.md
 ```

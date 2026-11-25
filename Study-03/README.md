@@ -17,6 +17,10 @@
 | 저장 | 사용자가 선택한 완료 기록을 현재 브라우저에 저장 |
 | 주요 기술 | HTML, CSS, JavaScript, localStorage, Python 데이터 생성 도구, Node.js 검사 도구 |
 
+![해설과 출처가 표시된 퀴즈 화면](screenshots/03_explanation_source.jpg)
+
+[스피드 모드·힌트](screenshots/04_speed_hint.jpg) · [순위](screenshots/06_ranking.jpg) · [교사 대시보드](screenshots/07_teacher_report.jpg) · [전체 화면 보기](SCREENSHOTS.md)
+
 ## 주요 기능과 콘텐츠 기준
 
 2026-11-10에 8·9주차 확장 기능과 7주차 최종 출처 재검토를 보완했다. [확장 기능 사용법](EXTENSIONS.md), [최종 출처 재검토](SOURCE_REVIEW.md), [추가 검사 결과](TEST_REPORT.md)를 참고한다.
@@ -69,12 +73,15 @@ Codex와 요구사항을 정리하고, 문제은행의 정답·해설을 출처�
 - `index.html`, `styles.css`, `quiz.js`: 게임 화면과 동작
 - `questions-data.js`: 브라우저에서 사용할 생성 데이터
 - `build_data.py`, `check.js`: 데이터 생성과 동작 검사
+- `check-extensions.js`: 4개 모드·타이머·힌트·교사 보고서 검사
+- `screenshots/`, `SCREENSHOTS.md`: 실행 화면
 
 문제 원본을 수정했다면 이 폴더에서 실행한다.
 
 ```sh
 python3 build_data.py
 node check.js
+node check-extensions.js
 node --check quiz.js
 ```
 
