@@ -2,6 +2,17 @@
 
 오늘의 일을 적으면 감정과 공감 메시지를 돌려주는 **공감 다이어리**, PDF에서 글을 추출해 **일반·간단 요약**을 만드는 로컬 웹 앱이다. 교재 14번의 두 예제를 Study-05에 구현한다.
 
+## 프로젝트 한눈에 보기
+
+| 항목 | 내용 |
+| --- | --- |
+| 과제 | 인공지능활용실습 14주차 · AI 개발팀(서브에이전트)으로 앱 만들기 |
+| 결과물 | 공감 다이어리(`index.html`), PDF 요약(`index_pdf.html`) |
+| AI 활용 | 기획·백엔드·프런트엔드·QA·AI 통합 서브에이전트 5개 ([`.claude/agents/`](.claude/agents)) |
+| 주요 기술 | Python 로컬 서버, pypdf, HTML·CSS·JavaScript, 학교 FactChat API |
+| 준비물 | Python 3.12 이상, 본인의 FactChat API 키 |
+| 검증 | [TEST_REPORT.md](TEST_REPORT.md) — 단위 테스트·프런트엔드 검사 (모의 API 사용) |
+
 다이어리는 사용자 제공 디자인 참고 이미지의 줄노트·사진 엽서·우표·엽서형 기록을 화면으로 구현했다. 키윗새 원본 그림은 `assets/kiwi-friend.png`에 보관하며 이미지 자체는 수정하지 않았다. 종이 질감과 새 낙서는 SVG·CSS로 표현하고, 글과 버튼은 실제 입력·조작 요소다. 날짜는 한국 시간으로 표시하며 맑음·흐림·기쁨·지침을 선택하면 분석과 기록에 반영한다. 디자인 정리에는 [Damir Sokolovsky (@heydamir)](https://x.com/heydamir)의 unslop 스킬(CC BY 4.0)의 원칙을 참고했다.
 
 ![키윗새와 함께 쓰는 일기](screenshots/diary-desktop.png)
@@ -71,3 +82,7 @@ node test_frontend.cjs
 ```
 
 검사는 임시 PDF와 모의 API를 사용한다. 실제 API 연동·브라우저 확인·GitHub 업로드·LMS 제출은 검사 결과와 별도로 기록한다.
+
+---
+
+[전체 과제 목록으로 돌아가기](../README.md)

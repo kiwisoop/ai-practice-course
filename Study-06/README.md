@@ -4,6 +4,17 @@
 
 > **2026-11-20 다시 하기:** 아래 기록은 처음에 Codex 도구로 대신한 버전이다. 교재대로 Claude Code에 MCP를 직접 설치해 다시 한 기록은 [claude-code-rerun/](claude-code-rerun/README.md) 폴더에 있고, GitHub 실습 결과는 [kiwisoop/shopping-list-app](https://github.com/kiwisoop/shopping-list-app) 저장소다.
 
+## 프로젝트 한눈에 보기
+
+| 항목 | 내용 |
+| --- | --- |
+| 과제 | 인공지능활용실습 교재 15·16 · MCP 연동 |
+| **먼저 볼 자료** | **[Claude Code 실행 기록 (claude-code-rerun/)](claude-code-rerun/README.md)** — 교재 프롬프트 그대로 MCP를 직접 설치해 수행 |
+| 사용한 MCP | Notion · Sequential Thinking · Context7 · Playwright · GitHub |
+| 결과물 | 쇼핑 리스트 앱, Notion 페이지 3개, [shopping-list-app](https://github.com/kiwisoop/shopping-list-app) 저장소 |
+| 실행 방식 | `shopping-list.html`을 브라우저에서 열기 ([온라인으로 열기](https://kiwisoop.github.io/ai-practice-course/Study-06/claude-code-rerun/shopping-list.html)). 설치·API 키 불필요 |
+| 이 문서 아래 내용 | 처음에 Codex 도구로 대신한 버전의 기록 (참고용으로 보관) |
+
 ![Playwright MCP 검사 화면](screenshots/shopping-list-test.png)
 
 ## 실행
@@ -71,3 +82,7 @@ python3 test_shopping_list.py
 - `claude-code-rerun/`: Claude Code로 다시 한 실습 기록과 그때 만든 앱·`CLAUDE.md`·스크린샷
 
 GitHub 업로드는 실습 자료 보관이다. LMS 제출·퀴즈·출석 완료는 별도 확인해야 한다.
+
+---
+
+[전체 과제 목록으로 돌아가기](../README.md)
