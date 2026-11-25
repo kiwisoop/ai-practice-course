@@ -82,7 +82,7 @@ flowchart LR
 
 기말 프로젝트는 별도 저장소로 분리했습니다.
 
-**👉 [kiwisoop/term-project](https://github.com/kiwisoop/term-project)**: 같은 날짜의 일기를 3년 동안 쌓으면, AI가 일기를 짧은 이야기·수채화·목소리가 담긴 세로 쇼츠 영상으로 만들어 줍니다.
+**👉 [kiwisoop/same-day-diary](https://github.com/kiwisoop/same-day-diary)**: 같은 날짜의 일기를 3년 동안 쌓으면, AI가 일기를 짧은 이야기·수채화·목소리가 담긴 세로 쇼츠 영상으로 만들어 줍니다.
 
 ---
 
